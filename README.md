@@ -12,24 +12,40 @@ La aplicación contará con tres pantallas principales: autenticación del usuar
 A continuación, se darán más detalles sobre cada una de las distintas pantallas: 
 •	Autenticación: 
 Esta pantalla consistirá en un cuadro de dialogo central que le solicitará al usuario el correo y la contraseña con los cuales se autentica en la plataforma:
+
 ![Autenticacion 1](images/Autenticacion1.png)
+
 A su vez, debajo de este cuadro de dialogo existirá una opción denominada “Registrarse”. Cuando el usuario oprima sobre esta opción, se desplegará un panel en el que se solicitarán al usuario distintos datos básicos, tales como: nombre, correo y contraseña para la aplicación.
+
 ![Autenticacion 2](images/Autenticacion2.png)
+
 Una vez el usuario se ha registrado, volverá al proceso de autenticación y digitando los datos correspondientes ya podrá hacer uso de la aplicación
+
 •	Perfil del usuario: 
 Una vez el usuario se ha autenticado correctamente, ingresará en su perfil, donde podrá ver: proyectos activos, notificaciones, invitaciones a participar en proyectos, información sobre su cuenta y crear un nuevo proyecto:
+
 ![Usuario 1](images/Usuario1.png)
+
 ![Usuario 2](images/Usuario2.png)
+
 •	Visualización de un proyecto:
 Cuando un usuario acceda a un proyecto al cual hace parte, tendrá la siguiente pantalla:
+
 ![Arbol 1](images/Arbol1.png)
+
 En esta pantalla se podrá consultar la estructura del proyecto, tener un chat con los participantes del proyecto y una opción en la parte superior derecha que permite agregar un nuevo usuario al proyecto.
 Cuando el usuario oprima el icono de archivos de una rama del árbol, se desplegará en pantalla un panel que le permitirá ver los aportes que se han realizado sobre esta tarea, esto incluye: Una pequeña descripción y los archivos. Además, tendrá las opciones de eliminar rama o adjuntar una rama hija a ella:
+
 ![Arbol 2](images/Arbol2.png)
+
 ![Arbol 3](images/Arbol3.png)
+
 Al dar clic en la rama se redirigiría a un enlace con la información colocada en el espacio de ella:
+
 ![Arbol 4](images/Arbol4.png)
+
 ![Arbol 5](images/Arbol5.png)
+
 # Historias de usuario
 1. Como miembro de equipo de un proyecto
 quiero poder acceder al contenido de un proyecto
