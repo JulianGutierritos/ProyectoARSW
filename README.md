@@ -65,7 +65,7 @@ Criterios de aceptación
 
 A continuación presentamos el diagrama de clases de la estructura que tenemos pensada para el proyecto
 
-![Diagrama de clases](images/ClassDiagram.png)
+![Diagrama de clases](images/class_diagram.png)
 
 
 ```
