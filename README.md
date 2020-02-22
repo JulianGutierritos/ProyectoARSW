@@ -1,11 +1,11 @@
 # Nombre: 
 TreeCore , Projectree  “Pueden cambiarlo”
 # Integrantes:
-Natalia Duran Vivas
+Natalia Durán Vivas
 
 Julián David Gutiérrez Vanegas
 
-Andrés Ricardo Martínez Diaz
+Andrés Ricardo Martínez Díaz
 
 # Resumen
 El proyecto se basará en crear una aplicación que consiste en una herramienta interactiva con la cual se podrán gestionar proyectos en tiempo real por múltiples usuarios al mismo tiempo. Esta herramienta utilizará una interfaz en forma de "árbol" donde en su centro se encontrará el nombre del proyecto en curso (rama central) y de él se irán desprendiendo múltiples ramas, que a su vez tendrán las opciones de agregar una nueva rama “hija” o de ser eliminada. Cada rama representa los componentes que forman a un proyecto y estas a su vez, dependiendo del tipo, tienen la oportunidad de convertirse en un subproyecto dependiendo de las necesidades de los usuarios.
@@ -50,16 +50,22 @@ Al dar clic en la rama se redirigiría a un enlace con la información colocada 
 ![Arbol 5](images/Arbol5.png)
 
 # Historias de usuario
-1. Como miembro de equipo de un proyecto
-quiero poder acceder al contenido de un proyecto
-para poder ver, agregar, modificar o eliminar los archivos, ramas y contenido.
-Criterios de aceptación
--Ver la completa estructura del proyecto como árbol.
--Tener la opción de ver las ramas por separado
--Poder agregar ramas y contenido.
--Poder eliminar ramas y contenido.
--Poder modificar ramas y contenido.
--Ser capaz de subir archivos a las ramas.
+1.
+COMO miembro de equipo de un proyecto
+QUIERO poder acceder al contenido de un proyecto
+PARA poder ver, agregar, modificar o eliminar los archivos, ramas y contenido.
+
+Criterios de aceptación:
+
+- Ver la completa estructura del proyecto como árbol.
+- Tener la opción de ver las ramas por separado
+- Poder agregar ramas y contenido.
+- Poder eliminar ramas y contenido.
+- Poder modificar ramas y contenido.
+- Ser capaz de subir archivos a las ramas.
+
+![Casos de uso](images/casos.png)
+
 
 # Arquitectura
 
