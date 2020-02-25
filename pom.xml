@@ -75,7 +75,10 @@
 
 	<build>
 		<plugins>
-        
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 	        <plugin>
 	           <groupId>org.apache.maven.plugins</groupId>
 	           <artifactId>maven-compiler-plugin</artifactId>
@@ -117,65 +120,6 @@
                 </configuration>
             </plugin>
         	
-        
-            <!-- clean project (also local H2 database)-->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <!-- create local H2 database -->
-         
-             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.197</version>
-                    </dependency>
-                
-                  <dependency>
-                    <groupId>com.a9ski.jsf</groupId>
-                    <artifactId>simple-jsf-exporter-primefaces-excel</artifactId>
-                    <version>1.0.3</version>
-                  </dependency>
-                </dependencies>
-                <configuration>
-                    <driver>org.h2.Driver</driver>
-                    <url>jdbc:h2:file:./target/db/testdb;MODE=PostgreSQL</url>
-                    <username>sa</username>
-                    <password></password>
-                    <autocommit>false</autocommit>
-                    <skip>${maven.test.skip}</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>create-db</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <srcFiles>
-                                <srcFile>tables.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>              
-            
             <!-- Plugin configuration for Heroku compatibility. -->
 	        <plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
