@@ -1,8 +1,11 @@
 
 /target/
+.factorypath
 .classpath
 .project
 .settings
+.mvn
+.vscode
 *.class
 *.log
 *.jar
@@ -12,4 +15,5 @@
 *.zip
 *.tar.gz
 *.rar
-
+mvnw
+mvnw.cmd

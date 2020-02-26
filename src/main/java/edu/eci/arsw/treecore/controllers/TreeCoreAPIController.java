@@ -20,12 +20,10 @@ public class TreeCoreAPIController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<String> getAllBlueprints()  {
-		ResponseEntity r;
+		ResponseEntity r=null;
 		try{
 			boolean connect=this.treeCoreServices.getConnection();
-			Gson gson = new Gson();
-			String json = gson.toJson(connect);
-			r = new ResponseEntity<>(json, HttpStatus.OK);
+			if(connect)r = new ResponseEntity<>("Successful connection", HttpStatus.OK);
 		} catch (Exception e){
 			r = new ResponseEntity<>("Failure Connection", HttpStatus.NOT_FOUND);
 		}
