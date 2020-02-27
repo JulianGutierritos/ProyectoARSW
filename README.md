@@ -1,5 +1,5 @@
 # Nombre: 
-TreeCore , Projectree  “Pueden cambiarlo”
+TreeCore 
 # Integrantes:
 Natalia Durán Vivas
 
@@ -9,11 +9,17 @@ Andrés Ricardo Martínez Díaz
 
 # Resumen
 El proyecto se basará en crear una aplicación que consiste en una herramienta interactiva con la cual se podrán gestionar proyectos en tiempo real por múltiples usuarios al mismo tiempo. Esta herramienta utilizará una interfaz en forma de "árbol" donde en su centro se encontrará el nombre del proyecto en curso (rama central) y de él se irán desprendiendo múltiples ramas, que a su vez tendrán las opciones de agregar una nueva rama “hija” o de ser eliminada. Cada rama representa los componentes que forman a un proyecto y estas a su vez, dependiendo del tipo, tienen la oportunidad de convertirse en un subproyecto dependiendo de las necesidades de los usuarios.
+
 Los proyectos podrán ser creados por cualquier usuario de la aplicación y este, a su vez, podrá invitar a otros usuarios de la aplicación para que sean colaboradores en su proyecto, dándoles así la oportunidad de modificar los componentes que se encuentran en el mismo.
+
 # Descripción
+
 La aplicación contará con tres pantallas principales: autenticación del usuario, perfil de un usuario y visualización de un proyecto. 
+
 A continuación, se darán más detalles sobre cada una de las distintas pantallas: 
+
 •	Autenticación: 
+
 Esta pantalla consistirá en un cuadro de dialogo central que le solicitará al usuario el correo y la contraseña con los cuales se autentica en la plataforma:
 
 ![Autenticacion 1](images/Autenticacion1.png)
@@ -73,8 +79,16 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 
 ![Diagrama de clases](images/class_diagram.png)
 
+# Heroku
 
+```markdown
 https://treecore.herokuapp.com/
-
 ```
+
+# Planeación de Taiga
+
+```markdown
+https://tree.taiga.io/project/nduran06-treecoreproject/
+```
+
 
