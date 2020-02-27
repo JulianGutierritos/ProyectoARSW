@@ -85,7 +85,7 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 https://treecore.herokuapp.com/
 ```
 
-# Planeación de Taiga
+# Planeación en Taiga
 
 ```markdown
 https://tree.taiga.io/project/nduran06-treecoreproject/
