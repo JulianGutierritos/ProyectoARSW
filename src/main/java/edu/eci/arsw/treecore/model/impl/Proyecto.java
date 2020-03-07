@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Proyecto {
+    private int id;
     private String nombre;
     private String descripcion;
     private Usuario creador;
     private Date fechaDeCreacion;
     private ArrayList<Usuario> participantes;
     private ArrayList<Rama> ramas;
-    public Proyecto(String nombre, String descripcion, Usuario creador, Date fechaDeCreacion, ArrayList<Usuario> participantes, ArrayList<Rama> ramas){
+    private ArrayList<Mensaje> mensajes;
+    public Proyecto(int id, String nombre, String descripcion, Usuario creador, Date fechaDeCreacion, ArrayList<Usuario> participantes, ArrayList<Rama> ramas, ArrayList<Mensaje> mensajes){
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.creador = creador;
         this.fechaDeCreacion = fechaDeCreacion;
         this.participantes = participantes;
         this.ramas = ramas;
+        this.mensajes = mensajes;
     }
     public String getNombre(){
         return nombre;
@@ -53,5 +57,17 @@ public class Proyecto {
     }
     public void setRamas(ArrayList<Rama> ramas){
         this.ramas = ramas;
+    }
+    public int getId(){
+        return this.id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public ArrayList<Mensaje> getMensajes(){
+        return mensajes;   
+    }
+    public void setMensajes(ArrayList<Mensaje> mensajes){
+        this.mensajes = mensajes;
     }
 }

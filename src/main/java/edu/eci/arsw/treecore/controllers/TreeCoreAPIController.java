@@ -13,7 +13,7 @@ import edu.eci.arsw.treecore.services.TreeCoreServices;
 @RestController
 @RequestMapping(value = "/treecore")
 public class TreeCoreAPIController {
-	
+	/** 
 	@Autowired
     TreeCoreServices treeCoreServices;
 	
@@ -29,5 +29,6 @@ public class TreeCoreAPIController {
 		}
 		return r;
 	}
+	*/
 
 }

@@ -1,32 +1,17 @@
 package edu.eci.arsw.treecore.model.impl;
 
-import java.io.File;
-import java.util.Date;
+import java.util.ArrayList;
 public class Archivo {
-    private File archivo;
-    private Date ultimaModificacion;
-    private Usuario modificadoPor;
-    public Archivo(File archivo, Date ultimaModificacion, Usuario modificadoPor){
-        this.archivo = archivo;
-        this.ultimaModificacion = ultimaModificacion;
-        this.modificadoPor = modificadoPor;
+    private ArrayList<Modificacion> modificaciones;
+    public Archivo(ArrayList<Modificacion> modificaciones){
+        this.modificaciones = modificaciones;
     }
-    public File getArchivo(){
-        return archivo;
+
+    public ArrayList<Modificacion> getModificaciones(){
+        return modificaciones;
     }
-    public void setArchivo(File archivo){
-        this.archivo = archivo;
-    }
-    public Date getUltimaModificacion(){
-        return ultimaModificacion;
-    }
-    public void seetUltimaModificacion(Date ultimaModificacion){
-        this.ultimaModificacion = ultimaModificacion;
-    }
-    public Usuario getModificadoPor(){
-        return modificadoPor;
-    }
-    public void setModificadoPor(Usuario modificadoPor){
-        this.modificadoPor = modificadoPor;
+
+    public void setModificaciones(ArrayList<Modificacion> modificaciones){
+        this.modificaciones = modificaciones;
     }
 }

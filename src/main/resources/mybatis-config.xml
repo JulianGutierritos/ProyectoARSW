@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<properties resource="config.properties">
+    </properties>	
+
+    <!--<settings>
+        <setting name="logImpl" value="LOG4J"/>        
+    </settings>-->
+    
+    <typeAliases>
+    	<typeAlias type='edu.eci.arsw.treecore.model.impl.Usuario' alias='Usuario'/>
+        <typeAlias type='edu.eci.arsw.treecore.model.impl.Notificacion' alias='Notificacion'/>
+        <typeAlias type='edu.eci.arsw.treecore.model.impl.Invitacion' alias='Invitacion'/>
+    </typeAliases>
+
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="org.postgresql.Driver" />
+                <property name="url" value="jdbc:postgresql://ec2-174-129-253-27.compute-1.amazonaws.com:5432/d2jjrqs2vof0ic?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
+                <property name="username" value="rgvcbgyrjzpwha" />
+                <property name="password" value="1680a8dc378a5cdb7698af20b33cca525a9b28305bd7e00c58cc90e909625fe1" />
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <mappers>
+        <mapper resource="mappers/UsuarioMapper.xml"></mapper>
+    </mappers> 
+        
+        
+</configuration>

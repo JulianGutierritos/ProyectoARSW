@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.UsuarioMapper">
+	
+	<select parameterType="map" id="getUsers" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.contraseña as contraseña_usuario,
+
+    		n.notificacionID as id_notificacion,
+			n.fecha as fecha_notificacion,
+			n.informacion as informacion_notificacion,
+
+            i.remitente as invitacion_remitente,
+            i.proyecto as invitacion_proyecto
+
+			FROM usuario as u 
+    		left join notificacion as n on u.correo=n.usuario
+            left join invitacion as i on u.correo=i.receptor
+
+	</select>
+
+	<select parameterType="map" id="getUser" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.contraseña as contraseña_usuario,
+
+    		n.notificacionID as id_notificacion,
+			n.fecha as fecha_notificacion,
+			n.informacion as informacion_notificacion,
+
+            i.remitente as invitacion_remitente,
+            i.proyecto as invitacion_proyecto
+
+			FROM usuario as u 
+    		left join notificacion as n on u.correo=n.usuario
+            left join invitacion as i on u.correo=i.receptor
+
+    		WHERE u.correo=#{correo} and u.contraseña=#{contraseña}
+
+	</select>
+	<select parameterType="map" id="getUser2" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.contraseña as contraseña_usuario,
+
+    		n.notificacionID as id_notificacion,
+			n.fecha as fecha_notificacion,
+			n.informacion as informacion_notificacion,
+
+            i.remitente as invitacion_remitente,
+            i.proyecto as invitacion_proyecto
+
+			FROM usuario as u 
+    		left join notificacion as n on u.correo=n.usuario
+            left join invitacion as i on u.correo=i.receptor
+
+    		WHERE u.correo=#{correo}
+
+	</select>
+	
+
+	<insert id ="insertarUsuario">
+    	INSERT into BR_USUARIO (carnet, documento, correo, nombres, apellidos, passwd, bloqueado, id_cargo) 
+    	VALUES (#{usuario.carnet},#{usuario.documento},#{usuario.correo},#{usuario.nombres},#{usuario.apellidos}, #{usuario.password}, #{usuario.bloquedo}, #{usuario.cargo.id})                     
+    </insert>
+
+	<resultMap id="UsuarioResult" type="Usuario">
+			<id property="correo" column="correo_usuarioo"/>
+    		<result property="nombre" column="nombre_usuario"/>
+			<result property="apellidos" column="apellidos_usuario"/>
+    		<result property="contraseña" column="contraseña_usuario"/>
+      		<collection property="notificaciones" column="{id_notificacion, correo_usuario}" 
+             javaType="ArrayList" ofType="Notificacion"
+             resultMap="NotifiacionResult" /> 
+             <collection property="invitaciones" column="{correo_usuario, invitacion_remitente, invitacion_proyecto}" 
+             javaType="ArrayList" ofType="Invitacion" resultMap="InvitacionResult" />    			
+    </resultMap>
+
+
+    <resultMap id="NotificacionResunt" type="Notificacion">
+		<id property="id" column="id_notificacion"/>
+		<result property="fecha" column="fecha_notificacion"/>
+		<result property="informacion" column="informacion_notificacion"/>
+  	</resultMap>
+
+    <resultMap id="InvitacionResunt" type="Invitacion">
+		<association property="remitente" column="invitacion_remitente" javaType="Usuario" resultMap="UsuarioMapper"/>
+        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.ProyectoMapper.ProyectoResult"/>
+    </resultMap>
+</mapper>
+

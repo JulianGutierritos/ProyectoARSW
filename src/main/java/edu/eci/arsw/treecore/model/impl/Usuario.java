@@ -9,7 +9,6 @@ public class Usuario {
     private String contraseña;
     private ArrayList<Notificacion> notificaciones;
     private ArrayList<Invitacion> invitaciones;
-    private Date ultimoAcceso;
 
     public Usuario(String correo, String nombre, String contraseña, ArrayList<Notificacion> notificaciones, ArrayList<Invitacion> invitaciones, Date ultimoAcceso) {
         this.correo = correo;
@@ -17,7 +16,6 @@ public class Usuario {
         this.contraseña = contraseña;
         this.notificaciones = notificaciones;
         this.invitaciones = invitaciones;
-        this.ultimoAcceso = ultimoAcceso;
     }
 
     public String getCorreo(){
@@ -49,11 +47,5 @@ public class Usuario {
     }
     public void setInvitaciones(ArrayList<Invitacion> invitaciones){
         this.invitaciones = invitaciones;
-    }
-    public Date getUltimoAcceso(){
-        return ultimoAcceso;
-    }
-    public void setUltimoAcceso(Date ultimoAcceso){
-        this.ultimoAcceso = ultimoAcceso;
     }
 }
