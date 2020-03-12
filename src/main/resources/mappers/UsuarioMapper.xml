@@ -68,6 +68,28 @@
 
 	</select>
 	
+	<select parameterType="map" id="getUserWithPasswd" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.contraseña as contraseña_usuario,
+
+    		n.notificacionID as id_notificacion,
+			n.fecha as fecha_notificacion,
+			n.informacion as informacion_notificacion,
+
+            i.remitente as invitacion_remitente,
+            i.proyecto as invitacion_proyecto
+
+			FROM usuario as u 
+    		left join notificacion as n on u.correo=n.usuario
+            left join invitacion as i on u.correo=i.receptor
+
+    		WHERE u.correo=#{correo}
+
+	</select>
+	
 
 	<insert id ="insertarUsuario">
     	INSERT into BR_USUARIO (carnet, documento, correo, nombres, apellidos, passwd, bloqueado, id_cargo) 

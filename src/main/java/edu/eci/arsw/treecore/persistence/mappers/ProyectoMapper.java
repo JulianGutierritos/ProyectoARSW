@@ -1,4 +1,4 @@
-package edu.eci.arsw.treecore.persistence.impl.mybatis.mappers;
+package edu.eci.arsw.treecore.persistence.mappers;
 
 import org.apache.ibatis.annotations.Param;
 
