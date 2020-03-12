@@ -8,9 +8,9 @@
     <resultMap id="ProyectoResult" type="Proyecto">
 		<id property="id" column="id_proyecto"/>
 		<result property="nombre" column="nombre_proyecto"/>
-		<association property="proyecto" column="creador_proyecto" javaType="Usuario" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.UsuarioMapper.UsuarioResult"/>
-        <result property="descripcion" column="descripcion_proyecto"/>
+		<result property="descripcion" column="descripcion_proyecto"/>
         <result property="fechaDeCreacion" column="descripcion_fecha"/>
+		<association property="proyecto" column="creador_proyecto" javaType="Usuario" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.UsuarioMapper.UsuarioResult"/>
         <collection property="participantes" column="{participante_usuario}" 
         javaType="ArrayList" ofType="Usuario" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.UsuarioMapper.UsuarioResult"/>   
     </resultMap>

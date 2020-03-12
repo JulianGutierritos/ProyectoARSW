@@ -6,12 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
 import edu.eci.arsw.treecore.exceptions.ProjectNotFoundException;
-import edu.eci.arsw.treecore.services.TreeCoreServices;
+import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
 public class TreeCoreAPIController {
 	
 	@Autowired
-	TreeCoreServices treeCoreServices;
+    TreeCoreUserServices treeCoreServices;
 	
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -51,7 +52,24 @@ public class TreeCoreAPIController {
         } catch (ProjectNotFoundException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-        }
+		}
+	}
+	public ResponseEntity<String> getAllBlueprints()  {
+		ResponseEntity r=null;
+		try{
+			boolean connect=true;
+			if(connect)r = new ResponseEntity<>("Successful connection", HttpStatus.OK);
+		} catch (Exception e){
+			r = new ResponseEntity<>("Failure Connection", HttpStatus.NOT_FOUND);
+		}
+		return r;
+	}
+	
+	@RequestMapping(value = "basicForm", method = RequestMethod.POST)
+    public void basicForm(@RequestParam("id") int id, @RequestParam("name") String name,
+    		@RequestParam("password") String pass, @RequestParam("email") String mail) {
+		
+		System.out.println(id);
 	}
 	
 

@@ -12,8 +12,8 @@ import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
-import edu.eci.arsw.treecore.persistence.UsuarioDAO;
-import edu.eci.arsw.treecore.services.TreeCoreServices;
+import edu.eci.arsw.treecore.persistenceDAO.UsuarioDAO;
+import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 //import edu.eci.arsw.treecore.persistence.TreeCorePersistence;
 
 @Service
-public class TreeCoreServicesImpl implements TreeCoreServices {
+public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 
     @Autowired
     @Qualifier("MyBatisUsuario")
@@ -39,13 +39,23 @@ public class TreeCoreServicesImpl implements TreeCoreServices {
         }
         return user;
     }
-
+    
     @Override
-    public Usuario verificarCredenciales(String correo, String contraseña) throws ServiciosTreeCoreException {
+    public void setUser(String correo, String passwd) throws ServiciosTreeCoreException{
+    	try {
+			this.usuarioDAO.setUser(correo, passwd);
+		} 
+    	catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("Este usuario ya existe");
+		}
+    }
+    
+    @Override
+	public Usuario verificarCredenciales(String correo, String passwd) throws ServiciosTreeCoreException{
         Usuario user;
-        try {
-            user = usuarioDAO.getUser(correo, contraseña);
-        } catch (PersistenceException e) {
+        try{
+            user=usuarioDAO.getUser(correo, passwd);
+        }catch(PersistenceException e){
             throw new ServiciosTreeCoreException("Credenciales incorrectas");
         }
         return user;
