@@ -12,11 +12,6 @@ import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 
-import org.springframework.stereotype.Service;
-
-//import edu.eci.arsw.treecore.persistence.TreeCorePersistence;
-
-@Service
 public interface TreeCoreUserServices {
 	public Usuario getUsuario(String correo) throws ServiciosTreeCoreException;
 	public Usuario verificarCredenciales(String correo, String contraseña) throws ServiciosTreeCoreException;

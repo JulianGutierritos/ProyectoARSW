@@ -2,13 +2,11 @@ package edu.eci.arsw.treecore.persistenceDAO;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.exceptions.PersistenceException;
 
-@Service
 public interface UsuarioDAO {
 	
 	public Usuario getUser(String correo, String passwd) throws PersistenceException;

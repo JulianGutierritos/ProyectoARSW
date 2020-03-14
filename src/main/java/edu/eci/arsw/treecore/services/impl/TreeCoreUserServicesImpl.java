@@ -1,7 +1,6 @@
 package edu.eci.arsw.treecore.services.impl;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,8 +15,6 @@ import edu.eci.arsw.treecore.persistenceDAO.UsuarioDAO;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.springframework.stereotype.Service;
 
 //import edu.eci.arsw.treecore.persistence.TreeCorePersistence;
@@ -26,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 
     @Autowired
-    @Qualifier("MyBatisUsuario")
     UsuarioDAO usuarioDAO;
 
     @Override

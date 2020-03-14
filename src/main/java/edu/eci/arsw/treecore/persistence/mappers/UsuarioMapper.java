@@ -2,11 +2,13 @@ package edu.eci.arsw.treecore.persistence.mappers;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UsuarioMapper {
 	
     public Usuario getUser(@Param("correo") String correo, @Param("contraseña") String passwd);

@@ -104,7 +104,7 @@
       		<collection property="notificaciones" column="{id_notificacion, correo_usuario}" 
              javaType="ArrayList" ofType="Notificacion"
              resultMap="NotifiacionResult" /> 
-             <collection property="invitaciones" column="{correo_usuario, invitacion_remitente, invitacion_proyecto}" 
+             <collection property="invitaciones" column="{invitacion_remitente, invitacion_proyecto}" 
              javaType="ArrayList" ofType="Invitacion" resultMap="InvitacionResult" />    			
     </resultMap>
 
@@ -115,7 +115,7 @@
 		<result property="informacion" column="informacion_notificacion"/>
   	</resultMap>
 
-    <resultMap id="InvitacionResunt" type="Invitacion">
+    <resultMap id="InvitacionResult" type="Invitacion">
 		<association property="remitente" column="invitacion_remitente" javaType="Usuario" resultMap="UsuarioMapper"/>
         <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.ProyectoMapper.ProyectoResult"/>
     </resultMap>
