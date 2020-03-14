@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.eci.arsw.treecore.exceptions.PersistenceException;
-import edu.eci.arsw.treecore.exceptions.ProjectNotFoundException;
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
-import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.persistenceDAO.UsuarioDAO;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
+
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
-import org.springframework.stereotype.Service;
 
-//import edu.eci.arsw.treecore.persistence.TreeCorePersistence;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
@@ -67,43 +67,4 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
         return null;
     }
 
-    @Override
-    public Proyecto getProyecto(int identificador) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Usuario> getParticipantes(int identificador) {
-        return null;
-    }
-
-    @Override
-    public boolean estaParticipando(String correo, int identificador) {
-        return false;
-    }
-
-    @Override
-    public ArrayList<Rama> getRamas(int identificador) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Mensaje> getMensajes(int identificador) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Proyecto> getAllProyectos() throws ProjectNotFoundException{
-        return null;
-    }
-
-    @Override
-    public Proyecto getProyecto(String Creator, String Name) throws ProjectNotFoundException {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Proyecto> getAllProyectosUser() throws ProjectNotFoundException {
-        return null;
-    }
 }
