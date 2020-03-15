@@ -9,6 +9,10 @@ public class Invitacion {
         this.proyecto = proyecto;
     }
 
+    public Invitacion(){
+        
+    }
+
     public Usuario getRemitente(){
         return remitente;
     }

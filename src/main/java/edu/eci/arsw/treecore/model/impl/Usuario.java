@@ -6,16 +6,19 @@ import java.util.Date;
 public class Usuario {
     private String correo;
     private String nombre;
-    private String contraseña;
+    private String passwd;
     private ArrayList<Notificacion> notificaciones;
     private ArrayList<Invitacion> invitaciones;
 
-    public Usuario(String correo, String nombre, String contraseña, ArrayList<Notificacion> notificaciones, ArrayList<Invitacion> invitaciones, Date ultimoAcceso) {
+    public Usuario(String correo, String nombre, String passwd, ArrayList<Notificacion> notificaciones, ArrayList<Invitacion> invitaciones) {
         this.correo = correo;
         this.nombre = nombre;
-        this.contraseña = contraseña;
+        this.passwd = passwd;
         this.notificaciones = notificaciones;
         this.invitaciones = invitaciones;
+    }
+
+    public Usuario() {
     }
 
     public String getCorreo(){
@@ -30,11 +33,11 @@ public class Usuario {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
-    public String getContraseña(){
-        return contraseña;
+    public String getPasswd(){
+        return passwd;
     }
-    public void setContraseña(String contraseña){
-        this.contraseña = contraseña;
+    public void setContraseña(String passwd){
+        this.passwd = passwd;
     }
     public ArrayList<Notificacion> getNoticaciones(){
         return notificaciones;

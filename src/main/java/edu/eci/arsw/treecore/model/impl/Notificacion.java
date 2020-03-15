@@ -13,6 +13,10 @@ public class Notificacion {
         this.informacion = informacion;
     }
 
+    public Notificacion(){
+        
+    }
+
     public Date getFecha(){
         return fecha;
     }

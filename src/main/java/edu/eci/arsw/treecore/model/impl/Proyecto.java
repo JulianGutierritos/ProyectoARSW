@@ -22,6 +22,10 @@ public class Proyecto {
         this.ramas = ramas;
         this.mensajes = mensajes;
     }
+
+    public Proyecto(){
+        
+    }
     public String getNombre(){
         return nombre;
     }

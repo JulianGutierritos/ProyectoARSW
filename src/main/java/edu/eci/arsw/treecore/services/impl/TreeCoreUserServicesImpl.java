@@ -16,10 +16,10 @@ import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 
     @Autowired

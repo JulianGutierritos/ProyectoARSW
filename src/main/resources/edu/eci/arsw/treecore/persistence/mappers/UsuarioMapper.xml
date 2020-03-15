@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.UsuarioMapper">
+<mapper namespace="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper">
 	
 	<select parameterType="map" id="getUsers" resultMap="UsuarioResult">
 			SELECT 
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.contraseña as contraseña_usuario,
+  			u.passwd as passwd_usuario,
 
-    		n.notificacionID as id_notificacion,
+            n.notificacionID as id_notificacion,
 			n.fecha as fecha_notificacion,
 			n.informacion as informacion_notificacion,
 
@@ -20,8 +19,9 @@
             i.proyecto as invitacion_proyecto
 
 			FROM usuario as u 
-    		left join notificacion as n on u.correo=n.usuario
+            left join notificacion as n on u.correo=n.usuario
             left join invitacion as i on u.correo=i.receptor
+    		
 
 	</select>
 
@@ -30,7 +30,7 @@
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.contraseña as contraseña_usuario,
+  			u.passwd as passwd_usuario,
 
     		n.notificacionID as id_notificacion,
 			n.fecha as fecha_notificacion,
@@ -43,7 +43,7 @@
     		left join notificacion as n on u.correo=n.usuario
             left join invitacion as i on u.correo=i.receptor
 
-    		WHERE u.correo=#{correo} and u.contraseña=#{contraseña}
+    		WHERE u.correo=#{correo} and u.passwd=#{passwd}
 
 	</select>
 	<select parameterType="map" id="getUser2" resultMap="UsuarioResult">
@@ -51,7 +51,7 @@
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.contraseña as contraseña_usuario,
+  			u.passwd as passwd_usuario,
 
     		n.notificacionID as id_notificacion,
 			n.fecha as fecha_notificacion,
@@ -73,7 +73,7 @@
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.contraseña as contraseña_usuario,
+  			u.passwd as passwd_usuario,
 
     		n.notificacionID as id_notificacion,
 			n.fecha as fecha_notificacion,
@@ -92,32 +92,29 @@
 	
 
 	<insert id ="insertarUsuario">
-    	INSERT into BR_USUARIO (carnet, documento, correo, nombres, apellidos, passwd, bloqueado, id_cargo) 
+    	INSERT into usuario (carnet, documento, correo, nombres, apellidos, passwd, bloqueado, id_cargo) 
     	VALUES (#{usuario.carnet},#{usuario.documento},#{usuario.correo},#{usuario.nombres},#{usuario.apellidos}, #{usuario.password}, #{usuario.bloquedo}, #{usuario.cargo.id})                     
     </insert>
 
-	<resultMap id="UsuarioResult" type="Usuario">
-			<id property="correo" column="correo_usuarioo"/>
-    		<result property="nombre" column="nombre_usuario"/>
-			<result property="apellidos" column="apellidos_usuario"/>
-    		<result property="contraseña" column="contraseña_usuario"/>
-      		<collection property="notificaciones" column="{id_notificacion, correo_usuario}" 
-             javaType="ArrayList" ofType="Notificacion"
-             resultMap="NotifiacionResult" /> 
-             <collection property="invitaciones" column="{invitacion_remitente, invitacion_proyecto}" 
-             javaType="ArrayList" ofType="Invitacion" resultMap="InvitacionResult" />    			
-    </resultMap>
-
-
-    <resultMap id="NotificacionResunt" type="Notificacion">
+    <resultMap id="NotificacionResult" type="Notificacion">
 		<id property="id" column="id_notificacion"/>
 		<result property="fecha" column="fecha_notificacion"/>
 		<result property="informacion" column="informacion_notificacion"/>
   	</resultMap>
 
     <resultMap id="InvitacionResult" type="Invitacion">
-		<association property="remitente" column="invitacion_remitente" javaType="Usuario" resultMap="UsuarioMapper"/>
-        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" resultMap="edu.eci.arsw.treecore.persistence.impl.mybatis.mappers.ProyectoMapper.ProyectoResult"/>
+		<association property="remitente" column="invitacion_remitente" javaType="Usuario" resultMap="UsuarioResult"/>
+        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" resultMap="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.ProyectoResult"/>
+    </resultMap>
+
+	<resultMap id="UsuarioResult" type="Usuario">
+			<id property="correo" column="correo_usuario"/>
+    		<result property="nombre" column="nombre_usuario"/>
+    		<result property="passwd" column="passwd_usuario"/>
+            <collection property="notificaciones" column="id_notificacion" 
+             javaType="ArrayList" ofType="Notificacion"
+             resultMap="NotificacionResult" /> 
+             <collection property="invitaciones" ofType="Invitacion" column="invitacion_remitente" 
+             resultMap="InvitacionResult" />    			
     </resultMap>
 </mapper>
-
