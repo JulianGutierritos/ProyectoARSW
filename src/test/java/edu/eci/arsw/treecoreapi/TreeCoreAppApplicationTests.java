@@ -27,16 +27,20 @@ public class TreeCoreAppApplicationTests {
 
 	@Test
 	public void prueba() {
-		System.out.println("lllllllllllllllllllll");
-		System.out.println(usuarioMapper);
-		System.out.println(proyectoMapper);
 		try{
 			ArrayList<Proyecto> p = proyectoMapper.getProyectos();
-			System.out.println(p);
-			Usuario u = usuarioMapper.getUser2("n@mail.com");
-			System.out.println(u.getCorreo());
-			System.out.println(u.getNombre());
-			System.out.println(u.getPasswd());
+			/*System.out.println(p);
+			System.out.println(p.get(0).getNombre());
+			System.out.println(p.get(0).getMensajes().get(0).getContenido());
+			System.out.println(p.get(0).getMensajes().get(1).getContenido());
+			System.out.println(p.get(0).getParticipantes().size());
+			Usuario u = usuarioMapper.getUser("j@mail.com");
+			System.out.println(u.getInvitaciones().get(0).getRemitente().getNombre());
+			System.out.println(u.getInvitaciones().get(1).getRemitente().getNombre());
+			System.out.println(u.getInvitaciones().get(0).getProyecto().getNombre());
+			System.out.println(u.getInvitaciones().get(1).getProyecto().getNombre());
+			//System.out.println(u.getNombre());
+			//System.out.println(u.getPasswd());*/
 		}
 		catch (Exception e){
 			e.printStackTrace();

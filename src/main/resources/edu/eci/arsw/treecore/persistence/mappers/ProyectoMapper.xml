@@ -5,23 +5,69 @@
 <mapper namespace="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper">
 
   <select parameterType="map" id="getProyectos" resultMap="ProyectoResult">
-			SELECT 
-
-        p.proyectoid as id_proyecto,
+	      SELECT
+		    p.proyectoid as id_proyecto,
         p.nombre as nombre_proyecto,
         p.descripcion as descripcion_proyecto,
-        p.fechadecreacion as fecha_proyecto
+        p.fechadecreacion as fecha_proyecto,
+        p.creador as creador_proyecto,
 
+        m.usuario as mensaje_usuario,
+        m.fecha as mensaje_fecha,
+        m.contenido as mensaje_contenido
+        
         FROM proyecto as p 
-    		
+        LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
+    </select>
 
-	</select>
+     <select parameterType="map" id="getProyecto" resultMap="ProyectoResult">
+	      SELECT
+		    p.proyectoid as id_proyecto,
+        p.nombre as nombre_proyecto,
+        p.descripcion as descripcion_proyecto,
+        p.fechadecreacion as fecha_proyecto,
+        p.creador as creador_proyecto,
+
+        m.usuario as mensaje_usuario,
+        m.fecha as mensaje_fecha,
+        m.contenido as mensaje_contenido
+        
+        FROM proyecto as p 
+        LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
+
+        where p.proyectoid = #{id}
+    </select>
 
 
+    <insert id ="insertarProyecto">
+		<selectKey keyProperty="id_proyecto" resultType="int" order="BEFORE">
+			select COALESCE(MAX(proyectoid)+1,1) from proyecto 
+    </selectKey>
+        INSERT INTO proyecto (proyectoid, nombre, creador, descripcion, fechadecreacion)
+        VALUES(#{proyectoid}, #{proyecto.nombre}, #{proyecto.creador.correo}, #{proyecto.descripcion}, {proyecto.fechaDeCreacio});
+    </insert>
+
+    <insert id ="insertarParticipante">
+        INSERT INTO public.participante (usuario, proyecto)
+        VALUES(usuario.correo, proyecto.id);
+    </insert>    
+
+
+    <resultMap id="MensajeResult" type="Mensaje">
+		<result property="fecha" column="mensaje_fecha"/>
+		<result property="contenido" column="mensaje_contenido"/>
+    <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+  	</resultMap>
+  
     <resultMap id="ProyectoResult" type="Proyecto">
 		<id property="id" column="id_proyecto"/>
 		<result property="nombre" column="nombre_proyecto"/>
 		<result property="descripcion" column="descripcion_proyecto"/>
     <result property="fechaDeCreacion" column="fecha_proyecto"/>
+    <association property="creador" column="creador_proyecto" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+    <collection property="participantes" javaType="ArrayList" ofType="Usuario" column="id_proyecto"
+     select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getParticipantes"/> 
+    <collection property="mensajes" javaType="ArrayList" ofType="Mensaje"
+    resultMap="MensajeResult"/> 
     </resultMap>
 </mapper>

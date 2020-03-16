@@ -9,92 +9,120 @@
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.passwd as passwd_usuario,
+  			u.passwd as passwd_usuario
 
-            n.notificacionID as id_notificacion,
-			n.fecha as fecha_notificacion,
-			n.informacion as informacion_notificacion,
-
-            i.remitente as invitacion_remitente,
-            i.proyecto as invitacion_proyecto
-
-			FROM usuario as u 
-            left join notificacion as n on u.correo=n.usuario
-            left join invitacion as i on u.correo=i.receptor
-    		
-
+			FROM usuario as u
 	</select>
 
+	<select parameterType="map" id="getUserWithPasswd" resultMap="UsuarioResult">
+			SELECT 
+
+
+            u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.passwd as passwd_usuario
+
+			FROM usuario as u
+    		WHERE u.correo=#{correo} and u.passwd=#{passwd}
+
+	</select>
 	<select parameterType="map" id="getUser" resultMap="UsuarioResult">
 			SELECT 
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.passwd as passwd_usuario,
-
-    		n.notificacionID as id_notificacion,
-			n.fecha as fecha_notificacion,
-			n.informacion as informacion_notificacion,
-
-            i.remitente as invitacion_remitente,
-            i.proyecto as invitacion_proyecto
-
-			FROM usuario as u 
-    		left join notificacion as n on u.correo=n.usuario
-            left join invitacion as i on u.correo=i.receptor
-
-    		WHERE u.correo=#{correo} and u.passwd=#{passwd}
-
-	</select>
-	<select parameterType="map" id="getUser2" resultMap="UsuarioResult">
-			SELECT 
-
-    		u.correo as correo_usuario,
-  			u.nombre as nombre_usuario,
-  			u.passwd as passwd_usuario,
-
-    		n.notificacionID as id_notificacion,
-			n.fecha as fecha_notificacion,
-			n.informacion as informacion_notificacion,
-
-            i.remitente as invitacion_remitente,
-            i.proyecto as invitacion_proyecto
-
-			FROM usuario as u 
-    		left join notificacion as n on u.correo=n.usuario
-            left join invitacion as i on u.correo=i.receptor
+  			u.passwd as passwd_usuario
+			FROM usuario as u
 
     		WHERE u.correo=#{correo}
 
 	</select>
-	
-	<select parameterType="map" id="getUserWithPasswd" resultMap="UsuarioResult">
+
+	<select parameterType="map" id="getParticipantes" resultMap="UsuarioResult">
 			SELECT 
 
     		u.correo as correo_usuario,
   			u.nombre as nombre_usuario,
-  			u.passwd as passwd_usuario,
+  			u.passwd as passwd_usuario
 
-    		n.notificacionID as id_notificacion,
+			FROM usuario as u
+
+    		WHERE u.correo IN (select usuario from participante where proyecto=#{proyecto})
+	</select>
+	<select parameterType="map" id="getNotificaciones" resultMap="NotificacionResult">
+			SELECT 
+            n.notificacionID as id_notificacion,
 			n.fecha as fecha_notificacion,
-			n.informacion as informacion_notificacion,
+			n.informacion as informacion_notificacion
 
+			FROM notificacion as n 
+			
+    		WHERE n.usuario=#{correo}
+	</select>
+	<select parameterType="map" id="getInvitaciones" resultMap="InvitacionResult">
+			SELECT 
             i.remitente as invitacion_remitente,
             i.proyecto as invitacion_proyecto
 
-			FROM usuario as u 
-    		left join notificacion as n on u.correo=n.usuario
-            left join invitacion as i on u.correo=i.receptor
-
-    		WHERE u.correo=#{correo}
-
+			FROM invitacion as i 
+    		WHERE i.receptor=#{correo}
 	</select>
-	
 
 	<insert id ="insertarUsuario">
-    	INSERT into usuario (carnet, documento, correo, nombres, apellidos, passwd, bloqueado, id_cargo) 
-    	VALUES (#{usuario.carnet},#{usuario.documento},#{usuario.correo},#{usuario.nombres},#{usuario.apellidos}, #{usuario.password}, #{usuario.bloquedo}, #{usuario.cargo.id})                     
+    	INSERT into usuario (correo, nombre, passwd) 
+    	VALUES (#{usuario.correo},#{usuario.nombre},#{usuario.passwd})                     
     </insert>
+
+	<insert id ="insertarNotificacion">
+		<selectKey keyProperty="id_notificacion" resultType="int" order="BEFORE">
+			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{notificacion.usuario.correo}
+    	</selectKey>
+		INSERT into notificacion (notificacionid, usuario, fecha, informacion) 
+    	VALUES (#{id_notificacion}, #{usuario},#{notificacion.fecha},#{notificacion.informacion})                     
+    </insert>
+
+	<insert id ="insertarInvitacion">
+		INSERT into invitacion (remitente, receptor, proyecto)
+    	VALUES (#{invitacion.remitente}, #{receptor},#{invitacion.proyecto})                     
+    </insert>
+
+	<update id = "setContraseña">
+		UPDATE usuario
+		SET passwd=#{passwd}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<update id = "setNombre">
+		UPDATE usuario
+		SET nombre=#{nombre}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<update id = "setCorreo">
+		UPDATE usuario
+		SET correo=#{correo}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<delete id = "deleteUsuario">
+		DELETE FROM public.usuario
+		WHERE correo=#{usuario.correo}
+	</delete>
+
+	<delete id = "deleteNotificaciones">
+		DELETE FROM public.notificacion
+		WHERE usuario=#{usuario.correo}
+	</delete>
+
+	<delete id = "deleteInvitacion">
+		DELETE FROM public.invitacion
+		WHERE remitente={invitacion.remitente.correo} AND receptor={usuario.correo} AND proyecto={invitacion.proyecto.id}
+	</delete>	
+
+	<delete id = "deleteInvitaciones">
+		DELETE FROM public.invitacion
+		WHERE receptor={usuario.correo} 
+	</delete>	
 
     <resultMap id="NotificacionResult" type="Notificacion">
 		<id property="id" column="id_notificacion"/>
@@ -103,18 +131,19 @@
   	</resultMap>
 
     <resultMap id="InvitacionResult" type="Invitacion">
-		<association property="remitente" column="invitacion_remitente" javaType="Usuario" resultMap="UsuarioResult"/>
-        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" resultMap="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.ProyectoResult"/>
+		<association property="remitente" column="invitacion_remitente" javaType="Usuario" select="getUser"/>
+        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" select="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.getProyecto"/>
     </resultMap>
 
 	<resultMap id="UsuarioResult" type="Usuario">
 			<id property="correo" column="correo_usuario"/>
     		<result property="nombre" column="nombre_usuario"/>
     		<result property="passwd" column="passwd_usuario"/>
-            <collection property="notificaciones" column="id_notificacion" 
+            <collection property="notificaciones" column="correo_usuario" 
              javaType="ArrayList" ofType="Notificacion"
-             resultMap="NotificacionResult" /> 
-             <collection property="invitaciones" ofType="Invitacion" column="invitacion_remitente" 
-             resultMap="InvitacionResult" />    			
+             select="getNotificaciones" /> 
+             <collection property="invitaciones"  
+			 javaType="ArrayList" ofType="Notificacion" column="correo_usuario" 
+             select="getInvitaciones" />    			
     </resultMap>
 </mapper>

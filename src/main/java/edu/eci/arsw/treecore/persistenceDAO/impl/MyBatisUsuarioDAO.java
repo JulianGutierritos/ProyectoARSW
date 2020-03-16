@@ -19,14 +19,14 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 
 	@Override
 	public Usuario getUser(String correo, String passwd) throws PersistenceException {
-		Usuario user=usuarioMapper.getUser(correo, passwd);
+		Usuario user=usuarioMapper.getUserWithPasswd(correo, passwd);
 		if(user==null) throw new PersistenceException("Usuario no encontrado");
 		else return user;   
 	}
 	
 	@Override
 	public Usuario getUser(String correo) throws PersistenceException {
-		Usuario user=usuarioMapper.getUser2(correo);
+		Usuario user=usuarioMapper.getUser(correo);
 		if(user==null) throw new PersistenceException("Usuario no encontrado");
 		else return user;   
 	}
@@ -39,7 +39,7 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 	@Override
 	public ArrayList<Notificacion> getNotificaciones(String correo) throws PersistenceException{
 		ArrayList<Notificacion> n;
-		Usuario user=usuarioMapper.getUser2(correo);
+		Usuario user=usuarioMapper.getUser(correo);
 		if(user==null) throw new PersistenceException("Usuario no encontrado");
 		else n = user.getNoticaciones();
 		return n; 
@@ -47,7 +47,7 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 	@Override
 	public ArrayList<Invitacion> getInvitaciones(String correo) throws PersistenceException{
 		ArrayList<Invitacion> n;
-		Usuario user=usuarioMapper.getUser2(correo);
+		Usuario user=usuarioMapper.getUser(correo);
 		if(user==null) throw new PersistenceException("Usuario no encontrado");
 		else n = user.getInvitaciones();
 		return n; 

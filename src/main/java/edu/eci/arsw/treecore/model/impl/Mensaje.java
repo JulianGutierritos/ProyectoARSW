@@ -12,6 +12,10 @@ public class Mensaje {
         this.contenido = contenido;
     }
 
+    public Mensaje(){
+        
+    }
+
     public Date getFecha(){
         return fecha;
     }
