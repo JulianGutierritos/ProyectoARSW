@@ -11,13 +11,7 @@ import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.persistenceDAO.UsuarioDAO;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
-
-import edu.eci.arsw.treecore.model.impl.Rama;
-import edu.eci.arsw.treecore.model.impl.Mensaje;
-
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class TreeCoreUserServicesImpl implements TreeCoreUserServices {

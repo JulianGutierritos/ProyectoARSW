@@ -53,21 +53,21 @@
     </insert>    
 
 
-    <resultMap id="MensajeResult" type="Mensaje">
+    <resultMap id="MensajeResult" type="edu.eci.arsw.treecore.model.impl.Mensaje">
 		<result property="fecha" column="mensaje_fecha"/>
 		<result property="contenido" column="mensaje_contenido"/>
-    <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+    <association property="usuario" column="mensaje_usuario" javaType="edu.eci.arsw.treecore.model.impl.Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
   	</resultMap>
   
-    <resultMap id="ProyectoResult" type="Proyecto">
+    <resultMap id="ProyectoResult" type="edu.eci.arsw.treecore.model.impl.Proyecto">
 		<id property="id" column="id_proyecto"/>
 		<result property="nombre" column="nombre_proyecto"/>
 		<result property="descripcion" column="descripcion_proyecto"/>
     <result property="fechaDeCreacion" column="fecha_proyecto"/>
-    <association property="creador" column="creador_proyecto" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
-    <collection property="participantes" javaType="ArrayList" ofType="Usuario" column="id_proyecto"
+    <association property="creador" column="creador_proyecto" javaType="edu.eci.arsw.treecore.model.impl.Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+    <collection property="participantes" javaType="ArrayList" ofType="edu.eci.arsw.treecore.model.impl.Usuario" column="id_proyecto"
      select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getParticipantes"/> 
-    <collection property="mensajes" javaType="ArrayList" ofType="Mensaje"
+    <collection property="mensajes" javaType="ArrayList" ofType="edu.eci.arsw.treecore.model.impl.Mensaje"
     resultMap="MensajeResult"/> 
     </resultMap>
 </mapper>

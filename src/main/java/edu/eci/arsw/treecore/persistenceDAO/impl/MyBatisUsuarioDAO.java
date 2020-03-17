@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyBatisUsuarioDAO implements UsuarioDAO{
 	
-	
+	@Autowired
 	private UsuarioMapper usuarioMapper;   
 
 	@Override
