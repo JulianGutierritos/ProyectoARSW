@@ -53,12 +53,24 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 
     @Override
     public ArrayList<Notificacion> getNotificaciones(String correo) throws ServiciosTreeCoreException {
-        return null;
+        ArrayList<Notificacion> n;
+        try{
+            n=usuarioDAO.getNotificaciones(correo);
+        }catch(PersistenceException e){
+            throw new ServiciosTreeCoreException("Credenciales incorrectas");
+        }
+        return n;
     }
 
     @Override
     public ArrayList<Invitacion> getInvitaciones(String correo) throws ServiciosTreeCoreException {
-        return null;
+        ArrayList<Invitacion> i;
+        try{
+            i=usuarioDAO.getInvitaciones(correo);
+        }catch(PersistenceException e){
+            throw new ServiciosTreeCoreException("Credenciales incorrectas");
+        }
+        return i;
     }
 
 }

@@ -3,18 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.techprimers.mybatis</groupId>
-	<artifactId>spring-boot-mybatis</artifactId>
+	<groupId>edu.eci.arsw.treecore</groupId>
+	<artifactId>TreeCoreApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>TreeCore</name>
-	<description>nnn</description>
+	<description>Herramienta para la gestion de proyectos</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.3.RELEASE</version>
+		<version>2.2.5.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>1.0.0</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -68,13 +68,10 @@
     		<artifactId>jquery</artifactId>
     		<version>3.3.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket 
 		<dependency>
-  		  <groupId>org.springframework.boot</groupId>
-   		   <artifactId>spring-boot-starter-websocket</artifactId>
-    	   <version>1.3.0.RELEASE</version>
-		</dependency> -->
-
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -107,15 +104,10 @@
 	                                <destFileName>webapp-runner.jar</destFileName>
 	                            </artifactItem>
 	                        </artifactItems>
-	
 	                    </configuration>
-	                </execution>
-	
+	                </execution>	
 	            </executions>
 	        </plugin>
         </plugins>
     </build>
-
-  
-
 </project>

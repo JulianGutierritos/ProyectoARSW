@@ -124,15 +124,15 @@
 		WHERE receptor={usuario.correo} 
 	</delete>	
 
-    <resultMap id="NotificacionResult" type="edu.eci.arsw.treecore.model.impl.Notificacion">
+    <resultMap id="NotificacionResult" type="Notificacion">
 		<id property="id" column="id_notificacion"/>
 		<result property="fecha" column="fecha_notificacion"/>
 		<result property="informacion" column="informacion_notificacion"/>
   	</resultMap>
 
-    <resultMap id="InvitacionResult" type="edu.eci.arsw.treecore.model.impl.Invitacion">
-		<association property="remitente" column="invitacion_remitente" javaType="edu.eci.arsw.treecore.model.impl.Usuario" select="getUser"/>
-        <association property="proyecto" column="invitacion_proyecto" javaType="edu.eci.arsw.treecore.model.impl.Proyecto" select="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.getProyecto"/>
+    <resultMap id="InvitacionResult" type="Invitacion">
+		<association property="remitente" column="invitacion_remitente" javaType="Usuario" select="getUser"/>
+        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" select="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.getProyecto"/>
     </resultMap>
 
 	<resultMap id="UsuarioResult" type="edu.eci.arsw.treecore.model.impl.Usuario">
@@ -140,10 +140,10 @@
     		<result property="nombre" column="nombre_usuario"/>
     		<result property="passwd" column="passwd_usuario"/>
             <collection property="notificaciones" column="correo_usuario" 
-             javaType="ArrayList" ofType="edu.eci.arsw.treecore.model.impl.Notificacion"
+             javaType="ArrayList" ofType="Notificacion"
              select="getNotificaciones" /> 
              <collection property="invitaciones"  
-			 javaType="ArrayList" ofType="edu.eci.arsw.treecore.model.impl.Invitacion" column="correo_usuario" 
+			 javaType="ArrayList" ofType="Invitacion" column="correo_usuario" 
              select="getInvitaciones" />    			
     </resultMap>
 </mapper>

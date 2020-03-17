@@ -11,7 +11,7 @@ import edu.eci.arsw.treecore.exceptions.ProjectNotFoundException;
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
-
+import edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +19,8 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping(value = "/treecore")
 public class TreeCoreAPIController {
-
+    @Autowired
+    UsuarioMapper usuarioMapper;
     @Autowired
     TreeCoreUserServices treeCoreUserServices;
     @Autowired
@@ -27,6 +28,7 @@ public class TreeCoreAPIController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> GetAll() {
+        System.out.println(usuarioMapper);
         System.out.println("holaaaaaaaaaaaaaa");
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
