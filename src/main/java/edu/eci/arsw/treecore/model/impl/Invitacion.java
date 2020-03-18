@@ -1,10 +1,11 @@
 package edu.eci.arsw.treecore.model.impl;
 
 public class Invitacion {
-    private Usuario remitente; 
-    private Proyecto proyecto;
+
+    private String remitente; 
+    private String proyecto;
     
-    public Invitacion(Usuario remitente, Proyecto proyecto){
+    public Invitacion(String remitente, String proyecto){
         this.remitente = remitente;
         this.proyecto = proyecto;
     }
@@ -13,20 +14,25 @@ public class Invitacion {
         
     }
 
-    public Usuario getRemitente(){
+    public String getRemitente() {
         return remitente;
     }
 
-    public void setRemitente(Usuario remitente){
+    public void setRemitente(String remitente) {
         this.remitente = remitente;
     }
 
-    public Proyecto getProyecto(){
+    public String getProyecto() {
         return proyecto;
     }
 
-    public void setProyecto(Proyecto proyecto){
+    public void setProyecto(String proyecto) {
         this.proyecto = proyecto;
+    }
+
+    @Override
+    public String toString(){
+        return "{Remitente: " + remitente + " Proyecto: " + proyecto +"}";
     }
 
 }

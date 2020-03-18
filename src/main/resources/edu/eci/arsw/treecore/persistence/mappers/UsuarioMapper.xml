@@ -116,12 +116,12 @@
 
 	<delete id = "deleteInvitacion">
 		DELETE FROM public.invitacion
-		WHERE remitente={invitacion.remitente.correo} AND receptor={usuario.correo} AND proyecto={invitacion.proyecto.id}
+		WHERE remitente={invitacion.remitente} AND receptor={usuario.correo} AND proyecto={invitacion.proyecto}
 	</delete>	
 
 	<delete id = "deleteInvitaciones">
 		DELETE FROM public.invitacion
-		WHERE receptor={usuario.correo} 
+		WHERE receptor={usuario} 
 	</delete>	
 
     <resultMap id="NotificacionResult" type="Notificacion">
@@ -131,8 +131,8 @@
   	</resultMap>
 
     <resultMap id="InvitacionResult" type="Invitacion">
-		<association property="remitente" column="invitacion_remitente" javaType="Usuario" select="getUser"/>
-        <association property="proyecto" column="invitacion_proyecto" javaType="Proyecto" select="edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper.getProyecto"/>
+		<result property="remitente" column="invitacion_remitente" />
+        <result property="proyecto" column="invitacion_proyecto" />
     </resultMap>
 
 	<resultMap id="UsuarioResult" type="edu.eci.arsw.treecore.model.impl.Usuario">

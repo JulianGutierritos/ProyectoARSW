@@ -51,4 +51,9 @@ public class Usuario {
     public void setInvitaciones(ArrayList<Invitacion> invitaciones){
         this.invitaciones = invitaciones;
     }
+
+    @Override
+    public String toString(){
+        return "{Correo: "+correo + " Nombre: "+ nombre + " Passwd: "+ passwd + " Invitaciones: " + invitaciones + " Notificaciones: " + notificaciones +"}";
+    }
 }

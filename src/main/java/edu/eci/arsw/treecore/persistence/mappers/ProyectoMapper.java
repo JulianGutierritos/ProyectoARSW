@@ -10,6 +10,7 @@ public interface ProyectoMapper {
 
     public ArrayList<Proyecto> getProyectos();
 
-    public ArrayList<Proyecto> getProyecto(@Param("id") int id);
-	
+    public Proyecto getProyecto(@Param("id") int id);
+    
+    public ArrayList<Proyecto> getProyectosUsuario(@Param("correo") String correo);
 }
