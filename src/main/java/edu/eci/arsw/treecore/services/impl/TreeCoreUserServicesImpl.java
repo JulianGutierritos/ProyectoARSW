@@ -1,6 +1,7 @@
 package edu.eci.arsw.treecore.services.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,59 +19,68 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 
     @Autowired
     UsuarioDAO usuarioDAO;
-
-    @Override
-    public Usuario getUsuario(String correo) throws ServiciosTreeCoreException {
-        Usuario user;
-        try {
-            user = usuarioDAO.getUser(correo);
-        } catch (PersistenceException e) {
-            throw new ServiciosTreeCoreException("Usuario no encontrado");
-        }
-        return user;
-    }
     
-    @Override
-    public void setUser(String correo, String passwd) throws ServiciosTreeCoreException{
+    public ArrayList<Usuario> getAllUsers() throws ServiciosTreeCoreException{
     	try {
-			this.usuarioDAO.setUser(correo, passwd);
-		} 
-    	catch (PersistenceException e) {
-			throw new ServiciosTreeCoreException("Este usuario ya existe");
+			return this.usuarioDAO.getAllUsers();
+		} catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("No se han podido cargar los usuarios");
 		}
     }
     
     @Override
+    public Usuario getUsuario(String correo) throws ServiciosTreeCoreException {
+        try {
+            return usuarioDAO.getUser(correo);
+        }
+        catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("Usuario no encontrado");
+        }
+    }
+    
+    
+    @Override
 	public Usuario verificarCredenciales(String correo, String passwd) throws ServiciosTreeCoreException{
-        Usuario user;
         try{
-            user=usuarioDAO.getUser(correo, passwd);
-        }catch(PersistenceException e){
+            return usuarioDAO.getUser(correo, passwd);
+        }
+        catch(PersistenceException e){
             throw new ServiciosTreeCoreException("Credenciales incorrectas");
         }
-        return user;
     }
 
+    
     @Override
     public ArrayList<Notificacion> getNotificaciones(String correo) throws ServiciosTreeCoreException {
-        ArrayList<Notificacion> n;
         try{
-            n=usuarioDAO.getNotificaciones(correo);
-        }catch(PersistenceException e){
+            return usuarioDAO.getNotificaciones(correo);
+        }
+        catch(PersistenceException e){
             throw new ServiciosTreeCoreException("Credenciales incorrectas");
         }
-        return n;
     }
 
+    
     @Override
     public ArrayList<Invitacion> getInvitaciones(String correo) throws ServiciosTreeCoreException {
-        ArrayList<Invitacion> i;
         try{
-            i=usuarioDAO.getInvitaciones(correo);
-        }catch(PersistenceException e){
+            return usuarioDAO.getInvitaciones(correo);
+        }
+        catch(PersistenceException e){
             throw new ServiciosTreeCoreException("Credenciales incorrectas");
         }
-        return i;
     }
+
+    
+	@Override
+	public void addNewUser(Usuario user) throws ServiciosTreeCoreException {
+		try {
+			this.usuarioDAO.setUser(user);
+		} 
+		catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("Credenciales incorrectas");
+		}
+		
+	}
 
 }

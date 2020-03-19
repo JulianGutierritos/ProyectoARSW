@@ -2,15 +2,24 @@ package edu.eci.arsw.treecore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
+
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
+import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 import edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,19 +28,30 @@ import java.util.logging.Logger;
 @RequestMapping(value = "/treecore")
 public class TreeCoreAPIController {
     @Autowired
-    UsuarioMapper usuarioMapper;
-    @Autowired
     TreeCoreUserServices treeCoreUserServices;
     @Autowired
     TreeCoreProjectServices treeCoreProjectServices;
 
+    
+    /**
+     * 
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> GetAll() {
-        System.out.println(usuarioMapper.getUsers());
-        System.out.println("holaaaaaaaaaaaaaa");
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public ResponseEntity<?> getAll() {
+        try {
+        	return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
+		} 
+        catch (ServiciosTreeCoreException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
     }
 
+    
+    /**
+     * 
+     * @return
+     */
     @RequestMapping(path = "/projects", method = RequestMethod.GET)
     public ResponseEntity<?> GetAllProyects() {
         try {
@@ -41,7 +61,13 @@ public class TreeCoreAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-
+    
+    
+    /**
+     * 
+     * @param creatorName
+     * @return
+     */
     @RequestMapping(path = "/{creator}/projects", method = RequestMethod.GET)
     public ResponseEntity<?> GetUserProjects(@PathVariable("creator") String creatorName) {
         try {
@@ -52,6 +78,12 @@ public class TreeCoreAPIController {
         }
     }
 
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(path = "/projects/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> GetProject(@PathVariable("id") int id) {
         try {
@@ -62,12 +94,24 @@ public class TreeCoreAPIController {
         }
     }
 
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(path = "/projects/{id}/ramas", method = RequestMethod.GET)
     public ResponseEntity<?> GetRamas(@PathVariable("id") int id) {
 
         return new ResponseEntity<>(treeCoreProjectServices.getRamas(id), HttpStatus.ACCEPTED);
     }
 
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(path = "/projects/{id}/team", method = RequestMethod.GET)
     public ResponseEntity<?> GetTeam(@PathVariable("id") int id) {
 
@@ -79,11 +123,23 @@ public class TreeCoreAPIController {
         }
     }
 
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(path = "/projects/{id}/menssages", method = RequestMethod.GET)
     public ResponseEntity<?> GetMessages(@PathVariable("id") int id) {
         return new ResponseEntity<>(treeCoreProjectServices.getMensajes(id), HttpStatus.ACCEPTED);
     }
     
+    
+    /**
+     * 
+     * @param correo
+     * @return
+     */
     @RequestMapping(path = "/users/{correo}", method = RequestMethod.GET)
     public ResponseEntity<?> GetUser(@PathVariable("correo") String correo) {
         try {
@@ -94,6 +150,12 @@ public class TreeCoreAPIController {
         }
     }
 
+    
+    /**
+     * 
+     * @param correo
+     * @return
+     */
     @RequestMapping(path = "/users/{correo}/invitations", method = RequestMethod.GET)
     public ResponseEntity<?> GetUserInvitations(@PathVariable("correo") String correo) {
         try {
@@ -104,6 +166,12 @@ public class TreeCoreAPIController {
         }
     }
 
+    
+    /**
+     * 
+     * @param correo
+     * @return
+     */
     @RequestMapping(path = "/users/{correo}/notifications", method = RequestMethod.GET)
     public ResponseEntity<?> GetUserNotificatios(@PathVariable("correo") String correo) {
         try {
@@ -114,4 +182,38 @@ public class TreeCoreAPIController {
         }
     }
 	
+    
+    /**
+	 * Metodo que recibe la peticion de loggeo un usuario
+	 * @param user Usuario
+	 */
+    @RequestMapping(path = "/login", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> loginUser(@RequestBody Usuario user){
+    	try {
+			this.treeCoreUserServices.verificarCredenciales(user.getCorreo(), user.getPasswd());
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    	} 
+    	catch (ServiciosTreeCoreException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+    
+    
+    /**
+	 * Metodo que recibe la peticion para adicionar un nuevo usuario
+	 * @param user Nuevo Usuario
+	 */
+    @RequestMapping(method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewUser(@RequestBody Usuario user){
+    	try {
+			this.treeCoreUserServices.addNewUser(user);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+    	} 
+    	catch (ServiciosTreeCoreException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+    	
+	}
+    
+    
 }
