@@ -1,4 +1,6 @@
 var component = (function() {
+	
+	listaElements=[]
 
 	var dibRect = function() {
 
@@ -54,6 +56,8 @@ var component = (function() {
 		elementoPadre.appendChild(elemento);
 		// opcional: la función devuelve el elemento creado para poder
 		// utilizarlo más tarde
+		
+		
 		return elemento;
 	}
 

@@ -47,6 +47,34 @@ var apiclient = (function () {
 					alert("sign up failed");
 				}
 			);
+        },
+        
+        getProjects: function (callback) {
+        	jQuery.ajax({
+        		url: appUrl+"/projects",
+        		type: "GET",
+        		success: function(respuesta) {
+        			callback(respuesta);
+        		}
+        	});
+        },
+        
+        addProject : function (project){
+        	var postRequest=$.ajax({
+				url:  appUrl+"/projects",
+				type: 'POST',
+				data: project,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function(){
+					alert("successful project creation");
+					location.reload(); 
+				},
+				function(){
+					alert("failed project creation");
+				}
+			);
         }
         
     };

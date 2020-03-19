@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
+import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
@@ -55,7 +56,7 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/projects", method = RequestMethod.GET)
     public ResponseEntity<?> GetAllProyects() {
         try {
-            return new ResponseEntity<>(treeCoreProjectServices.getAllProyectos(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(treeCoreProjectServices.getAllProyectos(), HttpStatus.OK);
         } catch (ServiciosTreeCoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -210,6 +211,24 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(HttpStatus.CREATED);
     	} 
     	catch (ServiciosTreeCoreException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+    	
+	}
+    
+    
+    /**
+	 * Metodo que recibe la peticion para adicionar un nuevo proyecto
+	 * @param project Nuevo proyecto
+	 */
+    @RequestMapping(path = "/projects", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewProject(@RequestBody Proyecto project){
+    	try {
+    		//crear mapper
+			//this.treeCoreProjectServices.se(project);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+    	} 
+    	catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
     	

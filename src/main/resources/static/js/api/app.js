@@ -29,21 +29,18 @@ var app = (function () {
 	}
 	
 	
-	var getTable = function (users) {
-		
-        $("#usersTableBody").empty();
-        users.map(function (user) {
-            $("#usersTableBody").append(
-                "<tr> " +
-                "<td>" + user.name + "</td> " +
-                "<td>" + user.birthday + "</td> " +
-                "<td>" + user.document + "</td> " +
-                "<td>" + user.phone + "</td> " +
-                "<td>" + user.email + "</td> " +
-                "</tr>"
-            );
-        });
+	var addProject = function(id, nombre, desc, usuario_creador) {
+		var newProject = {
+			id : username,
+			nombre : nombre,
+			descripcion : passwd,
+			creador : usuario_creador,
+			participantes : [],
+			mensajes : []
+		};
+		apiclient.addProject(JSON.stringify(newProject));
 	}
+	
 	
 	var onload = function(){
 		apiclient.getUsers(getTable);

@@ -37,11 +37,13 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
         // Proyecto p1 = new Proyecto(5,"Prueba", "Un proyecto de prueba", null, null, null, null, null);
         // proyectos.add(p1);
         try {
-            proyectos = proyectoDAO.getProyectos();
-        } catch (PersistenceException e) {
+        	proyectos = proyectoDAO.getProyectos();
+        	return proyectoDAO.getProyectos();
+            
+        } 
+        catch (PersistenceException e) {
             throw new ServiciosTreeCoreException("No hay proyectos");
         }
-        return proyectos;
     }
 
     @Override
