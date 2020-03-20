@@ -4,10 +4,11 @@ public class Invitacion {
 
     private String remitente; 
     private String proyecto;
-    
-    public Invitacion(String remitente, String proyecto){
+    private String nombreProyecto;
+    public Invitacion(String remitente, String proyecto, String nombreProyecto){
         this.remitente = remitente;
         this.proyecto = proyecto;
+        this.nombreProyecto = nombreProyecto;
     }
 
     public Invitacion(){
@@ -30,9 +31,17 @@ public class Invitacion {
         this.proyecto = proyecto;
     }
 
+    public String getNombreProyecto() {
+        return nombreProyecto;
+    }
+
+    public void setNombreProyecto(String nombreProyecto) {
+        this.nombreProyecto = nombreProyecto;
+    }
+
     @Override
     public String toString(){
-        return "{Remitente: " + remitente + " Proyecto: " + proyecto +"}";
+        return "{Remitente: " + remitente + " Proyecto: " + proyecto + " Nombre del proyecto: " + nombreProyecto + "}";
     }
 
 }

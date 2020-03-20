@@ -58,13 +58,17 @@
 			FROM notificacion as n 
 			
     		WHERE n.usuario=#{correo}
+			order by n.fecha desc
 	</select>
 	<select parameterType="map" id="getInvitaciones" resultMap="InvitacionResult">
 			SELECT 
             i.remitente as invitacion_remitente,
-            i.proyecto as invitacion_proyecto
+            i.proyecto as invitacion_proyecto,
+			p.nombre as proyecto_nombre
 
 			FROM invitacion as i 
+			LEFT JOIN proyecto as p on p.proyectoid = i.proyecto
+			
     		WHERE i.receptor=#{correo}
 	</select>
 
@@ -133,6 +137,7 @@
     <resultMap id="InvitacionResult" type="Invitacion">
 		<result property="remitente" column="invitacion_remitente" />
         <result property="proyecto" column="invitacion_proyecto" />
+		<result property="nombreProyecto" column="proyecto_nombre" />
     </resultMap>
 
 	<resultMap id="UsuarioResult" type="edu.eci.arsw.treecore.model.impl.Usuario">

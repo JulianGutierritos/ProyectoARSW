@@ -45,15 +45,14 @@
       p.descripcion as descripcion_proyecto,
       p.fechadecreacion as fecha_proyecto,
       p.creador as creador_proyecto,
-
       m.usuario as mensaje_usuario,
       m.fecha as mensaje_fecha,
       m.contenido as mensaje_contenido
-      
+        
       FROM proyecto as p 
       LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
-
-      where p.creador = #{correo}
+      
+      where p.proyectoid IN (select proyecto from participante where usuario=#{correo})
   </select>
 
 

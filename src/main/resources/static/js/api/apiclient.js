@@ -1,11 +1,40 @@
 var apiclient = (function () {
     var appUrl = "http://localhost:8080/treecore";
-
     return {
     	
-        getUsers: function (callback) {
+        getUser: function (callback) {
         	jQuery.ajax({
-        		url: appUrl,
+        		url: appUrl + "/users/" + sessionStorage.correo,
+        		type: "GET",
+        		success: function(respuesta) {
+        			callback(respuesta);
+        		}
+        	});
+        },
+		
+		getInvitaciones: function (callback) {
+        	jQuery.ajax({
+        		url: appUrl + "/users/" + sessionStorage.correo + "/invitations",
+        		type: "GET",
+        		success: function(respuesta) {
+        			callback(respuesta);
+        		}
+        	});
+        },
+		
+		getProyectosUsuario: function (callback) {
+        	jQuery.ajax({
+        		url: appUrl + "/users/" + sessionStorage.correo + "/projects",
+        		type: "GET",
+        		success: function(respuesta) {
+        			callback(respuesta);
+        		}
+        	});
+        },
+		
+		getNotificaciones: function (callback) {
+        	jQuery.ajax({
+        		url: appUrl + "/users/" + sessionStorage.correo + "/notifications",
         		type: "GET",
         		success: function(respuesta) {
         			callback(respuesta);
@@ -13,7 +42,7 @@ var apiclient = (function () {
         	});
         },
 
-        loginUser : function (user){
+        loginUser : function (user, username){
         	var postRequest=$.ajax({
 				url:  appUrl+"/login",
 				type: 'POST',
@@ -22,8 +51,8 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function(){
-					alert("successful process");
-					location.reload(); 
+					sessionStorage.correo = username;
+					location.replace("http://localhost:8080/profile.html");
 				},
 				function(){
 					alert("failure login");
@@ -58,6 +87,20 @@ var apiclient = (function () {
         		}
         	});
         },
+		
+		get: function (callback) {
+        	jQuery.ajax({
+        		url: appUrl+"/projects",
+        		type: "GET",
+        		success: function(respuesta) {
+        			callback(respuesta);
+        		}
+        	});
+        },
+		
+		getAutenticado : function(){
+			return sessionStorage.correo;
+		},
         
         addProject : function (project){
         	var postRequest=$.ajax({

@@ -13,7 +13,7 @@ var app = (function () {
 			invitaciones: [],
 			notificaciones : []
 		};
-		apiclient.loginUser(JSON.stringify(newUser));
+		apiclient.loginUser(JSON.stringify(newUser), username);
 	}
 	
 	

@@ -69,10 +69,10 @@ public class TreeCoreAPIController {
      * @param creatorName
      * @return
      */
-    @RequestMapping(path = "/{creator}/projects", method = RequestMethod.GET)
-    public ResponseEntity<?> GetUserProjects(@PathVariable("creator") String creatorName) {
+    @RequestMapping(path = "/users/{correo}/projects", method = RequestMethod.GET)
+    public ResponseEntity<?> GetUserProjects(@PathVariable("correo") String correo) {
         try {
-            return new ResponseEntity<>(treeCoreProjectServices.getAllProyectosUser(creatorName), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(treeCoreProjectServices.getAllProyectosUser(correo), HttpStatus.ACCEPTED);
         } catch (ServiciosTreeCoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
