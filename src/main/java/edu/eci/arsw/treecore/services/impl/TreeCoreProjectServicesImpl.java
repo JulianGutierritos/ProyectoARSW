@@ -34,12 +34,9 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
     @Override
     public ArrayList<Proyecto> getAllProyectos() throws ServiciosTreeCoreException { 
         ArrayList<Proyecto> proyectos;
-        // Proyecto p1 = new Proyecto(5,"Prueba", "Un proyecto de prueba", null, null, null, null, null);
-        // proyectos.add(p1);
         try {
         	proyectos = proyectoDAO.getProyectos();
         	return proyectoDAO.getProyectos();
-            
         } 
         catch (PersistenceException e) {
             throw new ServiciosTreeCoreException("No hay proyectos");
@@ -59,22 +56,74 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 
     @Override
     public ArrayList<Usuario> getParticipantes(int identificador) throws ServiciosTreeCoreException {
-        return null;
+        ArrayList<Usuario> participantes;
+        try {
+            participantes = proyectoDAO.getParticipantes(identificador);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+        return participantes;
     }
 
     @Override
-    public boolean estaParticipando(String correo, int identificador) {
-        return false;
+    public ArrayList<Mensaje> getMensajes(int identificador) throws ServiciosTreeCoreException {
+        ArrayList<Mensaje> mensajes;
+        try {
+            mensajes = proyectoDAO.getMensajes(identificador);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+        return mensajes;
+    }
+
+
+    @Override
+    public boolean estaParticipando(String correo, int identificador) throws ServiciosTreeCoreException {
+        Boolean esta;
+        try {
+            esta = proyectoDAO.estaParticipando(correo, identificador);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+        return esta;
     }
 
     @Override
-    public ArrayList<Rama> getRamas(int identificador) {
-        return null;
+    public ArrayList<Rama> getRamas(int identificador) throws ServiciosTreeCoreException {
+        ArrayList<Rama> ramas;
+        try {
+            ramas = proyectoDAO.getRamas(identificador);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+        return ramas;
     }
 
     @Override
-    public ArrayList<Mensaje> getMensajes(int identificador) {
-        return null;
+    public void insertarProyecto(Proyecto proyecto) throws ServiciosTreeCoreException {
+        try {
+            proyectoDAO.insertarProyecto(proyecto);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+    }
+
+    @Override
+    public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException {
+        try {
+            proyectoDAO.insertarRama(rama, proyecto);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
+    }
+
+    @Override
+    public void insertarParticipante(Usuario usuario, Proyecto proyecto) throws ServiciosTreeCoreException {
+        try {
+            proyectoDAO.insertarParticipante(proyecto, usuario);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("No hay proyectos");
+        }
     }
 
 }

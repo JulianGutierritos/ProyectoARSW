@@ -13,7 +13,7 @@
         p.creador as creador_proyecto,
 
         m.usuario as mensaje_usuario,
-        m.fecha as mensaje_fecha,
+        m.fechadecreacion as mensaje_fecha,
         m.contenido as mensaje_contenido
         
         FROM proyecto as p 
@@ -29,7 +29,7 @@
         p.creador as creador_proyecto,
 
         m.usuario as mensaje_usuario,
-        m.fecha as mensaje_fecha,
+        m.fechadecreacion as mensaje_fecha,
         m.contenido as mensaje_contenido
         
         FROM proyecto as p 
@@ -46,35 +46,83 @@
       p.fechadecreacion as fecha_proyecto,
       p.creador as creador_proyecto,
       m.usuario as mensaje_usuario,
-      m.fecha as mensaje_fecha,
+      m.fechadecreacion as mensaje_fecha,
       m.contenido as mensaje_contenido
         
       FROM proyecto as p 
       LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
       
       where p.proyectoid IN (select proyecto from participante where usuario=#{correo})
-  </select>
+    </select>
 
+    <select parameterType="map" id="getProyectosRamas" resultMap="RamaResult">
+    select
+	    r.ramaid as rama_id,
+	    r.nombre as rama_nombre,
+	    r.ramapadre as rama_padre,
+	    r.fechadecreacion as rama_fecha, 
+	    r.creador as rama_creador
+	  from rama r 
+	
+  	where r.ramaid = #{id}
+    </select>
+
+    <select parameterType="map" id="getRama" resultMap="RamaResult">
+    select
+	    r.ramaid as rama_id,
+	    r.nombre as rama_nombre,
+	    r.ramapadre as rama_padre,
+	    r.fechadecreacion as rama_fecha, 
+	    r.creador as rama_creador
+	    from rama r 
+  	  where r.proyecto = #{proyectoid}
+    </select>
 
     <insert id ="insertarProyecto">
 		<selectKey keyProperty="id_proyecto" resultType="int" order="BEFORE">
 			select COALESCE(MAX(proyectoid)+1,1) from proyecto 
     </selectKey>
-        INSERT INTO proyecto (proyectoid, nombre, creador, descripcion, fechadecreacion)
-        VALUES(#{proyectoid}, #{proyecto.nombre}, #{proyecto.creador.correo}, #{proyecto.descripcion}, {proyecto.fechaDeCreacio});
+        INSERT INTO proyecto (proyectoid, nombre, creador, descripcion)
+        VALUES(#{id_proyecto}, #{proyecto.nombre}, #{proyecto.creador.correo}, #{proyecto.descripcion})
     </insert>
 
     <insert id ="insertarParticipante">
         INSERT INTO public.participante (usuario, proyecto)
         VALUES(usuario.correo, proyecto.id);
-    </insert>    
+    </insert>  
 
+    <insert id ="insertarRamaConPadre">
+		<selectKey keyProperty="id_rama" resultType="int" order="BEFORE">
+			select COALESCE(MAX(ramaid)+1,1) from rama 
+    </selectKey>
+        INSERT INTO public.rama
+        (ramaid, nombre, proyecto, ramapadre, creador) 
+        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.ramaPadre.id}, #{rama.creador.correo})
+    </insert>  
+
+    <insert id ="insertarRama">
+		<selectKey keyProperty="id_rama" resultType="int" order="BEFORE">
+			select COALESCE(MAX(ramaid)+1,1) from rama 
+    </selectKey>
+        INSERT INTO public.rama
+        (ramaid, nombre, proyecto, fechadecreacion, creador) 
+        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.fechaDeCreacion}, #{rama.creador.correo})
+    </insert> 
 
     <resultMap id="MensajeResult" type="Mensaje">
 		<result property="fecha" column="mensaje_fecha"/>
 		<result property="contenido" column="mensaje_contenido"/>
     <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
   	</resultMap>
+
+    <resultMap id="RamaResult" type="Rama">
+    <id property="id" column="rama_id"/>
+    <result property="nombre" column="rama_nombre"/>
+    <result property="fechaDeCreacion" column="rama_fecha"/>
+    <association property="ramaPadre" column="rama_padre" javaType="Rama" select="getRama"/>
+    <association property="creador" column="rama_creador" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+    </resultMap>    
+    
   
     <resultMap id="ProyectoResult" type="Proyecto">
 		<id property="id" column="id_proyecto"/>
@@ -86,5 +134,7 @@
      select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getParticipantes"/> 
     <collection property="mensajes" javaType="ArrayList" ofType="Mensaje"
     resultMap="MensajeResult"/> 
+    <collection property="ramas" javaType="ArrayList" ofType="Rama" column="id_proyecto"
+    select="getProyectosRamas"/> 
     </resultMap>
 </mapper>

@@ -50,10 +50,9 @@ var apiprofile = (function () {
 		);
 	}
 	var crearProyecto = function(){
-		location.replace("http://localhost:8080/projectDescription.html")
+		location.replace("http://localhost:8080/addProject.html")
 	}
 	var verificar = function(){
-		console.log(sessionStorage.correo);
 		if (sessionStorage.correo == null){
 			location.replace("http://localhost:8080/login.html")
 		}

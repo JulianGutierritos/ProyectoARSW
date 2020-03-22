@@ -42,25 +42,77 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 
     @Override
     public ArrayList<Usuario> getParticipantes(int identificador) throws PersistenceException {
-        // TODO Auto-generated method stub
-        return null;
+        Proyecto proyecto=proyectoMapper.getProyecto(identificador);
+		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
+		else return proyecto.getParticipantes();
     }
 
     @Override
-    public boolean estaParticipando(String correo, int identificador) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean estaParticipando(String correo, int identificador) throws PersistenceException {
+        try {
+            ArrayList<Usuario> participantes=getParticipantes(identificador);
+            boolean esta = false;
+            for (int i = 0 ; i < participantes.size(); i++){
+                if (correo.equals(participantes.get(i).getCorreo())){
+                    esta = true;
+                    break;
+                }
+            }
+            return esta;
+        }
+        catch (PersistenceException e){
+            throw(e);
+        }
     }
 
     @Override
-    public ArrayList<Rama> getRamas(int identificador) {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Rama> getRamas(int identificador) throws PersistenceException {
+        Proyecto proyecto=proyectoMapper.getProyecto(identificador);
+		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
+		else return proyecto.getRamas();
     }
 
     @Override
-    public ArrayList<Mensaje> getMensajes(int identificador) {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Mensaje> getMensajes(int identificador) throws PersistenceException {
+        Proyecto proyecto=proyectoMapper.getProyecto(identificador);
+		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
+		else return proyecto.getMensajes();
+    }
+
+    @Override
+    public void insertarProyecto (Proyecto proyecto) throws PersistenceException {
+        try{
+            proyectoMapper.insertarProyecto(proyecto);
+            Rama r = new Rama(1, proyecto.getNombre(),  null, null, null, proyecto.getCreador());
+            proyectoMapper.insertarRama(r, proyecto);
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al insertar participante");
+        }
+    }
+
+    @Override
+    public void insertarParticipante (Proyecto proyecto, Usuario usuario) throws PersistenceException {
+        try{
+            proyectoMapper.insertarParticipante(usuario, proyecto);   
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al insertar participante");
+        }
+    }
+
+    @Override
+    public void insertarRama (Rama rama, Proyecto proyecto) throws PersistenceException {
+        try{
+            if (rama.getRamaPadre() != null){
+                proyectoMapper.insertarRamaConPadre(rama, proyecto);
+            }
+            else{
+                proyectoMapper.insertarRama(rama, proyecto);
+            }    
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al insertar rama");
+        }
     }
 }

@@ -29,12 +29,16 @@ var app = (function () {
 	}
 	
 	
-	var addProject = function(id, nombre, desc, usuario_creador) {
+	var addProject = function(){
+		apiclient.getUser(postProject);
+	}
+
+	var postProject = function(resp) {
 		var newProject = {
-			id : username,
-			nombre : nombre,
-			descripcion : passwd,
-			creador : usuario_creador,
+			id : 1,
+			nombre : $("#pnombre").val(),
+			descripcion : $("#pdescripcion").val(),
+			creador : resp,
 			participantes : [],
 			mensajes : []
 		};
@@ -49,6 +53,7 @@ var app = (function () {
     return {
     	loginUser : loginUser,
     	addUser : addUser,
-    	prueba: prueba
+		prueba: prueba,
+		addProject : addProject
     };
 })();

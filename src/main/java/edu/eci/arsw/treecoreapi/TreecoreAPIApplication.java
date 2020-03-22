@@ -3,7 +3,6 @@ package edu.eci.arsw.treecoreapi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 @SpringBootApplication(scanBasePackages = {"edu.eci.arsw.treecore"})
 @MapperScan("edu.eci.arsw.treecore.persistence.mappers")
 public class TreecoreAPIApplication {

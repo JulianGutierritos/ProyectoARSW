@@ -48,7 +48,7 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 		ArrayList<Notificacion> n;
 		Usuario user=usuarioMapper.getUser(correo);
 		if(user==null) throw new PersistenceException("Usuario no encontrado");
-		else n = user.getNoticaciones();
+		else n = user.getNotificaciones();
 		return n; 
 	} 
 	

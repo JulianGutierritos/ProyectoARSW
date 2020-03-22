@@ -18,7 +18,10 @@ public interface TreeCoreProjectServices {
 	public ArrayList<Proyecto> getAllProyectos() throws ServiciosTreeCoreException;
 	public ArrayList<Proyecto> getAllProyectosUser(String correo) throws ServiciosTreeCoreException;
 	public ArrayList<Usuario> getParticipantes(int identificador) throws ServiciosTreeCoreException;
-	public boolean estaParticipando (String correo, int identificador);
-	public ArrayList<Rama> getRamas (int identificador);
-	public ArrayList<Mensaje> getMensajes (int identificador);
+	public boolean estaParticipando (String correo, int identificador) throws ServiciosTreeCoreException;
+	public ArrayList<Rama> getRamas (int identificador) throws ServiciosTreeCoreException;
+	public ArrayList<Mensaje> getMensajes (int identificador) throws ServiciosTreeCoreException;
+	public void insertarProyecto(Proyecto proyecto) throws ServiciosTreeCoreException;
+	public void insertarParticipante(Usuario usuario, Proyecto proyecto) throws ServiciosTreeCoreException;
+	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException;
 }

@@ -52,13 +52,13 @@
 	<select parameterType="map" id="getNotificaciones" resultMap="NotificacionResult">
 			SELECT 
             n.notificacionID as id_notificacion,
-			n.fecha as fecha_notificacion,
+			n.fechadecreacion as fecha_notificacion,
 			n.informacion as informacion_notificacion
 
 			FROM notificacion as n 
 			
     		WHERE n.usuario=#{correo}
-			order by n.fecha desc
+			order by n.fechadecreacion desc
 	</select>
 	<select parameterType="map" id="getInvitaciones" resultMap="InvitacionResult">
 			SELECT 
@@ -81,8 +81,8 @@
 		<selectKey keyProperty="id_notificacion" resultType="int" order="BEFORE">
 			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{notificacion.usuario.correo}
     	</selectKey>
-		INSERT into notificacion (notificacionid, usuario, fecha, informacion) 
-    	VALUES (#{id_notificacion}, #{usuario},#{notificacion.fecha},#{notificacion.informacion})                     
+		INSERT into notificacion (notificacionid, usuario, informacion) 
+    	VALUES (#{id_notificacion}, #{usuario},#{notificacion.informacion})                     
     </insert>
 
 	<insert id ="insertarInvitacion">

@@ -39,7 +39,7 @@ public class Usuario {
     public void setContraseña(String passwd){
         this.passwd = passwd;
     }
-    public ArrayList<Notificacion> getNoticaciones(){
+    public ArrayList<Notificacion> getNotificaciones(){
         return notificaciones;
     }  
     public void setNoificaciones(ArrayList<Notificacion> notificaciones){

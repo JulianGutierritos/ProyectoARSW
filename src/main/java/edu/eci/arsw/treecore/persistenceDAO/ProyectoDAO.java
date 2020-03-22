@@ -14,8 +14,10 @@ public interface ProyectoDAO {
 	public ArrayList<Proyecto> getProyectos() throws PersistenceException;
 	public ArrayList<Proyecto> getProyectosUsuario(String correo) throws PersistenceException;
 	public ArrayList<Usuario> getParticipantes(int identificador) throws PersistenceException;
-	public boolean estaParticipando (String correo, int identificador);
-	public ArrayList<Rama> getRamas (int identificador);
-	public ArrayList<Mensaje> getMensajes (int identificador);
-	
+	public boolean estaParticipando (String correo, int identificador) throws PersistenceException;
+	public ArrayList<Rama> getRamas (int identificador) throws PersistenceException;
+	public ArrayList<Mensaje> getMensajes (int identificador) throws PersistenceException;
+	public void insertarParticipante (Proyecto proyecto, Usuario usuario) throws PersistenceException;
+	public void insertarRama (Rama rama, Proyecto proyecto) throws PersistenceException;
+	public void insertarProyecto (Proyecto proyecto) throws PersistenceException;
 }

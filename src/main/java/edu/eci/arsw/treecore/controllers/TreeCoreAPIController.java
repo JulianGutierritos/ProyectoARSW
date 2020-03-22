@@ -10,17 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
 
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
-import edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,8 +99,12 @@ public class TreeCoreAPIController {
      */
     @RequestMapping(path = "/projects/{id}/ramas", method = RequestMethod.GET)
     public ResponseEntity<?> GetRamas(@PathVariable("id") int id) {
-
-        return new ResponseEntity<>(treeCoreProjectServices.getRamas(id), HttpStatus.ACCEPTED);
+        try{
+            return new ResponseEntity<>(treeCoreProjectServices.getRamas(id), HttpStatus.ACCEPTED);
+        } catch (ServiciosTreeCoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     
@@ -132,7 +132,12 @@ public class TreeCoreAPIController {
      */
     @RequestMapping(path = "/projects/{id}/menssages", method = RequestMethod.GET)
     public ResponseEntity<?> GetMessages(@PathVariable("id") int id) {
-        return new ResponseEntity<>(treeCoreProjectServices.getMensajes(id), HttpStatus.ACCEPTED);
+        try{
+            return new ResponseEntity<>(treeCoreProjectServices.getMensajes(id), HttpStatus.ACCEPTED);
+        } catch (ServiciosTreeCoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
     
     
@@ -224,8 +229,8 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/projects", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewProject(@RequestBody Proyecto project){
     	try {
-    		//crear mapper
-			//this.treeCoreProjectServices.se(project);
+            System.out.println(project.getCreador());
+			this.treeCoreProjectServices.insertarProyecto(project);
 			return new ResponseEntity<>(HttpStatus.CREATED);
     	} 
     	catch (Exception e) {
