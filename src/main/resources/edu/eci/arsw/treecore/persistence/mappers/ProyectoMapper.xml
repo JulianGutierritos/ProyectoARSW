@@ -88,7 +88,7 @@
 
     <insert id ="insertarParticipante">
         INSERT INTO public.participante (usuario, proyecto)
-        VALUES(usuario.correo, proyecto.id);
+        VALUES(#{usuario.correo}, #{proyecto.id});
     </insert>  
 
     <insert id ="insertarRamaConPadre">

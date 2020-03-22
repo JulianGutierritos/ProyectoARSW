@@ -94,10 +94,9 @@ public interface UsuarioMapper {
     
     /**
      * Metodo que elimina una invitacion del usuario dado
-     * @param u Usuario
      * @param i Invitacion
      */
-    public void deleteInvitacion(@Param("usuario") Usuario u, @Param("invitacion") Invitacion i);
+    public void deleteInvitacion(@Param("invitacion") Invitacion i);
 
     /**
      * Metodo que elimina todas las invitaciones del usuario dado

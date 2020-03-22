@@ -1,9 +1,32 @@
 var apiclient = apiclient;
 var apiprofile = (function () {
-    var appUrl = "http://localhost:8080/treecore";
+	var appUrl = "http://localhost:8080/treecore";
+	
+	var aceptarInvitacion = function(p, r){
+		var newInvitacion = {
+			remitente : r,
+			receptor : sessionStorage.correo,
+			proyecto : p,
+			receptor : sessionStorage.correo
+		};
+		apiclient.aceptarInvitacion(JSON.stringify(newInvitacion));
+		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
+
+	}
+
+	var eliminarInvitacion = function(p, r){
+		var newInvitacion = {
+			remitente : r,
+			receptor : sessionStorage.correo,
+			proyecto : p,
+			receptor : sessionStorage.correo
+		};
+		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
+	}
+
 	var showInvitaciones = function(resp){
 		for(var i = 0; i < resp.length; i++) {
-			putInvitaciones(resp[i].proyecto, resp[i].nombreProyecto, resp[i].remitente); 
+			putInvitaciones(resp[i]); 
 		};
 		$("#numero").text(resp.length);
 		$("#anuncio").text("Tinene " + resp.length + " invitaciones");
@@ -33,14 +56,16 @@ var apiprofile = (function () {
 	var getUsuario = function(){
 		apiclient.getUser(showUsuario);
 	}
-	var putInvitaciones = function(proyecto, proyectoNombre, remitente){
+	var putInvitaciones = function(resp){
+		proyectoNombre= resp.nombreProyecto;
+		remitente = resp.remitente;
 		$("#invitaciones").append(
-		'<li> <a href=http://localhost:8080/project.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre +  '</span> </a><button type="button" class="btn btn-success">Aceptar</button> <button type="button" class="btn btn-danger">Rechazar </button> </li>'
+		'<li> <a href=/tree.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre +  '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Rechazar </button> </li>'
 		);
 	}
 	var putProyectos = function(proyecto, id){
 		$("#proyectos").append(
-		'<tr><td><a href=http://localhost:8080/project.html >' + proyecto + '</a></td></tr>'
+		'<tr><td><a href=/tree.html >' + proyecto + '</a></td></tr>'
 		);
 	}
 	var putNotificaciones = function (informacion, fecha){
@@ -50,16 +75,16 @@ var apiprofile = (function () {
 		);
 	}
 	var crearProyecto = function(){
-		location.replace("http://localhost:8080/addProject.html")
+		location.replace("/addProject.html")
 	}
 	var verificar = function(){
 		if (sessionStorage.correo == null){
-			location.replace("http://localhost:8080/login.html")
+			location.replace("/login.html")
 		}
 	}
 	var salir = function(){
 		sessionStorage.removeItem('correo');
-		location.replace("http://localhost:8080/login.html")
+		location.replace("/login.html")
 	}
     return {
 		verificar : verificar,
@@ -68,6 +93,8 @@ var apiprofile = (function () {
 		notificaciones : getNotificaciones,
 		usuario : getUsuario,
 		crear : crearProyecto,
-		salir : salir
+		salir : salir,
+		eliminarInvitacion : eliminarInvitacion,
+		aceptarInvitacion : aceptarInvitacion
     };
 })();

@@ -58,6 +58,40 @@ var apiclient = (function () {
 					alert("failure login");
 				}
 			);
+		},
+		
+		aceptarInvitacion : function (invitacion){
+        	var postRequest=$.ajax({
+				url:  appUrl+"/projects/team",
+				type: 'PUT',
+				data: invitacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function(){
+					apiprofile.getProyectos();
+				},
+				function(){
+					alert("failure acept");
+				}
+			);
+		},
+		
+		eliminarInvitacion : function (invitacion){
+        	var postRequest=$.ajax({
+				url:  appUrl+"/users/invitations",
+				type: 'DELETE',
+				data: invitacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function(){
+					location.reload(); 
+				},
+				function(){
+					alert("failure delete");
+				}
+			);
         },
         
         addUser : function (user){

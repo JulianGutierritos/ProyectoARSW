@@ -3,16 +3,26 @@ package edu.eci.arsw.treecore.model.impl;
 public class Invitacion {
 
     private String remitente; 
-    private String proyecto;
+    private int proyecto;
     private String nombreProyecto;
-    public Invitacion(String remitente, String proyecto, String nombreProyecto){
+    private String receptor;
+    public Invitacion(String remitente, int proyecto, String nombreProyecto, String receptor){
         this.remitente = remitente;
         this.proyecto = proyecto;
         this.nombreProyecto = nombreProyecto;
+        this.receptor = receptor;
     }
 
     public Invitacion(){
         
+    }
+
+    public String getReceptor() {
+        return receptor;
+    }
+
+    public void setReceptor(String receptor) {
+        this.receptor = receptor;
     }
 
     public String getRemitente() {
@@ -23,11 +33,11 @@ public class Invitacion {
         this.remitente = remitente;
     }
 
-    public String getProyecto() {
+    public int getProyecto() {
         return proyecto;
     }
 
-    public void setProyecto(String proyecto) {
+    public void setProyecto(int proyecto) {
         this.proyecto = proyecto;
     }
 

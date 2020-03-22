@@ -82,3 +82,35 @@ primary key (archivo, modificadoPor, ultimaModificacion),
 foreign key (modificadoPor) references usuario(correo),
 foreign key (archivo) references archivo(archivoID)
 );
+
+
+
+CREATE OR REPLACE FUNCTION proyecto_fecha()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.fechadecreacion = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE TRIGGER proyecto_fecha
+BEFORE INSERT ON proyecto
+FOR EACH ROW
+EXECUTE PROCEDURE proyecto_fecha();
+
+CREATE TRIGGER rama_fecha
+BEFORE INSERT ON rama
+FOR EACH ROW
+EXECUTE PROCEDURE proyecto_fecha();
+
+CREATE TRIGGER modificacion_fecha
+BEFORE INSERT ON modificacion
+FOR EACH ROW
+EXECUTE PROCEDURE proyecto_fecha();
+
+CREATE TRIGGER modificacion_fecha
+BEFORE INSERT ON mensaje
+FOR EACH ROW
+EXECUTE PROCEDURE proyecto_fecha();

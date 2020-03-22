@@ -61,6 +61,8 @@ public interface UsuarioDAO {
 	 */
 	public void setUser(Usuario u) throws PersistenceException;
 	
+
+	public void deleteInvitacion(Invitacion invitacion) throws PersistenceException;
 	
 }
 

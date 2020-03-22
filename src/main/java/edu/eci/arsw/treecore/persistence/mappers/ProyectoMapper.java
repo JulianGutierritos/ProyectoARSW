@@ -18,7 +18,7 @@ public interface ProyectoMapper {
 
     public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
 
-    public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyeto") Proyecto proyecto);
+    public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
     
     public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
 

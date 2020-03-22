@@ -14,4 +14,5 @@ public interface TreeCoreUserServices {
 	public ArrayList<Notificacion> getNotificaciones(String correo) throws ServiciosTreeCoreException;
 	public ArrayList<Invitacion> getInvitaciones(String correo) throws ServiciosTreeCoreException;
 	public void addNewUser(Usuario User) throws ServiciosTreeCoreException;
+	public void deleteInvitacion(Invitacion invitacion) throws ServiciosTreeCoreException;
 }

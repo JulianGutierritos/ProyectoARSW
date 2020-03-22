@@ -64,6 +64,7 @@
 			SELECT 
             i.remitente as invitacion_remitente,
             i.proyecto as invitacion_proyecto,
+			i.receptor as invitacion_receptor,
 			p.nombre as proyecto_nombre
 
 			FROM invitacion as i 
@@ -120,7 +121,7 @@
 
 	<delete id = "deleteInvitacion">
 		DELETE FROM public.invitacion
-		WHERE remitente={invitacion.remitente} AND receptor={usuario.correo} AND proyecto={invitacion.proyecto}
+		WHERE remitente=#{invitacion.remitente} AND receptor=#{invitacion.receptor} AND proyecto=#{invitacion.proyecto}
 	</delete>	
 
 	<delete id = "deleteInvitaciones">
@@ -138,6 +139,7 @@
 		<result property="remitente" column="invitacion_remitente" />
         <result property="proyecto" column="invitacion_proyecto" />
 		<result property="nombreProyecto" column="proyecto_nombre" />
+		<result property="receptor" column="invitacion_recepetor" />
     </resultMap>
 
 	<resultMap id="UsuarioResult" type="edu.eci.arsw.treecore.model.impl.Usuario">

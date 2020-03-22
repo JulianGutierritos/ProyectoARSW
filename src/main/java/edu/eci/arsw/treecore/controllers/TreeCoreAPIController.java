@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
+import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
@@ -172,6 +172,16 @@ public class TreeCoreAPIController {
         }
     }
 
+    @RequestMapping(path = "/users/invitations", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteInvitation(@RequestBody Invitacion invitacion) {
+        try {
+            treeCoreUserServices.deleteInvitacion(invitacion);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (ServiciosTreeCoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
     
     /**
      * 
@@ -229,7 +239,6 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/projects", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewProject(@RequestBody Proyecto project){
     	try {
-            System.out.println(project.getCreador());
 			this.treeCoreProjectServices.insertarProyecto(project);
 			return new ResponseEntity<>(HttpStatus.CREATED);
     	} 
@@ -239,5 +248,21 @@ public class TreeCoreAPIController {
     	
 	}
     
-    
+    /**
+     * Metodo para agregar un nuevo integrante al equipo del proyecto
+     */
+    @RequestMapping(path = "/projects/team", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addTeamMate(@RequestBody Invitacion invitacion){
+        try {
+            Usuario usuario = treeCoreUserServices.getUsuario(invitacion.getReceptor());
+            Proyecto project = treeCoreProjectServices.getProyecto(invitacion.getProyecto());
+			this.treeCoreProjectServices.insertarParticipante(usuario, project);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+    	} 
+    	catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+    }
+
+
 }
