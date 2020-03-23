@@ -130,6 +130,16 @@ var apiclient = (function () {
         			callback(respuesta);
         		}
         	});
+		},
+		
+		getProject: function (id, callback) {
+        	jQuery.ajax({
+        		url: appUrl+"/projects/" + id,
+        		type: "GET",
+        		success: function(response) {
+        			callback(response);
+        		}
+        	});
         },
 		
 		getAutenticado : function(){
