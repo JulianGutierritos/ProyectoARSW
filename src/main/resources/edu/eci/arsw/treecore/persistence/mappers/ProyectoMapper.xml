@@ -55,7 +55,7 @@
       where p.proyectoid IN (select proyecto from participante where usuario=#{correo})
     </select>
 
-    <select parameterType="map" id="getProyectosRamas" resultMap="RamaResult">
+    <select parameterType="map" id="getRama" resultMap="RamaResult">
     select
 	    r.ramaid as rama_id,
 	    r.nombre as rama_nombre,
@@ -67,7 +67,7 @@
   	where r.ramaid = #{id}
     </select>
 
-    <select parameterType="map" id="getRama" resultMap="RamaResult">
+    <select parameterType="map" id="getProyectosRamas" resultMap="RamaResult">
     select
 	    r.ramaid as rama_id,
 	    r.nombre as rama_nombre,
