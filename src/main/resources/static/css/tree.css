@@ -1,6 +1,6 @@
 .sec1{
 	width: 100%;
-	height: 60%;
+	height: 80%;
 	position: absolute;
 	margin: 0 auto;
 	left: 0;
@@ -20,12 +20,12 @@
 
 .sec2{
 	width: 60%;
-	height: 30%;
+	height: 20%;
 	position: absolute;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
-	top: 60%;
+	top: 80%;
 }
 
 .info {

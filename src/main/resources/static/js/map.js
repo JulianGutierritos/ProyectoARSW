@@ -1,6 +1,6 @@
 var map=(function(){
 	    function init() {
-	      var $ = go.GraphObject.make;
+		  var $ = go.GraphObject.make;
 	      var dataList=[];
 
 	      myDiagram =
@@ -169,8 +169,6 @@ var map=(function(){
 	        });
 	      });
 
-	      // read in the predefined graph using the JSON format data held in the "mySavedModel" textarea
-	      load();
 	    }
 
 	    function spotConverter(dir, from) {
@@ -221,12 +219,7 @@ var map=(function(){
 	      var oldnode = adorn.adornedPart;
 	      var olddata = oldnode.data;
 	      // copy the brush and direction to the new node data
-	      var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
-
-	      //dataList.add(newdata)
-	     // alert(dataList.length)
-	      alert(myDiagram.model.toJson())
-	      
+	      var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key }; 
 	      diagram.model.addNodeData(newdata);
 	      layoutTree(oldnode);
 	      //Add new component
@@ -286,12 +279,29 @@ var map=(function(){
 
 	    // Show the diagram's model in JSON format
 	    function save() {
-	      document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+		  //document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+		  console.log(myDiagram.model.toJson());
 	      myDiagram.isModified = false;
 	    }
-	    function load() {
-	      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
-	    }
+	    function load(project) {
+			var ramlist = project.ramas;
+			var list = [];
+			var pro = { "key": 0, "text": project.nombre,"loc": "0 0"};
+			list.push(pro);
+			for(var i =1;i<=ramlist.length;i++){
+			  var rama = ramlist[i-1];
+			  var padre = rama.ramaPadre;
+			  if ( padre == null){
+				padre = 0;
+			  }
+			  var cadena = {"key": rama.id, "parent": padre, "text": rama.nombre};
+			  list.push(cadena);
+			};
+			//console.log(list);
+			var val = { "class": "go.TreeModel", "nodeDataArray": list};
+			myDiagram.model = go.Model.fromJson(val);
+			layoutAll();
+		}
 	    return{
 	    	init:init,
 	    	save:save,
