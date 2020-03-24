@@ -1,7 +1,5 @@
 var apiclient = apiclient;
-var apiprofile = (function () {
-	var appUrl = "http://localhost:8080/treecore";
-	
+var apiprofile = (function () {	
 	var aceptarInvitacion = function(p, r){
 		var newInvitacion = {
 			remitente : r,

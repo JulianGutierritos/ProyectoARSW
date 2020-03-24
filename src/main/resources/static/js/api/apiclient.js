@@ -1,5 +1,5 @@
 var apiclient = (function () {
-    var appUrl = "http://localhost:8080/treecore";
+    var appUrl = "https://treecore.herokuapp.com/treecore";
     return {
     	
         getUser: function (callback) {
@@ -52,7 +52,7 @@ var apiclient = (function () {
 			postRequest.then(
 				function(){
 					sessionStorage.correo = username;
-					location.replace("http://localhost:8080/profile.html");
+					location.replace("/profile.html");
 				},
 				function(){
 					alert("failure login");
