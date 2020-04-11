@@ -1,8 +1,6 @@
 package edu.eci.arsw.treecore.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.eci.arsw.treecore.exceptions.PersistenceException;

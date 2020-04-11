@@ -36,11 +36,11 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
         ArrayList<Proyecto> proyectos;
         try {
         	proyectos = proyectoDAO.getProyectos();
-        	return proyectoDAO.getProyectos();
         } 
         catch (PersistenceException e) {
             throw new ServiciosTreeCoreException("No hay proyectos");
         }
+        return proyectos;
     }
 
     @Override
