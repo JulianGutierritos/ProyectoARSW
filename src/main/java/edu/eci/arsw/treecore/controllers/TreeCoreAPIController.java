@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
+import edu.eci.arsw.treecore.exceptions.TreeCoreStoreException;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Usuario;
+import edu.eci.arsw.treecore.persistence.TreeCoreStore;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 @RestController
 @RequestMapping(value = "/treecore")
@@ -28,8 +28,9 @@ public class TreeCoreAPIController {
     TreeCoreUserServices treeCoreUserServices;
     @Autowired
     TreeCoreProjectServices treeCoreProjectServices;
+    @Autowired
+    TreeCoreStore treeCoreStore;
 
-    
     /**
      * 
      * @return
@@ -37,14 +38,12 @@ public class TreeCoreAPIController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAll() {
         try {
-        	return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
-		} 
-        catch (ServiciosTreeCoreException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+            return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
+        } catch (ServiciosTreeCoreException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
-    
     /**
      * 
      * @return
@@ -58,8 +57,7 @@ public class TreeCoreAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    
-    
+
     /**
      * 
      * @param creatorName
@@ -75,7 +73,6 @@ public class TreeCoreAPIController {
         }
     }
 
-    
     /**
      * 
      * @param id
@@ -91,7 +88,6 @@ public class TreeCoreAPIController {
         }
     }
 
-    
     /**
      * 
      * @param id
@@ -99,7 +95,7 @@ public class TreeCoreAPIController {
      */
     @RequestMapping(path = "/projects/{id}/ramas", method = RequestMethod.GET)
     public ResponseEntity<?> GetRamas(@PathVariable("id") int id) {
-        try{
+        try {
             return new ResponseEntity<>(treeCoreProjectServices.getRamas(id), HttpStatus.ACCEPTED);
         } catch (ServiciosTreeCoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
@@ -107,7 +103,6 @@ public class TreeCoreAPIController {
         }
     }
 
-    
     /**
      * 
      * @param id
@@ -124,23 +119,21 @@ public class TreeCoreAPIController {
         }
     }
 
-    
     /**
      * 
      * @param id
      * @return
      */
-    @RequestMapping(path = "/projects/{id}/menssages", method = RequestMethod.GET)
+    @RequestMapping(path = "/projects/{id}/messages", method = RequestMethod.GET)
     public ResponseEntity<?> GetMessages(@PathVariable("id") int id) {
-        try{
+        try {
             return new ResponseEntity<>(treeCoreProjectServices.getMensajes(id), HttpStatus.ACCEPTED);
         } catch (ServiciosTreeCoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    
-    
+
     /**
      * 
      * @param correo
@@ -156,7 +149,6 @@ public class TreeCoreAPIController {
         }
     }
 
-    
     /**
      * 
      * @param correo
@@ -182,7 +174,7 @@ public class TreeCoreAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    
+
     /**
      * 
      * @param correo
@@ -197,72 +189,95 @@ public class TreeCoreAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-	
-    
+
     /**
-	 * Metodo que recibe la peticion de loggeo un usuario
-	 * @param user Usuario
-	 */
-    @RequestMapping(path = "/login", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> loginUser(@RequestBody Usuario user){
-    	try {
-			this.treeCoreUserServices.verificarCredenciales(user.getCorreo(), user.getPasswd());
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    	} 
-    	catch (ServiciosTreeCoreException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
-    
-    
+     * Metodo que recibe la peticion de loggeo un usuario
+     * 
+     * @param user Usuario
+     */
+    @RequestMapping(path = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> loginUser(@RequestBody Usuario user) {
+        try {
+            this.treeCoreUserServices.verificarCredenciales(user.getCorreo(), user.getPasswd());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (ServiciosTreeCoreException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     /**
-	 * Metodo que recibe la peticion para adicionar un nuevo usuario
-	 * @param user Nuevo Usuario
-	 */
-    @RequestMapping(method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addNewUser(@RequestBody Usuario user){
-    	try {
-			this.treeCoreUserServices.addNewUser(user);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-    	} 
-    	catch (ServiciosTreeCoreException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
-    	
-	}
-    
-    
+     * Metodo que recibe la peticion para adicionar un nuevo usuario
+     * 
+     * @param user Nuevo Usuario
+     */
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewUser(@RequestBody Usuario user) {
+        try {
+            this.treeCoreUserServices.addNewUser(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (ServiciosTreeCoreException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+    }
+
     /**
-	 * Metodo que recibe la peticion para adicionar un nuevo proyecto
-	 * @param project Nuevo proyecto
-	 */
-    @RequestMapping(path = "/projects", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addNewProject(@RequestBody Proyecto project){
-    	try {
-			this.treeCoreProjectServices.insertarProyecto(project);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-    	} 
-    	catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
-    	
-	}
-    
+     * Metodo que recibe la peticion para adicionar un nuevo proyecto
+     * 
+     * @param project Nuevo proyecto
+     */
+    @RequestMapping(path = "/projects", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewProject(@RequestBody Proyecto project) {
+        try {
+            this.treeCoreProjectServices.insertarProyecto(project);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+    }
+
     /**
      * Metodo para agregar un nuevo integrante al equipo del proyecto
      */
     @RequestMapping(path = "/projects/team", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addTeamMate(@RequestBody Invitacion invitacion){
+    public ResponseEntity<?> addTeamMate(@RequestBody Invitacion invitacion) {
         try {
             Usuario usuario = treeCoreUserServices.getUsuario(invitacion.getReceptor());
             Proyecto project = treeCoreProjectServices.getProyecto(invitacion.getProyecto());
-			this.treeCoreProjectServices.insertarParticipante(usuario, project);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-    	} 
-    	catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
+            this.treeCoreProjectServices.insertarParticipante(usuario, project);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
-
+    /**
+     * 
+     * @param ruta
+     * @return
+     */
+    @RequestMapping(path = "/files/{ruta}", method = RequestMethod.GET)
+    public ResponseEntity<?> GetFiles(@PathVariable("ruta") String ruta) {
+        try {
+            return new ResponseEntity<>(treeCoreStore.consultar(ruta), HttpStatus.ACCEPTED);
+        } catch ( TreeCoreStoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    /**
+     * 
+     * @param ruta
+     * @return
+     */
+    @RequestMapping(path = "/file/{ruta}", method = RequestMethod.GET)
+    public ResponseEntity<?> GetFile(@PathVariable("ruta") String ruta) {
+        try {
+            return new ResponseEntity<>(treeCoreStore.downloadFile(ruta), HttpStatus.ACCEPTED);
+        } catch ( TreeCoreStoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
