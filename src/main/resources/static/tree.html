@@ -9,9 +9,10 @@
 <meta http-equiv="Last-Modified" content="0">
 <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
 <meta http-equiv="Pragma" content="no-cache">
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="css/dashio/style.css" rel="stylesheet">
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="release/go.js"></script>
 <script src="assets/js/goSamples.js"></script>
 <script src="js/map.js"></script>
@@ -24,8 +25,6 @@
 	<section class="sec1">
 		<div id="sample">
 			<div id="myDiagramDiv" class="myDiagramDiv"></div>
-
-
 		</div>
 	</section>
 	<br/>
@@ -36,6 +35,22 @@
 			<button onclick="map.layoutAll()">Layout</button>
 		</div>
 	</section>
-	<br/>
-</body>
+
+	<div class="detailBox">
+		<div class="titleBox">
+		  <label>Chat</label>
+		</div>
+		<div class="actionBox">
+			<ul class="commentList" id="chat">
+			</ul>
+			<form class="form-inline" role="form">
+				<div class="form-group">
+					<input id="mensaje" class="form-control" type="text" placeholder="Message" />
+				</div>
+				<div class="form-group">
+					<button onclick="map.enviar(); return false;">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>	                
 </html>

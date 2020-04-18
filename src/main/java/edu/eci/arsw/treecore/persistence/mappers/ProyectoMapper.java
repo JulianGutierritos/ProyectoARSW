@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
+import edu.eci.arsw.treecore.model.impl.Mensaje;
 
 public interface ProyectoMapper {
 
@@ -24,5 +25,5 @@ public interface ProyectoMapper {
 
     public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
 
-
+    public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
 }

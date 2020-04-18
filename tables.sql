@@ -114,3 +114,23 @@ CREATE TRIGGER modificacion_fecha
 BEFORE INSERT ON mensaje
 FOR EACH ROW
 EXECUTE PROCEDURE proyecto_fecha();
+
+CREATE OR REPLACE FUNCTION rama_participante() RETURNS trigger LANGUAGE plpgsql AS $function$
+declare
+ id INTEGER; 
+begin 
+  select COALESCE(MAX(ramaid)+1,1) into id from rama; 
+  insert into rama (ramaid, nombre, proyecto, ramapadre, fechadecreacion, creador) values (id, new.nombre, new.proyectoid, null, null, new.creador);
+  insert into participante (usuario, proyecto) values (new.creador, new.proyectoid);
+  return null;
+END;
+$function$
+;
+
+create trigger autogenerar after
+insert
+    on
+    public.proyecto for each row execute function rama_participante();
+
+insert into proyecto (proyectoid, nombre, creador, descripcion) values (4, 'prueba', 'j@mail.com', 'holaaa');
+

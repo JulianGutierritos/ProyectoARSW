@@ -91,6 +91,14 @@
         VALUES(#{usuario.correo}, #{proyecto.id});
     </insert>  
 
+    <insert id ="insertarMensaje">
+      <selectKey keyProperty="id_mensaje" resultType="int" order="BEFORE">
+			select COALESCE(MAX(id)+1,1) from mensaje where usuario=#{mensaje.usuario.correo} and proyecto=#{proyecto}
+      </selectKey>
+      INSERT INTO mensaje (id, usuario, proyecto, contenido)
+      VALUES(#{id_mensaje}, #{mensaje.usuario.correo}, #{proyecto}, #{mensaje.contenido})
+    </insert>
+
     <insert id ="insertarRamaConPadre">
 		<selectKey keyProperty="id_rama" resultType="int" order="BEFORE">
 			select COALESCE(MAX(ramaid)+1,1) from rama 

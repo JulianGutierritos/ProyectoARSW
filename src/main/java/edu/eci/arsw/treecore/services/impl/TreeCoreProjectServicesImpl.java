@@ -126,4 +126,14 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
         }
     }
 
+    @Override
+    public void insertarMensaje(Mensaje mensaje, int proyecto) throws ServiciosTreeCoreException{
+        try{
+            proyectoDAO.insertarMensaje(mensaje, proyecto);
+        } catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("Error al ingresar mensaje");
+        }
+
+    }
+
 }

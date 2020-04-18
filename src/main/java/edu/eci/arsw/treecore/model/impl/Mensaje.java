@@ -13,7 +13,6 @@ public class Mensaje {
     }
 
     public Mensaje(){
-        
     }
 
     public Date getFecha(){
@@ -35,8 +34,13 @@ public class Mensaje {
         return this.usuario;
     }
 
-    public void setId(Usuario usuario){
+    public void setUsuario(Usuario usuario){
         this.usuario = usuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Mensaje{" + "usuario=" + usuario + ", fecha=" + fecha + ", contenido=" + contenido + "}";
     }
 
 }

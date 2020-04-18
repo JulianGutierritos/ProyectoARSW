@@ -39,7 +39,7 @@ var app = (function () {
 			nombre : $("#pnombre").val(),
 			descripcion : $("#pdescripcion").val(),
 			creador : resp,
-			participantes : [],
+			participantes : [resp],
 			mensajes : []
 		};
 		apiclient.addProject(JSON.stringify(newProject));

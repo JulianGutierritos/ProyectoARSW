@@ -24,4 +24,5 @@ public interface TreeCoreProjectServices {
 	public void insertarProyecto(Proyecto proyecto) throws ServiciosTreeCoreException;
 	public void insertarParticipante(Usuario usuario, Proyecto proyecto) throws ServiciosTreeCoreException;
 	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException;
+	public void insertarMensaje(Mensaje mensaje, int proyecto) throws ServiciosTreeCoreException;
 }

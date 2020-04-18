@@ -1,3 +1,5 @@
+var apiclient = apiclient;
+var stompClient = null;
 var map=(function(){
 	    function init() {
 		  var $ = go.GraphObject.make;
@@ -297,15 +299,60 @@ var map=(function(){
 			  var cadena = {"key": rama.id, "parent": padre, "text": rama.nombre};
 			  list.push(cadena);
 			};
-			//console.log(list);
 			var val = { "class": "go.TreeModel", "nodeDataArray": list};
 			myDiagram.model = go.Model.fromJson(val);
 			layoutAll();
+			conectar();
+			mensajes(project);
 		}
+
+		var mensajes = function(project){
+			for (var i = 0; i < project.mensajes.length ; i++){
+				var mensaje = project.mensajes[i];
+				$("#chat").append(
+					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
+				);						
+			}
+		}
+
+		var enviar = function(){
+			apiclient.getUser(publicar)			
+		}
+
+		var publicar = function(rem){
+			var mensaje = new Mensaje(rem, null, $("#mensaje").val());
+			$("#mensaje").val("");
+			stompClient.send("/treecore/mensaje."+ 1, {}, JSON.stringify(mensaje));
+		}
+
+		var conectar = function (){
+			var socket = new SockJS('/stompendpoint');
+        	stompClient = Stomp.over(socket);
+        	stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/project/mensaje.'+ 1, function (eventbody) {
+				var mensaje = JSON.parse(eventbody.body);
+				console.log("entroooooooooooooooo");
+				console.log(mensaje)
+				$("#chat").append(
+					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
+				);		
+            });
+        });	
+		}
+
+		class Mensaje{
+			constructor(usuario, fecha, contenido){
+				this.usuario = usuario;
+        		this.fecha = fecha;
+        		this.contenido = contenido;
+			}        
+		}
+
 	    return{
 	    	init:init,
 	    	save:save,
 	    	load:load,
-	    	layoutAll:layoutAll
+			layoutAll:layoutAll,
+			enviar:enviar
 	    }
 })();

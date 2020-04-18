@@ -20,4 +20,5 @@ public interface ProyectoDAO {
 	public void insertarParticipante (Proyecto proyecto, Usuario usuario) throws PersistenceException;
 	public void insertarRama (Rama rama, Proyecto proyecto) throws PersistenceException;
 	public void insertarProyecto (Proyecto proyecto) throws PersistenceException;
+	public void insertarMensaje (Mensaje mensaje, int proyecto) throws PersistenceException;
 }

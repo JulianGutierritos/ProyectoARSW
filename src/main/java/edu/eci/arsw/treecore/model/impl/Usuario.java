@@ -1,7 +1,6 @@
 package edu.eci.arsw.treecore.model.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Usuario {
     private String correo;
