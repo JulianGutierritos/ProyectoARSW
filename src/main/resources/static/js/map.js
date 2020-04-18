@@ -1,6 +1,12 @@
 var apiclient = apiclient;
 var stompClient = null;
 var map = (function () {
+
+	var currentRootId;
+	var currentRootParentId;
+	var currentRootParent;
+	var currentRootProyectId;
+
 	function init() {
 		var $ = go.GraphObject.make;
 
@@ -80,7 +86,7 @@ var map = (function () {
 					{
 						alignment: go.Spot.Right,
 						alignmentFocus: go.Spot.Right,
-						click: hiddenComponentAdd  // define click behavior for this Button in the Adornment
+						click: currentRoot,
 					},
 					$(go.TextBlock, "me",  // the Button content
 						{ font: "bold 8pt sans-serif" })
@@ -296,7 +302,7 @@ var map = (function () {
 
 	// Show the diagram's model in JSON format
 	function save() {
-		//document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+		document.getElementById("mySavedModel").value = myDiagram.model.toJson();
 		console.log(myDiagram.model.toJson());
 		myDiagram.isModified = false;
 	}
@@ -368,9 +374,55 @@ var map = (function () {
 		}
 	}
 
+
 	var hiddenComponentAdd = function () {
 		var el = document.getElementById("componentInfo");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+	}
+
+	var currentRoot=function(e, obj){
+		var adorn = obj.part;
+		var diagram = adorn.diagram;
+		diagram.startTransaction("Add Node");
+		var oldnode = adorn.adornedPart;
+		var olddata = oldnode.data;
+
+		currentRootId=olddata.key; //oldata is the current root 
+		currentRootParentId=olddata.parent; //cuando es 0, el padre es el proyecto
+
+		//currentRootProyect=; //Hay que buscar en la bd con el nombre
+
+		apiclient.getProject(currentRootParentId,setCurrentRootParent);
+
+		alert(currentRootId)
+		alert(currentRootParentId)
+		alert(currentRootParent)
+
+		hiddenComponentAdd();
+	}
+
+	setCurrentRootParent=function(rootParent){
+		currentRootParent=rootParent;
+	}
+
+	setCurrentRootProyect=function(rootProject){
+		currentRootProyect=rootProject;
+	}
+
+
+	var addRootInfo=function(name, messDecr){
+
+		var newRoot = {
+			id : currentRootId,
+			nombre : name,
+			RamaPadre : "",
+			descripcion: messDecr,
+			archivos : [],
+			fechaDeCreacion:"",
+			creador: ""
+
+		};
+		apiclient.loginUser(JSON.stringify(newUser), username);
 	}
 
 	return {
@@ -379,6 +431,7 @@ var map = (function () {
 		save: save,
 		load: load,
 		layoutAll: layoutAll,
-		enviar: enviar
+		enviar: enviar,
+		addRootInfo:addRootInfo
 	}
 })();

@@ -13,7 +13,6 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="release/go.js"></script>
-	<script src="assets/js/goSamples.js"></script>
 	<script src="/js/api/apiclient.js"></script>
 	<script src="js/map.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -31,7 +30,7 @@
 	<link rel="stylesheet" type="text/css" href="layer/css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/tree.css">
 	<link rel="stylesheet" type="text/css" href="layer/css/main.css">
-	<link href="css/dashio/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/dashio/style.css">
 
 
 
@@ -65,15 +64,6 @@
 					</label>
 				</div>
 
-
-				<div class="wrap-input100 validate-input">
-					<input id="email" class="input100" type="text" name="email" placeholder="Subject">
-					<span class="focus-input100"></span>
-					<label class="label-input100" for="email">
-						<span class="lnr lnr-envelope m-b-5"></span>
-					</label>
-				</div>
-
 				<div class="wrap-input100 validate-input">
 					<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
 					<span class="focus-input100"></span>
@@ -87,7 +77,7 @@
 						Close
 					</button>
 					&nbsp; &nbsp; &nbsp; &nbsp;
-					<button class="contact100-form-btn">
+					<button type="button" class="contact100-form-btn" onclick="map.addRootInfo(name, message)">      
 						Send Now
 					</button>
 
@@ -112,7 +102,7 @@
 		</div>
 	</section>
 	<br />
-	<div class="detailBox">
+	<section class="detailBox">
 		<div class="titleBox">
 			<label>Chat</label>
 		</div>
@@ -128,7 +118,8 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</section>
+	</br>
 
 </body>
 

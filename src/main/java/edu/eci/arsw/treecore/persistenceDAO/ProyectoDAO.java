@@ -21,4 +21,5 @@ public interface ProyectoDAO {
 	public void insertarRama (Rama rama, Proyecto proyecto) throws PersistenceException;
 	public void insertarProyecto (Proyecto proyecto) throws PersistenceException;
 	public void insertarMensaje (Mensaje mensaje, int proyecto) throws PersistenceException;
+	public Proyecto getProyectoByName(String projectName) throws PersistenceException;
 }

@@ -35,7 +35,7 @@ public class TreeCoreAPIController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getAllUsers() {
         try {
         	return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
 		} 
@@ -85,6 +85,16 @@ public class TreeCoreAPIController {
     public ResponseEntity<?> GetProject(@PathVariable("id") int id) {
         try {
             return new ResponseEntity<>(treeCoreProjectServices.getProyecto(id), HttpStatus.ACCEPTED);
+        } catch (ServiciosTreeCoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/project/{projectName}", method = RequestMethod.GET)
+    public ResponseEntity<?> getProjectByName(@PathVariable("projectName") String projectName) {
+        try {
+            return new ResponseEntity<>(treeCoreProjectServices.getProyectoByName(projectName), HttpStatus.ACCEPTED);
         } catch (ServiciosTreeCoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -172,6 +182,11 @@ public class TreeCoreAPIController {
         }
     }
 
+    /**
+     * 
+     * @param invitacion
+     * @return
+     */
     @RequestMapping(path = "/users/invitations", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteInvitation(@RequestBody Invitacion invitacion) {
         try {

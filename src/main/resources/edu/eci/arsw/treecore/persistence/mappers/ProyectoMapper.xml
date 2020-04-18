@@ -38,6 +38,24 @@
         where p.proyectoid = #{id}
     </select>
 
+    <select parameterType="map" id="getProyectoByName" resultMap="ProyectoResult">
+	      SELECT
+		    p.proyectoid as id_proyecto,
+        p.nombre as nombre_proyecto,
+        p.descripcion as descripcion_proyecto,
+        p.fechadecreacion as fecha_proyecto,
+        p.creador as creador_proyecto,
+
+        m.usuario as mensaje_usuario,
+        m.fechadecreacion as mensaje_fecha,
+        m.contenido as mensaje_contenido
+        
+        FROM proyecto as p 
+        LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
+
+        where p.proyectoid = #{projectName}
+    </select>
+
     <select parameterType="map" id="getProyectosUsuario" resultMap="ProyectoResult">
       SELECT
       p.proyectoid as id_proyecto,

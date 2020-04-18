@@ -26,4 +26,6 @@ public interface ProyectoMapper {
     public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
 
     public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
+
+	public Proyecto getProyectoByName(@Param("projectName") String projectName);
 }

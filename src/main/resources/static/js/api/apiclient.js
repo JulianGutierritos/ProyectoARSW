@@ -163,6 +163,45 @@ var apiclient = (function () {
 					alert("failed project creation");
 				}
 			);
+		},
+
+		getProjectByName:function(projectName, callback){
+			jQuery.ajax({
+				url: appUrl + "/project/" + projectName,
+				type: "GET",
+				success: function (response) {
+					callback(response);
+				}
+			});
+		},
+
+		getRoot: function (id, callback) {
+			jQuery.ajax({
+				url: appUrl + "/root/" + id,
+				type: "GET",
+				success: function (response) {
+					callback(response);
+				}
+			});
+		},
+
+		addRoot: function (root) {
+			var postRequest = $.ajax({
+				url: appUrl + "/newRoot",
+				type: 'POST',
+				data: root,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					alert("successful root creation");
+					location.reload();
+				},
+				function () {
+					alert("failed root creation");
+				}
+			);
+
 		}
 
 	};

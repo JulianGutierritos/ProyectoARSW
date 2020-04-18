@@ -427,10 +427,13 @@ ul.sidebar-menu li a.active i {
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
 
 .detailBox {
-    width: 1000px;
+    width: 40%;
     border: 1px solid #bbb;
-    margin: 50px;
-    margin-top: 700px;
+    position: relative;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+    margin-top: 60%;
 }
 
 .titleBox {

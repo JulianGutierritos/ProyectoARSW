@@ -25,6 +25,14 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
 		else return proyecto;
     }
+    
+    
+	@Override
+	public Proyecto getProyectoByName(String projectName) throws PersistenceException {
+		Proyecto proyecto=proyectoMapper.getProyectoByName(projectName);
+		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
+		else return proyecto;
+	}
 
     @Override
     public ArrayList<Proyecto> getProyectos() throws PersistenceException {
