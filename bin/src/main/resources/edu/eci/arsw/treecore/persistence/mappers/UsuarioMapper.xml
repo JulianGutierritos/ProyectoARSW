@@ -1,0 +1,156 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper">
+	
+	<select parameterType="map" id="getUsers" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.passwd as passwd_usuario
+
+			FROM usuario as u
+	</select>
+
+	<select parameterType="map" id="getUserWithPasswd" resultMap="UsuarioResult">
+			SELECT 
+
+
+            u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.passwd as passwd_usuario
+
+			FROM usuario as u
+    		WHERE u.correo=#{correo} and u.passwd=#{passwd}
+
+	</select>
+	<select parameterType="map" id="getUser" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.passwd as passwd_usuario
+			FROM usuario as u
+
+    		WHERE u.correo=#{correo}
+
+	</select>
+
+	<select parameterType="map" id="getParticipantes" resultMap="UsuarioResult">
+			SELECT 
+
+    		u.correo as correo_usuario,
+  			u.nombre as nombre_usuario,
+  			u.passwd as passwd_usuario
+
+			FROM usuario as u
+
+    		WHERE u.correo IN (select usuario from participante where proyecto=#{proyecto})
+	</select>
+	<select parameterType="map" id="getNotificaciones" resultMap="NotificacionResult">
+			SELECT 
+            n.notificacionID as id_notificacion,
+			n.fechadecreacion as fecha_notificacion,
+			n.informacion as informacion_notificacion
+
+			FROM notificacion as n 
+			
+    		WHERE n.usuario=#{correo}
+			order by n.fechadecreacion desc
+	</select>
+	<select parameterType="map" id="getInvitaciones" resultMap="InvitacionResult">
+			SELECT 
+            i.remitente as invitacion_remitente,
+            i.proyecto as invitacion_proyecto,
+			i.receptor as invitacion_receptor,
+			p.nombre as proyecto_nombre
+
+			FROM invitacion as i 
+			LEFT JOIN proyecto as p on p.proyectoid = i.proyecto
+			
+    		WHERE i.receptor=#{correo}
+	</select>
+
+	<insert id ="insertarUsuario">
+    	INSERT into usuario (correo, nombre, passwd) 
+    	VALUES (#{usuario.correo},#{usuario.nombre},#{usuario.passwd})                     
+    </insert>
+
+	<insert id ="insertarNotificacion">
+		<selectKey keyProperty="id_notificacion" resultType="int" order="BEFORE">
+			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{notificacion.usuario.correo}
+    	</selectKey>
+		INSERT into notificacion (notificacionid, usuario, informacion) 
+    	VALUES (#{id_notificacion}, #{usuario},#{notificacion.informacion})                     
+    </insert>
+
+	<insert id ="insertarInvitacion">
+		INSERT into invitacion (remitente, receptor, proyecto)
+    	VALUES (#{invitacion.remitente}, #{receptor},#{invitacion.proyecto})                     
+    </insert>
+
+	<update id = "setContraseña">
+		UPDATE usuario
+		SET passwd=#{passwd}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<update id = "setNombre">
+		UPDATE usuario
+		SET nombre=#{nombre}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<update id = "setCorreo">
+		UPDATE usuario
+		SET correo=#{correo}
+		WHERE correo=#{usuario.correo}
+	</update>
+
+	<delete id = "deleteUsuario">
+		DELETE FROM public.usuario
+		WHERE correo=#{usuario.correo}
+	</delete>
+
+	<delete id = "deleteNotificaciones">
+		DELETE FROM public.notificacion
+		WHERE usuario=#{usuario.correo}
+	</delete>
+
+	<delete id = "deleteInvitacion">
+		DELETE FROM public.invitacion
+		WHERE remitente=#{invitacion.remitente} AND receptor=#{invitacion.receptor} AND proyecto=#{invitacion.proyecto}
+	</delete>	
+
+	<delete id = "deleteInvitaciones">
+		DELETE FROM public.invitacion
+		WHERE receptor={usuario} 
+	</delete>	
+
+    <resultMap id="NotificacionResult" type="Notificacion">
+		<id property="id" column="id_notificacion"/>
+		<result property="fecha" column="fecha_notificacion"/>
+		<result property="informacion" column="informacion_notificacion"/>
+  	</resultMap>
+
+    <resultMap id="InvitacionResult" type="Invitacion">
+		<result property="remitente" column="invitacion_remitente" />
+        <result property="proyecto" column="invitacion_proyecto" />
+		<result property="nombreProyecto" column="proyecto_nombre" />
+		<result property="receptor" column="invitacion_recepetor" />
+    </resultMap>
+
+	<resultMap id="UsuarioResult" type="edu.eci.arsw.treecore.model.impl.Usuario">
+			<id property="correo" column="correo_usuario"/>
+    		<result property="nombre" column="nombre_usuario"/>
+    		<result property="passwd" column="passwd_usuario"/>
+            <collection property="notificaciones" column="correo_usuario" 
+             javaType="ArrayList" ofType="Notificacion"
+             select="getNotificaciones" /> 
+             <collection property="invitaciones"  
+			 javaType="ArrayList" ofType="Invitacion" column="correo_usuario" 
+             select="getInvitaciones" />    			
+    </resultMap>
+</mapper>

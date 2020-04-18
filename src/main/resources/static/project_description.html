@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Description</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<!--Scripts-->
+	<script src="js/view/jquery.min.js"></script>
+	<script src="js/view/jquery.dropotron.min.js"></script>
+	<script src="js/view/jquery.scrollgress.min.js"></script>
+	<script src="js/view/skel.min.js"></script>
+	<script src="js/view/skel-layers.min.js"></script>
+	<script src="js/view/init.js"></script>
+	<script src="js/api/apiclient.js"></script>
+	<script src="js/api/app.js"></script>
+	<script src="js/api/apiprofile.js"></script>
+	<noscript>
+		<link rel="stylesheet" href="css/view/skel.css" />
+		<link rel="stylesheet" href="css/view/style.css" />
+		<link rel="stylesheet" href="css/view/style-wide.css" />
+	</noscript>
+</head>
+
+<body>
+
+	<script type="text/javascript">
+		apiprofile.verificar();
+	</script>
+	<header id="header" class="skel-layers-fixed">
+		<h1>
+			<a href="index.html">TreeCoreApp</a> by Equipo Dinamita
+		</h1>
+		<nav id="nav">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="" class="icon fa-angle-down">Layouts</a>
+					<ul>
+						<li><a href="prueba.html">Project</a>
+							<ul>
+								<li><a href="projectDescription.html">Add</a></li>
+								<li><a href="#">Option Two</a></li>
+								<li><a href="#">Option Three</a></li>
+								<li><a href="#">Option Four</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><a href="#" class="button">Sign In</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Main -->
+	<section id="main" class="container 75%">
+		<header>
+			<h2>Add Component</h2>
+			<p>Describe the new project component</p>
+		</header>
+		<div class="box">
+			<form method="post" action="#">
+				<div class="row uniform 50%">
+					<div class="12u">
+						<input type="text" name="name" id="pname" value="" placeholder="Name" />
+					</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="12u">
+						<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
+					</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="12u">
+						<textarea name="description" id="pdescription" placeholder="Enter description"
+							rows="6"></textarea>
+					</div>
+				</div>
+				<div class="row uniform">
+					<div class="12u">
+						<ul class="actions align-center">
+							<li><input type="submit" value="Add" onclick="app.addProject()" /></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+			<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+			<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+		</ul>
+		<ul class="copyright">
+			<li>&copy; Untitled. All rights reserved.</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</footer>
+
+</body>
+
+</html>

@@ -133,4 +133,3 @@ insert
     public.proyecto for each row execute function rama_participante();
 
 insert into proyecto (proyectoid, nombre, creador, descripcion) values (4, 'prueba', 'j@mail.com', 'holaaa');
-
