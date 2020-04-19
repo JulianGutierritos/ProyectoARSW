@@ -162,7 +162,16 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("Error al ingresar mensaje");
 		}
+	}
 
+	@Override
+	public void upateRama(Proyecto proyecto, Rama rama) throws ServiciosTreeCoreException {
+		try {
+			proyectoDAO.updateRama(proyecto, rama);
+		} catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("Error al actualizar la rama");
+		}
+		
 	}
 
 }

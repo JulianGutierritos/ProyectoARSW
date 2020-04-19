@@ -129,4 +129,24 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error al insertar mensaje");
         }       
     }
+
+
+	@Override
+	public void updateRama(Proyecto proyecto, Rama rama) throws PersistenceException {
+		try{
+            proyectoMapper.updateRama(proyecto, rama); 
+            System.out.println(proyecto.getId());
+            System.out.println(rama.getId());
+            System.out.println(rama.getNombre());
+            System.out.println(rama.getDescripcion());
+
+
+
+            
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al actualizar la rama");
+        } 
+		
+	}
 }

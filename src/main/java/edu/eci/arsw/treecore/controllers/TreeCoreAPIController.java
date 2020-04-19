@@ -234,10 +234,18 @@ public class TreeCoreAPIController {
 	public ResponseEntity<?> addProjectRama(@PathVariable("projectId") int projectId, @RequestBody Rama rama){
 		try {
 			Proyecto project=treeCoreProjectServices.getProyecto(projectId);
-			System.out.println(project);
-			System.out.println(rama);
-
-			//this.treeCoreProjectServices.insertarRama(rama, project);
+			Rama oldRama=treeCoreProjectServices.getSpecificProjectRama(projectId, rama.getId());
+			
+			if(oldRama==null) {
+				this.treeCoreProjectServices.insertarRama(rama, project);
+			}
+			else {
+				String ramaName=rama.getNombre();
+				String ramaDescrip=rama.getDescripcion();
+				oldRama.setNombre(ramaName);
+				oldRama.setDescripcion(ramaDescrip);
+				this.treeCoreProjectServices.upateRama(project, oldRama);
+			}
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);

@@ -36,4 +36,7 @@ public interface TreeCoreProjectServices {
 	public void insertarMensaje(Mensaje mensaje, int proyecto) throws ServiciosTreeCoreException;
 
 	public Proyecto getProyectoByName(String projectName) throws ServiciosTreeCoreException;
+	
+	public void upateRama(Proyecto proyecto, Rama rama) throws ServiciosTreeCoreException;
 }
+

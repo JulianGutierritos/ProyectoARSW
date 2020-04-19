@@ -6,6 +6,7 @@ var map = (function () {
 	var currentRootParentId;
 	var currentRootParent;
 	var currentProject;
+	var currentUser;
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -241,7 +242,7 @@ var map = (function () {
 
 		//dataList.add(newdata)
 		// alert(dataList.length)
-		alert(myDiagram.model.toJson())
+		//alert(myDiagram.model.toJson())
 
 		diagram.model.addNodeData(newdata);
 		layoutTree(oldnode);
@@ -403,19 +404,11 @@ var map = (function () {
 		if (currentRootParentId == 0) {
 			currentRootParentId = null;
 		}
-		//currentRootProyect=; //Hay que buscar en la bd con el nombre
+
 		if (currentRootParentId != null) {
-			alert(currentRootParentId);
-			alert(currentProject.id);
-
 			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getUser(setCurrentUser);
 		}
-
-		/*alert(currentRootId)
-		alert(currentRootParentId)*/
-		//alert(currentRootParent)
-		/*alert(currentRootProyect)*/
-
 		hiddenComponentAdd();
 
 	}
@@ -424,6 +417,9 @@ var map = (function () {
 		currentRootParent = rootParent;
 	}
 
+	setCurrentUser=function(user){
+		currentUser=user;
+	}
 
 
 
@@ -436,11 +432,10 @@ var map = (function () {
 			descripcion: messDecr,
 			archivos: [],
 			fechaDeCreacion: "",
-			creador: null
+			creador: currentUser
 
 		};
-
-		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));//+ id del proyecto
+		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
 	}
 
 	var back = function () {

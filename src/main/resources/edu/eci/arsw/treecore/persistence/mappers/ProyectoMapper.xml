@@ -79,7 +79,9 @@
 	    r.nombre as rama_nombre,
 	    r.ramapadre as rama_padre,
 	    r.fechadecreacion as rama_fecha, 
-	    r.creador as rama_creador
+	    r.creador as rama_creador,
+      r.descripcion as rama_desc
+
 	  from rama r 
 	
   	where r.ramaid = #{id}
@@ -91,7 +93,9 @@
 	    r.nombre as rama_nombre,
 	    r.ramapadre as rama_padre,
 	    r.fechadecreacion as rama_fecha, 
-	    r.creador as rama_creador
+	    r.creador as rama_creador,
+      r.descripcion as rama_desc
+
 	    from rama r 
   	  where r.proyecto = #{proyectoid}
     </select>
@@ -122,8 +126,8 @@
 			select COALESCE(MAX(ramaid)+1,1) from rama 
     </selectKey>
         INSERT INTO public.rama
-        (ramaid, nombre, proyecto, ramapadre, creador) 
-        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.ramaPadre.id}, #{rama.creador.correo})
+        (ramaid, nombre, proyecto, ramapadre, creador, descripcion) 
+        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.ramaPadre.id}, #{rama.creador.correo},#{rama.descripcion})     
     </insert>  
 
     <insert id ="insertarRama">
@@ -132,8 +136,15 @@
     </selectKey>
         INSERT INTO public.rama
         (ramaid, nombre, proyecto, fechadecreacion, creador) 
-        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.fechaDeCreacion}, #{rama.creador.correo})
+        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.fechaDeCreacion}, #{rama.creador.correo}, #{rama.descripcion})
     </insert> 
+
+    <update id="updateRama">
+      update rama set
+        nombre = #{rama.nombre},
+        descripcion = #{rama.descripcion}
+      where ramaid = #{rama.id} and proyecto=#{project.id}
+    </update>
 
     <resultMap id="MensajeResult" type="Mensaje">
 		<result property="fecha" column="mensaje_fecha"/>
@@ -145,8 +156,10 @@
     <id property="id" column="rama_id"/>
     <result property="nombre" column="rama_nombre"/>
     <result property="fechaDeCreacion" column="rama_fecha"/>
+    <result property="descripcion" column="rama_desc"/>
     <association property="ramaPadre" column="rama_padre" javaType="Rama" select="getRama"/>
     <association property="creador" column="rama_creador" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+
     </resultMap>    
     
   
