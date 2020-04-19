@@ -49,11 +49,18 @@ var app = (function () {
 	var onload = function(){
 		apiclient.getUsers(getTable);
 	}
+
+	var verificar = function(){
+		if (localStorage.correo != null){
+			location.replace("/profile.html")
+		}
+	}
     
     return {
     	loginUser : loginUser,
     	addUser : addUser,
 		prueba: prueba,
-		addProject : addProject
+		addProject : addProject,
+		verificar : verificar
     };
 })();

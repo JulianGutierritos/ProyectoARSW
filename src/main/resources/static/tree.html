@@ -14,10 +14,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="release/go.js"></script>
 	<script src="/js/api/apiclient.js"></script>
+	<script src="js/api/apiprofile.js"></script>
 	<script src="js/map.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-
+	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
+	<link href="css/dashio/style.css" rel="stylesheet">
+	<link href="css/dashio/style-responsive.css" rel="stylesheet">
+	<link href="css/dashio/table-responsive.css" rel="stylesheet">
 	<link rel="icon" type="image/png" href="layer/images/icons/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="layer/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="layer/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -34,25 +40,30 @@
 
 </head>
 
-<body onload="map.hiddenComponentAdd(), map.init(), apiclient.getProject(1,map.load)">
+<body onload="map.verificar(), map.hiddenComponentAdd(), map.init()">
+	<section id="container">
+		<header class="header black-bg">
+		  <a class="logo"><b>TREE<span>CORE</span></b></a>
+		  <div class="top-menu">
+			<ul class="nav pull-right top-menu">
+				<li><a class="logout" onclick = "apiprofile.salir()">Logout</a></li>
+			</ul>
+			<ul class="nav pull-right top-menu">
+				<li><a class="logout" onclick = "map.back()">Back</a></li>
+			</ul>
+		  </div>
+		</header>	
 	<section class="sec1">
 		<div id="sample">
 			<div id="myDiagramCanvas" class="myDiagramDiv"></div>
-
 		</div>
 	</section>
-
-
 	<section class="container-contact100" id="componentInfo">
-
 		<div class="wrap-contact100">
-
 			<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
 				<span>Add component</span>
 			</div>
-
 			<form class="contact100-form validate-form">
-
 				<div class="wrap-input100 validate-input">
 					<input id="name" class="input100" type="text" name="name" placeholder="Name">
 					<span class="focus-input100"></span>
@@ -60,7 +71,6 @@
 						<span class="lnr lnr-user m-b-2"></span>
 					</label>
 				</div>
-
 				<div class="wrap-input100 validate-input">
 					<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
 					<span class="focus-input100"></span>
@@ -68,7 +78,6 @@
 						<span class="lnr lnr-bubble"></span>
 					</label>
 				</div>
-
 				<div class="container-contact100-form-btn">
 					<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
 						Close
@@ -77,25 +86,15 @@
 					<button type="button" class="contact100-form-btn" onclick="map.addRootInfo(name, message)">      
 						Send Now
 					</button>
-
 				</div>
 			</form>
 		</div>
 	</section>
-
 	<section class="sec2">
 		<div id="info" class="info">
 			<button id="SaveButton" onclick="map.save()">Save</button>
 			<button onclick="map.load()">Load</button>
 			<button onclick="map.layoutAll()">Layout</button>
-			Diagram Model saved in JSON format: <br />
-			<textarea id="mySavedModel" style="width: 100%; height: 400px">
-				{ "class": "go.TreeModel",
-				  "nodeDataArray": [
-				{"key":0, "text":"Project", "loc":"0 0"}
-				 ]
-				}
-	  		</textarea>
 		</div>
 	</section>
 	<br />
@@ -116,8 +115,6 @@
 			</form>
 		</div>
 	</section>
-	</br>
-
+	</section>
 </body>
-
 </html>

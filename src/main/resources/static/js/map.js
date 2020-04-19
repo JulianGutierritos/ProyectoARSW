@@ -184,9 +184,7 @@ var map = (function () {
 				layoutTree(node);
 			});
 		});
-
-		// read in the predefined graph using the JSON format data held in the "mySavedModel" textarea
-		//load();
+		apiclient.getProject(sessionStorage.proyecto,map.load);
 	}
 
 	function spotConverter(dir, from) {
@@ -359,17 +357,15 @@ var map = (function () {
 	var publicar = function (rem) {
 		var mensaje = new Mensaje(rem, null, $("#mensaje").val());
 		$("#mensaje").val("");
-		stompClient.send("/treecore/mensaje." + 1, {}, JSON.stringify(mensaje));
+		stompClient.send("/treecore/mensaje." + sessionStorage.proyecto, {}, JSON.stringify(mensaje));
 	}
 
 	var conectar = function () {
 		var socket = new SockJS('/stompendpoint');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function (frame) {
-			stompClient.subscribe('/project/mensaje.' + 1, function (eventbody) {
+			stompClient.subscribe('/project/mensaje.' + sessionStorage.proyecto, function (eventbody) {
 				var mensaje = JSON.parse(eventbody.body);
-				console.log("entroooooooooooooooo");
-				console.log(mensaje)
 				$("#chat").append(
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
@@ -441,6 +437,16 @@ var map = (function () {
 		apiclient.addRoot(JSON.stringify(newRoot));//+ id del proyecto
 	}
 
+	var back = function(){
+		location.replace("/profile.html")
+	}
+
+	var verificar = function(){
+		if (sessionStorage.proyecto == null){
+			location.replace("/profile.html")
+		}
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -448,6 +454,8 @@ var map = (function () {
 		load: load,
 		layoutAll: layoutAll,
 		enviar: enviar,
-		addRootInfo:addRootInfo
+		addRootInfo:addRootInfo,
+		back:back,
+		verificar:verificar
 	}
 })();

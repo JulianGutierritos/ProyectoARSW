@@ -5,9 +5,9 @@ var apiprofile = (function () {
 	var aceptarInvitacion = function(p, r){
 		var newInvitacion = {
 			remitente : r,
-			receptor : sessionStorage.correo,
+			receptor : localStorage.correo,
 			proyecto : p,
-			receptor : sessionStorage.correo
+			receptor : localStorage.correo
 		};
 		apiclient.aceptarInvitacion(JSON.stringify(newInvitacion));
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
@@ -17,9 +17,9 @@ var apiprofile = (function () {
 	var eliminarInvitacion = function(p, r){
 		var newInvitacion = {
 			remitente : r,
-			receptor : sessionStorage.correo,
+			receptor : localStorage.correo,
 			proyecto : p,
-			receptor : sessionStorage.correo
+			receptor : localStorage.correo
 		};
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
 	}
@@ -65,7 +65,7 @@ var apiprofile = (function () {
 	}
 	var putProyectos = function(proyecto, id){
 		$("#proyectos").append(
-		'<tr><td><a href=/tree.html >' + proyecto + '</a></td></tr>'
+		'<tr><td><a onclick=apiprofile.proyecto(' + id + ') >' + proyecto + '</a></td></tr>'
 		);
 	}
 	var putNotificaciones = function (informacion, fecha){
@@ -78,13 +78,19 @@ var apiprofile = (function () {
 		location.replace("/addProject.html")
 	}
 	var verificar = function(){
-		if (sessionStorage.correo == null){
+		if (localStorage.correo == null){
 			location.replace("/login.html")
 		}
 	}
 	var salir = function(){
-		sessionStorage.removeItem('correo');
+		localStorage.removeItem('correo');
 		location.replace("/login.html")
+	}
+
+	var proyecto = function(id){
+		console.log(id);
+		sessionStorage.proyecto = id;
+		location.replace("/tree.html")
 	}
     return {
 		verificar : verificar,
@@ -95,6 +101,7 @@ var apiprofile = (function () {
 		crear : crearProyecto,
 		salir : salir,
 		eliminarInvitacion : eliminarInvitacion,
-		aceptarInvitacion : aceptarInvitacion
+		aceptarInvitacion : aceptarInvitacion,
+		proyecto: proyecto
     };
 })();

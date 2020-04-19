@@ -14,18 +14,19 @@
 	height: 90%;
 	position: absolute;
 	margin: 0 auto;
+	top: 100px;
 	left: 0;
 	right: 0;
 }
 
 .sec2 {
 	width: 60%;
-	height: 30%;
+	height: 10%;
 	position: absolute;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
-	top: 60%;
+	top: 65%;
 }
 
 .info {

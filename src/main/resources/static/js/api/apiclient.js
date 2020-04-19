@@ -1,11 +1,11 @@
 var apiclient = (function () {
-	//var appUrl = "https://treecore.herokuapp.com/treecore";
-	var appUrl = "http://localhost:8080/treecore";
+	var appUrl = "https://treecore.herokuapp.com/treecore";
+	//var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
 			jQuery.ajax({
-				url: appUrl + "/users/" + sessionStorage.correo,
+				url: appUrl + "/users/" + localStorage.correo,
 				type: "GET",
 				success: function (respuesta) {
 					callback(respuesta);
@@ -15,7 +15,7 @@ var apiclient = (function () {
 
 		getInvitaciones: function (callback) {
 			jQuery.ajax({
-				url: appUrl + "/users/" + sessionStorage.correo + "/invitations",
+				url: appUrl + "/users/" + localStorage.correo + "/invitations",
 				type: "GET",
 				success: function (respuesta) {
 					callback(respuesta);
@@ -25,7 +25,7 @@ var apiclient = (function () {
 
 		getProyectosUsuario: function (callback) {
 			jQuery.ajax({
-				url: appUrl + "/users/" + sessionStorage.correo + "/projects",
+				url: appUrl + "/users/" + localStorage.correo + "/projects",
 				type: "GET",
 				success: function (respuesta) {
 					callback(respuesta);
@@ -35,7 +35,7 @@ var apiclient = (function () {
 
 		getNotificaciones: function (callback) {
 			jQuery.ajax({
-				url: appUrl + "/users/" + sessionStorage.correo + "/notifications",
+				url: appUrl + "/users/" + localStorage.correo + "/notifications",
 				type: "GET",
 				success: function (respuesta) {
 					callback(respuesta);
@@ -52,7 +52,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					sessionStorage.correo = username;
+					localStorage.correo = username;
 					location.replace("http://localhost:8080/profile.html");
 				},
 				function () {
@@ -144,7 +144,7 @@ var apiclient = (function () {
 		},
 
 		getAutenticado: function () {
-			return sessionStorage.correo;
+			return localStorage.correo;
 		},
 
 		addProject: function (project) {
