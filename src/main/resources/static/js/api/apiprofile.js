@@ -1,107 +1,107 @@
 var apiclient = apiclient;
 var apiprofile = (function () {
 	var appUrl = "http://localhost:8080/treecore";
-	
-	var aceptarInvitacion = function(p, r){
+
+	var aceptarInvitacion = function (p, r) {
 		var newInvitacion = {
-			remitente : r,
-			receptor : localStorage.correo,
-			proyecto : p,
-			receptor : localStorage.correo
+			remitente: r,
+			receptor: localStorage.correo,
+			proyecto: p,
+			receptor: localStorage.correo
 		};
 		apiclient.aceptarInvitacion(JSON.stringify(newInvitacion));
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
 
 	}
 
-	var eliminarInvitacion = function(p, r){
+	var eliminarInvitacion = function (p, r) {
 		var newInvitacion = {
-			remitente : r,
-			receptor : localStorage.correo,
-			proyecto : p,
-			receptor : localStorage.correo
+			remitente: r,
+			receptor: localStorage.correo,
+			proyecto: p,
+			receptor: localStorage.correo
 		};
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
 	}
 
-	var showInvitaciones = function(resp){
-		for(var i = 0; i < resp.length; i++) {
-			putInvitaciones(resp[i]); 
+	var showInvitaciones = function (resp) {
+		for (var i = 0; i < resp.length; i++) {
+			putInvitaciones(resp[i]);
 		};
 		$("#numero").text(resp.length);
 		$("#anuncio").text("Tinene " + resp.length + " invitaciones");
 	}
-	var showProyectos = function(resp){
-		for(var i = 0; i < resp.length; i++) {
-			putProyectos(resp[i].nombre, resp[i].id); 
+	var showProyectos = function (resp) {
+		for (var i = 0; i < resp.length; i++) {
+			putProyectos(resp[i].nombre, resp[i].id);
 		};
 	}
-	var showNotificaciones = function(resp){
-		for(var i = 0; i < resp.length; i++) {
-			putNotificaciones(resp[i].informacion, resp[i].fecha); 
+	var showNotificaciones = function (resp) {
+		for (var i = 0; i < resp.length; i++) {
+			putNotificaciones(resp[i].informacion, resp[i].fecha);
 		};
 	}
-	var showUsuario = function(resp){
+	var showUsuario = function (resp) {
 		$("#nombre").text(resp.nombre);
 	}
-	var getInvitaciones = function(){
+	var getInvitaciones = function () {
 		apiclient.getInvitaciones(showInvitaciones);
 	}
-	var getProyectos = function(){
+	var getProyectos = function () {
 		apiclient.getProyectosUsuario(showProyectos);
 	}
-	var getNotificaciones = function(){
+	var getNotificaciones = function () {
 		apiclient.getNotificaciones(showNotificaciones);
 	}
-	var getUsuario = function(){
+	var getUsuario = function () {
 		apiclient.getUser(showUsuario);
 	}
-	var putInvitaciones = function(resp){
-		proyectoNombre= resp.nombreProyecto;
+	var putInvitaciones = function (resp) {
+		proyectoNombre = resp.nombreProyecto;
 		remitente = resp.remitente;
 		$("#invitaciones").append(
-		'<li> <a href=/tree.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre +  '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Rechazar </button> </li>'
+			'<li> <a href=/tree.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre + '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Rechazar </button> </li>'
 		);
 	}
-	var putProyectos = function(proyecto, id){
+	var putProyectos = function (proyecto, id) {
 		$("#proyectos").append(
-		'<tr><td><a onclick=apiprofile.proyecto(' + id + ') >' + proyecto + '</a></td></tr>'
+			'<tr><td><a onclick=apiprofile.proyecto(' + id + ') >' + proyecto + '</a></td></tr>'
 		);
 	}
-	var putNotificaciones = function (informacion, fecha){
-		var f = fecha.slice(0,10);
+	var putNotificaciones = function (informacion, fecha) {
+		var f = fecha.slice(0, 10);
 		$("#notificaciones").append(
-		'<div class="alert alert-info"><b>' + informacion + ' </b>' + f + '</div>'
+			'<div class="alert alert-info"><b>' + informacion + ' </b>' + f + '</div>'
 		);
 	}
-	var crearProyecto = function(){
+	var crearProyecto = function () {
 		location.replace("/addProject.html")
 	}
-	var verificar = function(){
-		if (localStorage.correo == null){
+	var verificar = function () {
+		if (localStorage.correo == null) {
 			location.replace("/login.html")
 		}
 	}
-	var salir = function(){
+	var salir = function () {
 		localStorage.removeItem('correo');
 		location.replace("/login.html")
 	}
 
-	var proyecto = function(id){
+	var proyecto = function (id) {
 		console.log(id);
 		sessionStorage.proyecto = id;
 		location.replace("/tree.html")
 	}
-    return {
-		verificar : verificar,
-		invitaciones : getInvitaciones,
-		proyectos : getProyectos,
-		notificaciones : getNotificaciones,
-		usuario : getUsuario,
-		crear : crearProyecto,
-		salir : salir,
-		eliminarInvitacion : eliminarInvitacion,
-		aceptarInvitacion : aceptarInvitacion,
+	return {
+		verificar: verificar,
+		invitaciones: getInvitaciones,
+		proyectos: getProyectos,
+		notificaciones: getNotificaciones,
+		usuario: getUsuario,
+		crear: crearProyecto,
+		salir: salir,
+		eliminarInvitacion: eliminarInvitacion,
+		aceptarInvitacion: aceptarInvitacion,
 		proyecto: proyecto
-    };
+	};
 })();

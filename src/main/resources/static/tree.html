@@ -18,12 +18,13 @@
 	<script src="js/map.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.css" />
 	<link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
-	<link href="css/dashio/style.css" rel="stylesheet">
-	<link href="css/dashio/style-responsive.css" rel="stylesheet">
-	<link href="css/dashio/table-responsive.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/dashio/style.css">
+	<link rel="stylesheet" type="text/css" href="css/dashio/style-responsive.css">
+	<link rel="stylesheet" type="text/css" href="css/dashio/table-responsive.css">
 	<link rel="icon" type="image/png" href="layer/images/icons/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="layer/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="layer/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -41,80 +42,96 @@
 </head>
 
 <body onload="map.verificar(), map.hiddenComponentAdd(), map.init()">
+	
 	<section id="container">
 		<header class="header black-bg">
-		  <a class="logo"><b>TREE<span>CORE</span></b></a>
-		  <div class="top-menu">
-			<ul class="nav pull-right top-menu">
-				<li><a class="logout" onclick = "apiprofile.salir()">Logout</a></li>
-			</ul>
-			<ul class="nav pull-right top-menu">
-				<li><a class="logout" onclick = "map.back()">Back</a></li>
-			</ul>
-		  </div>
-		</header>	
-	<section class="sec1">
-		<div id="sample">
-			<div id="myDiagramCanvas" class="myDiagramDiv"></div>
-		</div>
-	</section>
-	<section class="container-contact100" id="componentInfo">
-		<div class="wrap-contact100">
-			<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
-				<span>Add component</span>
+			<a class="logo"><b>TREE<span>CORE</span></b></a>
+			<div class="top-menu">
+				<ul class="nav pull-right top-menu">
+					<li><a class="logout" onclick="apiprofile.salir()">Logout</a></li>
+				</ul>
+				<ul class="nav pull-right top-menu">
+					<li><a class="logout" onclick="map.back()">Back</a></li>
+				</ul>
 			</div>
-			<form class="contact100-form validate-form">
-				<div class="wrap-input100 validate-input">
-					<input id="name" class="input100" type="text" name="name" placeholder="Name">
-					<span class="focus-input100"></span>
-					<label class="label-input100" for="name">
-						<span class="lnr lnr-user m-b-2"></span>
-					</label>
+		</header>
+		<section class="sec1">
+			<div id="sample">
+				<div id="myDiagramCanvas" class="myDiagramDiv"></div>
+			</div>
+		</section>
+
+
+		<section class="container-contact100" id="componentInfo">
+
+			<div class="wrap-contact100">
+
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
+					<span>Add component</span>
 				</div>
-				<div class="wrap-input100 validate-input">
-					<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
-					<span class="focus-input100"></span>
-					<label class="label-input100 rs1" for="message">
-						<span class="lnr lnr-bubble"></span>
-					</label>
-				</div>
-				<div class="container-contact100-form-btn">
-					<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
-						Close
-					</button>
-					&nbsp; &nbsp; &nbsp; &nbsp;
-					<button type="button" class="contact100-form-btn" onclick="map.addRootInfo(name, message)">      
-						Send Now
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
-	<section class="sec2">
-		<div id="info" class="info">
-			<button id="SaveButton" onclick="map.save()">Save</button>
-			<button onclick="map.load()">Load</button>
-			<button onclick="map.layoutAll()">Layout</button>
-		</div>
-	</section>
-	<br />
-	<section class="detailBox">
-		<div class="titleBox">
-			<label>Chat</label>
-		</div>
-		<div class="actionBox">
-			<ul class="commentList" id="chat">
-			</ul>
-			<form class="form-inline" role="form">
-				<div class="form-group">
-					<input id="mensaje" class="form-control" type="text" placeholder="Message" />
-				</div>
-				<div class="form-group">
-					<button onclick="map.enviar(); return false;">Send</button>
-				</div>
-			</form>
-		</div>
-	</section>
-	</section>
+
+				<form class="contact100-form validate-form">
+
+					<div class="wrap-input100 validate-input">
+						<input id="rootName" class="input100" type="text" name="name" placeholder="Name">
+						<span class="focus-input100"></span>
+						<label class="label-input100" for="name">
+							<span class="lnr lnr-user m-b-2"></span>
+						</label>
+					</div>
+
+					<div class="wrap-input100 validate-input">
+						<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
+						<span class="focus-input100"></span>
+						<label class="label-input100 rs1" for="message">
+							<span class="lnr lnr-bubble"></span>
+						</label>
+					</div>
+
+					<div class="container-contact100-form-btn">
+						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
+							Close
+						</button>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+						<button type="button" class="contact100-form-btn"
+							onclick="map.addRootInfo(rootName.value, message.value)">
+							Send Now
+						</button>
+
+					</div>
+				</form>
+			</div>
+		</section>
+
+		<section class="sec2">
+			<div id="info" class="info">
+				<button id="SaveButton" onclick="map.save()">Save</button>
+				<button onclick="map.load()">Load</button>
+				<button onclick="map.layoutAll()">Layout</button>
+			</div>
+		</section>
+
+		<br />
+
+		<section class="detailBox">
+			<div class="titleBox">
+				<label>Chat</label>
+			</div>
+			<div class="actionBox">
+				<ul class="commentList" id="chat">
+				</ul>
+				<form class="form-inline" role="form">
+					<div class="form-group">
+						<input id="mensaje" class="form-control" type="text" placeholder="Message" />
+					</div>
+					<div class="form-group">
+						<button onclick="map.enviar(); return false;">Send</button>
+					</div>
+				</form>
+			</div>
+		</section>
+		<br />
+
 </body>
+
 </html>

@@ -35,10 +35,11 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	public Proyecto getProyectoByName(String projectName) throws ServiciosTreeCoreException {
 		try {
 			Proyecto p = proyectoDAO.getProyectoByName(projectName);
+			return p;
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("Proyecto no encontrado");
+
 		}
-		return null;
 	}
 
 	@Override
@@ -105,6 +106,26 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 			throw new ServiciosTreeCoreException("No hay proyectos");
 		}
 		return ramas;
+	}
+	
+	@Override
+	public Rama getSpecificProjectRama(int idProyecto, int idRama) throws ServiciosTreeCoreException{
+		Rama rama=null;
+		try {
+			ArrayList<Rama> ramas= proyectoDAO.getRamas(idProyecto);
+			int ramasSize=ramas.size();
+			int cont=0;
+			while(rama==null && cont<ramasSize) {
+				Rama ramaLista=ramas.get(cont);
+				if(ramaLista.getId()==idRama) {
+					rama=ramaLista;
+				}
+				cont++;
+			}
+		} catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("La rama no existe");
+		}
+		return rama;
 	}
 
 	@Override

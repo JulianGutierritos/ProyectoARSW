@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore";
-	//var appUrl = "http://localhost:8080/treecore";
+	//var appUrl = "https://treecore.herokuapp.com/treecore";
+	var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
@@ -165,7 +165,7 @@ var apiclient = (function () {
 			);
 		},
 
-		getProjectByName:function(projectName, callback){
+		getProjectByName: function (projectName, callback) {
 			jQuery.ajax({
 				url: appUrl + "/project/" + projectName,
 				type: "GET",
@@ -175,9 +175,11 @@ var apiclient = (function () {
 			});
 		},
 
-		getRoot: function (id, callback) {
+		getRoot: function (idProyecto, idRama, callback) {
+
+			alert(appUrl + "/projects/" + idProyecto + "/rama/" + idRama)
 			jQuery.ajax({
-				url: appUrl + "/root/" + id,
+				url: appUrl + "/projects/" + idProyecto + "/rama/" + idRama,
 				type: "GET",
 				success: function (response) {
 					callback(response);
@@ -185,9 +187,9 @@ var apiclient = (function () {
 			});
 		},
 
-		addRoot: function (root) {
+		addProjectRoot: function (projectId, root) {
 			var postRequest = $.ajax({
-				url: appUrl + "/newRoot",
+				url: appUrl + "/projects/" + projectId + "/ramas",
 				type: 'POST',
 				data: root,
 				contentType: "application/json"

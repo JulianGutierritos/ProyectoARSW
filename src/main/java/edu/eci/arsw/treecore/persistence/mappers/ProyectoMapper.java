@@ -11,21 +11,22 @@ import edu.eci.arsw.treecore.model.impl.Mensaje;
 
 public interface ProyectoMapper {
 
-    public ArrayList<Proyecto> getProyectos();
+	public ArrayList<Proyecto> getProyectos();
 
-    public Proyecto getProyecto(@Param("id") int id);
-    
-    public ArrayList<Proyecto> getProyectosUsuario(@Param("correo") String correo);
-
-    public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
-
-    public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
-    
-    public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
-
-    public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
-
-    public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
+	public Proyecto getProyecto(@Param("id") int id);
 
 	public Proyecto getProyectoByName(@Param("projectName") String projectName);
+
+	public ArrayList<Proyecto> getProyectosUsuario(@Param("correo") String correo);
+
+	public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
+
+	public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
+
+	public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+
+	public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+
+	public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
+
 }

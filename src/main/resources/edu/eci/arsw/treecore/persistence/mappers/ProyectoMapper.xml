@@ -53,7 +53,7 @@
         FROM proyecto as p 
         LEFT JOIN mensaje as m on p.proyectoid = m.proyecto
 
-        where p.proyectoid = #{projectName}
+        where p.nombre = #{projectName}
     </select>
 
     <select parameterType="map" id="getProyectosUsuario" resultMap="ProyectoResult">

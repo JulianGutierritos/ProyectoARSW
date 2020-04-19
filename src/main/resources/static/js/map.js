@@ -5,7 +5,7 @@ var map = (function () {
 	var currentRootId;
 	var currentRootParentId;
 	var currentRootParent;
-	var currentRootProyectId;
+	var currentProject;
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -184,7 +184,9 @@ var map = (function () {
 				layoutTree(node);
 			});
 		});
-		apiclient.getProject(sessionStorage.proyecto,map.load);
+
+		apiclient.getProject(sessionStorage.proyecto, map.load);
+
 	}
 
 	function spotConverter(dir, from) {
@@ -310,6 +312,7 @@ var map = (function () {
 		var list = [];
 		var pro = { "key": 0, "text": project.nombre, "loc": "0 0" };
 		list.push(pro);
+		currentProject = project;
 		for (var i = 1; i <= ramlist.length; i++) {
 			var rama = ramlist[i - 1];
 			//alert(JSON.stringify(rama))
@@ -320,8 +323,8 @@ var map = (function () {
 			if (padre == null) {
 				idPadre = 0;
 			}
-			else{
-				idPadre=padre.id;
+			else {
+				idPadre = padre.id;
 			}
 			//alert(JSON.stringify(padre))
 			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
@@ -387,62 +390,65 @@ var map = (function () {
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
-	var currentRoot=function(e, obj){
+	var currentRoot = function (e, obj) {
 		var adorn = obj.part;
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
 		var oldnode = adorn.adornedPart;
 		var olddata = oldnode.data;//oldata is the current root
 
-		currentRootId=olddata.key; //current root id 
-		currentRootParentId=olddata.parent; //cuando es 0, el padre es el proyecto
+		currentRootId = olddata.key; //current root id 
+		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
 
-		if(currentRootParentId==0){
-			currentRootParentId=null;
+		if (currentRootParentId == 0) {
+			currentRootParentId = null;
 		}
 		//currentRootProyect=; //Hay que buscar en la bd con el nombre
+		if (currentRootParentId != null) {
+			alert(currentRootParentId);
+			alert(currentProject.id);
 
-		apiclient.getProject(currentRootParentId,setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+		}
 
 		/*alert(currentRootId)
-		alert(currentRootParentId)
-		alert(currentRootParent)
-		alert(currentRootProyect)*/
-
+		alert(currentRootParentId)*/
+		//alert(currentRootParent)
+		/*alert(currentRootProyect)*/
 
 		hiddenComponentAdd();
+
 	}
 
-	setCurrentRootParent=function(rootParent){
-		currentRootParent=rootParent;
-	}
-
-	setCurrentRootProyect=function(rootProject){
-		currentRootProyect=rootProject;
+	setCurrentRootParent = function (rootParent) {
+		currentRootParent = rootParent;
 	}
 
 
-	var addRootInfo=function(name, messDecr){
+
+
+	var addRootInfo = function (name, messDecr) {
 
 		var newRoot = {
-			id : currentRootId,
-			nombre : name,
-			ramaPadre : "",//currentRootParentId object
+			id: currentRootId,
+			nombre: name,
+			ramaPadre: currentRootParent,
 			descripcion: messDecr,
-			archivos : [],
-			fechaDeCreacion:"",
-			creador: ""
+			archivos: [],
+			fechaDeCreacion: "",
+			creador: null
 
 		};
-		apiclient.addRoot(JSON.stringify(newRoot));//+ id del proyecto
+
+		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));//+ id del proyecto
 	}
 
-	var back = function(){
+	var back = function () {
 		location.replace("/profile.html")
 	}
 
-	var verificar = function(){
-		if (sessionStorage.proyecto == null){
+	var verificar = function () {
+		if (sessionStorage.proyecto == null) {
 			location.replace("/profile.html")
 		}
 	}
@@ -454,8 +460,8 @@ var map = (function () {
 		load: load,
 		layoutAll: layoutAll,
 		enviar: enviar,
-		addRootInfo:addRootInfo,
-		back:back,
-		verificar:verificar
+		addRootInfo: addRootInfo,
+		back: back,
+		verificar: verificar
 	}
 })();
