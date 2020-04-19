@@ -3,42 +3,42 @@ package edu.eci.arsw.treecore.model.impl;
 import java.util.Date;
 
 public class Notificacion {
-    private int id;
-    private Date fecha; 
-    private String informacion;
-    
-    public Notificacion(int id, Date fecha, String informacion){
-        this.id = id;
-        this.fecha = fecha;
-        this.informacion = informacion;
-    }
+	private int id;
+	private Date fecha;
+	private String informacion;
 
-    public Notificacion(){
-        
-    }
+	public Notificacion(int id, Date fecha, String informacion) {
+		this.id = id;
+		this.fecha = fecha;
+		this.informacion = informacion;
+	}
 
-    public Date getFecha(){
-        return fecha;
-    }
+	public Notificacion() {
 
-    public void setFecha(Date fecha){
-        this.fecha = fecha;
-    }
+	}
 
-    public String getInformacion(){
-        return informacion;
-    }
+	public Date getFecha() {
+		return fecha;
+	}
 
-    public void setInformacion(String informacion){
-        this.informacion = informacion;
-    }
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
-    public int getId(){
-        return this.id;
-    }
+	public String getInformacion() {
+		return informacion;
+	}
 
-    public void setId(int id){
-        this.id = id;
-    }
+	public void setInformacion(String informacion) {
+		this.informacion = informacion;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 }

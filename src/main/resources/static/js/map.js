@@ -314,13 +314,24 @@ var map = (function () {
 		list.push(pro);
 		for (var i = 1; i <= ramlist.length; i++) {
 			var rama = ramlist[i - 1];
+			//alert(JSON.stringify(rama))
+			//alert(rama.ramaPadre)
+
 			var padre = rama.ramaPadre;
+			var idPadre;
 			if (padre == null) {
-				padre = 0;
+				idPadre = 0;
 			}
-			var cadena = { "key": rama.id, "parent": padre, "text": rama.nombre };
+			else{
+				idPadre=padre.id;
+			}
+			//alert(JSON.stringify(padre))
+			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
 			list.push(cadena);
 		};
+
+
+
 		var val = { "class": "go.TreeModel", "nodeDataArray": list };
 		myDiagram.model = go.Model.fromJson(val);
 		layoutAll();
@@ -385,18 +396,23 @@ var map = (function () {
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
 		var oldnode = adorn.adornedPart;
-		var olddata = oldnode.data;
+		var olddata = oldnode.data;//oldata is the current root
 
-		currentRootId=olddata.key; //oldata is the current root 
+		currentRootId=olddata.key; //current root id 
 		currentRootParentId=olddata.parent; //cuando es 0, el padre es el proyecto
 
+		if(currentRootParentId==0){
+			currentRootParentId=null;
+		}
 		//currentRootProyect=; //Hay que buscar en la bd con el nombre
 
-		apiclient.getProject(currentRootParentId,setCurrentRootParent);
+		apiclient.getProject(currentRootParentId,setCurrentRootParent);//se necesita el id del padre y el nombre
 
-		alert(currentRootId)
+		/*alert(currentRootId)
 		alert(currentRootParentId)
 		alert(currentRootParent)
+		alert(currentRootProyect)*/
+
 
 		hiddenComponentAdd();
 	}
@@ -415,14 +431,14 @@ var map = (function () {
 		var newRoot = {
 			id : currentRootId,
 			nombre : name,
-			RamaPadre : "",
+			ramaPadre : "",//currentRootParentId object
 			descripcion: messDecr,
 			archivos : [],
 			fechaDeCreacion:"",
 			creador: ""
 
 		};
-		apiclient.loginUser(JSON.stringify(newUser), username);
+		apiclient.addRoot(JSON.stringify(newRoot));//+ id del proyecto
 	}
 
 	return {

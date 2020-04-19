@@ -12,13 +12,13 @@ public class Rama {
 	private Date fechaDeCreacion;
 	private Usuario creador;
 
-	public Rama(int id, String nombre, Rama ramaPadre, String descripcion, ArrayList<Archivo> archivos, Date fechaDeCreacion,
-			Usuario creador) {
-		
+	public Rama(int id, String nombre, Rama ramaPadre, String descripcion, ArrayList<Archivo> archivos,
+			Date fechaDeCreacion, Usuario creador) {
+
 		this.id = id;
 		this.nombre = nombre;
 		this.ramaPadre = ramaPadre;
-		this.descripcion=descripcion;
+		this.descripcion = descripcion;
 		this.archivos = archivos;
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.creador = creador;
@@ -58,13 +58,13 @@ public class Rama {
 	public void setRamaPadre(Rama ramaPadre) {
 		this.ramaPadre = ramaPadre;
 	}
-	
+
 	public String getDescripcion() {
 		return this.descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
-		this.descripcion=descripcion;
+		this.descripcion = descripcion;
 	}
 
 	public ArrayList<Archivo> getArchivos() {
