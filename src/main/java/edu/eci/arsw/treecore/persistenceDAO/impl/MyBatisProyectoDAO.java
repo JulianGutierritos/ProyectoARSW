@@ -25,6 +25,14 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
 		else return proyecto;
     }
+    
+    
+	@Override
+	public Proyecto getProyectoByName(String projectName) throws PersistenceException {
+		Proyecto proyecto=proyectoMapper.getProyectoByName(projectName);
+		if(proyecto==null) throw new PersistenceException("Proyecto no encontrado");
+		else return proyecto;
+	}
 
     @Override
     public ArrayList<Proyecto> getProyectos() throws PersistenceException {
@@ -83,8 +91,6 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
     public void insertarProyecto (Proyecto proyecto) throws PersistenceException {
         try{
             proyectoMapper.insertarProyecto(proyecto);
-            Rama r = new Rama(1, proyecto.getNombre(),  null, null, null, proyecto.getCreador());
-            proyectoMapper.insertarRama(r, proyecto);
         }
         catch (Exception e){
             throw new PersistenceException("Error al insertar participante");
@@ -100,7 +106,6 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error al insertar participante");
         }
     }
-
     @Override
     public void insertarRama (Rama rama, Proyecto proyecto) throws PersistenceException {
         try{
@@ -115,4 +120,33 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error al insertar rama");
         }
     }
+    @Override
+    public void insertarMensaje (Mensaje mensaje, int proyecto) throws PersistenceException{
+        try{
+            proyectoMapper.insertarMensaje(mensaje, proyecto);   
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al insertar mensaje");
+        }       
+    }
+
+
+	@Override
+	public void updateRama(Proyecto proyecto, Rama rama) throws PersistenceException {
+		try{
+            proyectoMapper.updateRama(proyecto, rama); 
+            System.out.println(proyecto.getId());
+            System.out.println(rama.getId());
+            System.out.println(rama.getNombre());
+            System.out.println(rama.getDescripcion());
+
+
+
+            
+        }
+        catch (Exception e){
+            throw new PersistenceException("Error al actualizar la rama");
+        } 
+		
+	}
 }

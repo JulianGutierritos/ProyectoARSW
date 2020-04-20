@@ -7,22 +7,28 @@ import org.apache.ibatis.annotations.Param;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
+import edu.eci.arsw.treecore.model.impl.Mensaje;
 
 public interface ProyectoMapper {
 
-    public ArrayList<Proyecto> getProyectos();
+	public ArrayList<Proyecto> getProyectos();
 
-    public Proyecto getProyecto(@Param("id") int id);
-    
-    public ArrayList<Proyecto> getProyectosUsuario(@Param("correo") String correo);
+	public Proyecto getProyecto(@Param("id") int id);
 
-    public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
+	public Proyecto getProyectoByName(@Param("projectName") String projectName);
 
-    public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
-    
-    public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+	public ArrayList<Proyecto> getProyectosUsuario(@Param("correo") String correo);
 
-    public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+	public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
 
+	public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
 
+	public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+
+	public void insertarRama(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+
+	public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
+
+	public void  updateRama(@Param("project") Proyecto proyecto, @Param("rama") Rama rama);
+	
 }

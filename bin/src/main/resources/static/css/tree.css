@@ -1,0 +1,62 @@
+.sec1 {
+	width: 100%;
+	height: 60%;
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+
+.myDiagramDiv {
+	background-color: lightblue;
+	border: solid 2px blue;
+	width: 80%;
+	height: 90%;
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+
+.sec2 {
+	width: 60%;
+	height: 30%;
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: 60%;
+}
+
+.info {
+	background-color: lightblue;
+	width: 80%;
+	height: 50%;
+}
+
+
+.component {
+
+	width: 60%;
+	height: 30%;
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: 100%;
+
+}
+
+.buttonCloseDiv {
+	width: 10%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+	background: red;
+	position: relative;
+	z-index: 10;
+}
+
