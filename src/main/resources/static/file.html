@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <script src="js/api/apifiles.js"></script>
+  <script src="js/view/jquery.min.js"></script>
+  <script src="js/view/jquery.dropotron.min.js"></script>
+  <script src="js/view/jquery.scrollgress.min.js"></script>
+</head>
 <body onload="myFunction()">
 
-<input type="file" id="myFile" multiple size="50" onchange="myFunction()"/>
+<input type="text" id="getPath" />
+<button name="button" width="50px" onclick="apifiles.getFiles('C')">Files</button>
+<button name="button" width="50px" onclick="apifiles.getFiles('A')">File</button>
+<br/>
+<br/>
+<input type="text" id="postPath" />
+<input type="file" id="myFile" multiple size="50" onchange="apifiles.uploadFile()"/>
 
 <p id="demo"></p>
   

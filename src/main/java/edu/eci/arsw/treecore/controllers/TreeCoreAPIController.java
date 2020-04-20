@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.exceptions.TreeCoreStoreException;
@@ -20,6 +22,7 @@ import edu.eci.arsw.treecore.persistence.TreeCoreStore;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -322,7 +325,7 @@ public class TreeCoreAPIController {
      * @return
      */
     @RequestMapping(path = "/files/{ruta}", method = RequestMethod.GET)
-    public ResponseEntity<?> GetFiles(@PathVariable("ruta") String ruta) {
+    public ResponseEntity<?> getFiles(@PathVariable("ruta") String ruta) {
         try {
             return new ResponseEntity<>(treeCoreStore.consultar(ruta), HttpStatus.ACCEPTED);
         } catch ( TreeCoreStoreException e) {
@@ -336,13 +339,29 @@ public class TreeCoreAPIController {
      * @return
      */
     @RequestMapping(path = "/file/{ruta}", method = RequestMethod.GET)
-    public ResponseEntity<?> GetFile(@PathVariable("ruta") String ruta) {
+    public ResponseEntity<?> getFile(@PathVariable("ruta") String ruta) {
         try {
             return new ResponseEntity<>(treeCoreStore.downloadFile(ruta), HttpStatus.ACCEPTED);
         } catch ( TreeCoreStoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-    }
+	}
+	
+	/**
+     * 
+     * @param ruta
+     * @return
+     */
+    @RequestMapping(path = "/file/{ruta}", method = RequestMethod.POST)
+    public ResponseEntity<?> postFile(@PathVariable("ruta") String ruta,@RequestParam("file") MultipartFile file) {
+        try {
+			treeCoreStore.receiveFile(file,ruta);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch ( TreeCoreStoreException e) {
+            Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+	}
 
 }
