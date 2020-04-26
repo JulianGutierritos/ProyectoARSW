@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface TreeCoreStore {
     public List<String> consultar(final String ruta) throws TreeCoreStoreException;
-    public void uploadFile(File localFile, String path) throws TreeCoreStoreException;
+    public void uploadFile(File localFile, String path, String option) throws TreeCoreStoreException;
     public List<String> downloadFile(String path) throws TreeCoreStoreException;
-    public void receiveFile(MultipartFile file, String path) throws TreeCoreStoreException;
+    public void receiveFile(MultipartFile file, String path, String option) throws TreeCoreStoreException;
 }

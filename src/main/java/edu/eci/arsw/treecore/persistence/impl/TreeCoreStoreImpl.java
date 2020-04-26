@@ -81,43 +81,43 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
      * 
      * @param localFile Archivo
      * @param path      Ruta donde se va a colocar.
+     * @param option
      * @throws TreeCoreStoreException
      */
     @Override
-    public void uploadFile(File localFile, String path) throws TreeCoreStoreException {
-    
-        if (localFile.exists()){
-            try (InputStream in = new FileInputStream(localFile)) {
+    public void uploadFile(File localFile, String path, String option) throws TreeCoreStoreException {
+
+        try (InputStream in = new FileInputStream(localFile)) {
+            if(option=="put"){
                 client.files().deleteV2(path);
-                final ProgressListener progressListener = l -> printProgress(l, localFile.length());
-                final FileMetadata metadata = client.files().uploadBuilder(path)
-                    .withMode(WriteMode.ADD)
-                    .withClientModified(new Date(localFile.lastModified()))
-                    .uploadAndFinish(in, progressListener);
-
-                System.out.println(metadata.toStringMultiline());
-            } catch (final DbxException  ex) {
-                throw new TreeCoreStoreException("Error uploading to Dropbox: " + ex.getMessage());
-
-            } catch (final IOException ex) {
-                throw new TreeCoreStoreException("Error reading from file \"" + localFile + "\": " + ex.getMessage());
             }
+            final ProgressListener progressListener = l -> printProgress(l, localFile.length());
+            final FileMetadata metadata = client.files().uploadBuilder(path)
+                .withMode(WriteMode.ADD)
+                .withClientModified(new Date(localFile.lastModified()))
+                .uploadAndFinish(in, progressListener);
+
+            System.out.println(metadata.toStringMultiline());
+        } catch (final DbxException  ex) {
+            throw new TreeCoreStoreException("Error uploading to Dropbox: " + ex.getMessage());
+
+        } catch (final IOException ex) {
+            throw new TreeCoreStoreException("Error reading from file \"" + localFile + "\": " + ex.getMessage());
         }
     }
 
-    public void receiveFile(MultipartFile file, String path) throws TreeCoreStoreException {
+    public void receiveFile(MultipartFile file, String path, String option) throws TreeCoreStoreException {
         path = path.replace("+++", "/");
-        System.out.println(file.getOriginalFilename() + " " + path+" "+  file.getSize());
-        File localFile = new File("test.txt");
-        System.out.println(localFile.getName()+" "+localFile.exists());
+        
 
         try {
-            localFile = new File(file.getOriginalFilename());
+            File localFile = new File(file.getOriginalFilename());
             localFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(localFile);
             fos.write(file.getBytes());
             fos.close();
-            uploadFile(localFile, path);
+            uploadFile(localFile, path,option);
+            localFile.delete();
         } catch (IOException e) {
             System.out.println("F");
         }

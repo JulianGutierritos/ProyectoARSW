@@ -22,7 +22,6 @@ import edu.eci.arsw.treecore.persistence.TreeCoreStore;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -356,7 +355,7 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/file/{ruta}", method = RequestMethod.POST)
     public ResponseEntity<?> postFile(@PathVariable("ruta") String ruta,@RequestParam("file") MultipartFile file) {
         try {
-			treeCoreStore.receiveFile(file,ruta);
+			treeCoreStore.receiveFile(file,ruta,"post");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch ( TreeCoreStoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
