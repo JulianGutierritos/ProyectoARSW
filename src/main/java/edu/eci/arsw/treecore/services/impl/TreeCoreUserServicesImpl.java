@@ -89,9 +89,19 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
 			this.usuarioDAO.deleteInvitacion(invitacion);
 		} 
 		catch (PersistenceException e) {
-			throw new ServiciosTreeCoreException("Credenciales incorrectas");
+			throw new ServiciosTreeCoreException("Error al eliminar invitacion");
 		}
 		
-	}
+    }
+    
+    @Override
+    public void addInvitacion(Invitacion invitacion) throws ServiciosTreeCoreException{
+        try {
+			this.usuarioDAO.insertarInvitacion(invitacion);
+		} 
+		catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("Error al agregar invitacion");
+		}
+    }
 
 }

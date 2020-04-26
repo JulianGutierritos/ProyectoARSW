@@ -62,9 +62,8 @@ public interface UsuarioMapper {
 	 * Metodo que adiciona una invitacion al usuario dado
 	 * 
 	 * @param i Invitacion del usuario
-	 * @param u Usuario
 	 */
-	public void insertarInvitacion(@Param("invitacion") Invitacion i, @Param("usuario") Usuario u);
+	public void insertarInvitacion(@Param("invitacion") Invitacion i);
 
 	/**
 	 * Metodo que cambia la contraseña al usuario dado

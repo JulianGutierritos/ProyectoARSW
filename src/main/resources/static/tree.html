@@ -67,7 +67,7 @@
 			<div class="wrap-contact100">
 
 				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
-					<span>Add component</span>
+					<span>Agregar Componente</span>
 				</div>
 
 				<form class="contact100-form validate-form">
@@ -90,12 +90,12 @@
 
 					<div class="container-contact100-form-btn">
 						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
-							Close
+							Cerrar
 						</button>
 						&nbsp; &nbsp; &nbsp; &nbsp;
 						<button type="button" class="contact100-form-btn"
 							onclick="map.addRootInfo(rootName.value, message.value)">
-							Send Now
+							Enviar
 						</button>
 
 					</div>
@@ -125,12 +125,48 @@
 						<input id="mensaje" class="form-control" type="text" placeholder="Message" />
 					</div>
 					<div class="form-group">
-						<button onclick="map.enviar(); return false;">Send</button>
+						<button onclick="map.enviar(); return false;">Enviar</button>
 					</div>
 				</form>
 			</div>
 		</section>
 		<br />
+
+		<button type="button" class="contact100-form-btn" style="position: absolute; top:500px"
+			onclick="map.hiddenComponentAddCollaborator()">
+			Agregar Colaborador
+		</button>
+		
+		<section class="container-contact100" id="componentCollaborator" style="position: absolute; top:100px">
+
+			<div class="wrap-contact100">
+
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
+					<span>Agregar Colaborador</span>
+				</div>
+
+				<form class="contact100-form validate-form">
+
+					<div class="wrap-input100 validate-input">
+						<input id="colaborador" class="input100" type="text" name="name" placeholder="Correo">
+						<span class="focus-input100"></span>
+						<label class="label-input100" for="name">
+							<span class="lnr lnr-user m-b-2"></span>
+						</label>
+					</div>
+					<div class="container-contact100-form-btn">
+						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAddCollaborator()">
+							Cerrar
+						</button>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+						<button type="button" class="contact100-form-btn"
+							onclick="map.invitar()">
+							Invitar
+						</button>
+					</div>
+				</form>
+			</div>
+		</section>
 
 </body>
 

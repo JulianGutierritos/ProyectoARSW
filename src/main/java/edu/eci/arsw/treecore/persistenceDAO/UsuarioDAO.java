@@ -71,4 +71,12 @@ public interface UsuarioDAO {
 	 */
 	public void deleteInvitacion(Invitacion invitacion) throws PersistenceException;
 
+	/**
+	 * Metodo que agrega una inviación de un usuario
+	 * 
+	 * @param invitacion Invitacion a eliminar
+	 * @throws PersistenceException Si no encuentra la invitacion
+	 */
+	public void insertarInvitacion(Invitacion invitacion) throws PersistenceException;
+
 }

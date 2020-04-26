@@ -6,8 +6,11 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+
+import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
+import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
 @Controller
 public class TreeCoreAPIMessage {
@@ -16,6 +19,9 @@ public class TreeCoreAPIMessage {
 
 	@Autowired
 	TreeCoreProjectServices treeCoreProjectServices;
+
+	@Autowired
+	TreeCoreUserServices treeCoreUserServices;
 
 	/**
 	 * Metodo para adicionar un nuevo mensaje al proyecto
@@ -34,4 +40,21 @@ public class TreeCoreAPIMessage {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Metodo para adicionar una nueva invitacion a un proyecto
+	 * 
+	 * @param inv Nuevo mensaje
+	 * @param correo correo del usuario
+	 */
+	@MessageMapping("/invitacion.{correo}")
+	public void handlerInvitation(Invitacion inv, @DestinationVariable String correo) {
+		try {
+			treeCoreUserServices.addInvitacion(inv);
+			msgt.convertAndSend("/project/user/invitacion." + correo, inv);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

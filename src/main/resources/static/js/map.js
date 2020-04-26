@@ -1,5 +1,6 @@
 var apiclient = apiclient;
 var stompClient = null;
+var proyecto = null;
 var map = (function () {
 
 	var currentRootId;
@@ -187,6 +188,7 @@ var map = (function () {
 		});
 
 		apiclient.getProject(sessionStorage.proyecto, map.load);
+		hiddenComponentAddCollaborator();
 
 	}
 
@@ -309,6 +311,7 @@ var map = (function () {
 	}
 
 	function load(project) {
+		proyecto = project
 		var ramlist = project.ramas;
 		var list = [];
 		var pro = { "key": 0, "text": project.nombre, "loc": "0 0" };
@@ -359,9 +362,20 @@ var map = (function () {
 	}
 
 	var publicar = function (rem) {
-		var mensaje = new Mensaje(rem, null, $("#mensaje").val());
-		$("#mensaje").val("");
-		stompClient.send("/treecore/mensaje." + sessionStorage.proyecto, {}, JSON.stringify(mensaje));
+		if ($("#mensaje").val() != ""){
+			var mensaje = new Mensaje(rem, null, $("#mensaje").val());
+			$("#mensaje").val("");
+			stompClient.send("/treecore/mensaje." + sessionStorage.proyecto, {}, JSON.stringify(mensaje));
+		}
+	}
+
+	var invitar = function (){
+		if ($("#colaborador").val() != ""){
+			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
+		}
+		$("#colaborador").val("");
+		hiddenComponentAddCollaborator();
 	}
 
 	var conectar = function () {
@@ -370,6 +384,8 @@ var map = (function () {
 		stompClient.connect({}, function (frame) {
 			stompClient.subscribe('/project/mensaje.' + sessionStorage.proyecto, function (eventbody) {
 				var mensaje = JSON.parse(eventbody.body);
+				console.log(mensaje);
+				console.log("si entro");
 				$("#chat").append(
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
@@ -385,9 +401,23 @@ var map = (function () {
 		}
 	}
 
+	class Invitacion {
+		constructor(remitente, proyecto, nombreProyecto, receptor){
+			this.remitente = remitente;
+			this.proyecto = proyecto;
+			this.nombreProyecto = nombreProyecto;
+			this.receptor = receptor;
+		}
+	}
+
 
 	var hiddenComponentAdd = function () {
 		var el = document.getElementById("componentInfo");
+		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+	}
+
+	var hiddenComponentAddCollaborator = function () {
+		var el = document.getElementById("componentCollaborator");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
@@ -457,6 +487,8 @@ var map = (function () {
 		enviar: enviar,
 		addRootInfo: addRootInfo,
 		back: back,
-		verificar: verificar
+		verificar: verificar,
+		hiddenComponentAddCollaborator : hiddenComponentAddCollaborator,
+		invitar : invitar
 	}
 })();
