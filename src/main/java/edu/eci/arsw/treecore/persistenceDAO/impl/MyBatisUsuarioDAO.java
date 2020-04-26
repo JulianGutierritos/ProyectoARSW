@@ -77,11 +77,17 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 			this.usuarioMapper.deleteInvitacion(invitacion);
 		}
 		catch(Exception e) {
-			throw new PersistenceException("No se ha podido adicionar al usuario");
+			throw new PersistenceException("No se ha podido eliminar la invitacion");
 		}
 	}
 
-
-	
-
+	@Override
+	public void insertarInvitacion(Invitacion invitacion) throws PersistenceException{
+		try {
+			this.usuarioMapper.insertarInvitacion(invitacion);
+		}
+		catch(Exception e) {
+			throw new PersistenceException("No se ha podido adicionar la invitacion");
+		}
+	}
 }
