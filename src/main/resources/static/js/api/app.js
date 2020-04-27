@@ -56,11 +56,21 @@ var app = (function () {
 		}
 	}
 
+	openNav=function(){
+		document.getElementById("mySidenav").style.width = "250px";
+	}
+
+	closeNav=function(){
+		document.getElementById("mySidenav").style.width = "0";
+	}
+
 	return {
 		loginUser: loginUser,
 		addUser: addUser,
 		prueba: prueba,
 		addProject: addProject,
-		verificar: verificar
+		verificar: verificar,
+		openNav: openNav,
+		closeNav: closeNav
 	};
 })();

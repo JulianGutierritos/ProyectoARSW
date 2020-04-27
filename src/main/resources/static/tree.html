@@ -16,6 +16,7 @@
 	<script src="/js/api/apiclient.js"></script>
 	<script src="js/api/apiprofile.js"></script>
 	<script src="js/map.js"></script>
+	<script src="js/api/app.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
@@ -42,7 +43,7 @@
 </head>
 
 <body onload="map.verificar(), map.hiddenComponentAdd(), map.init()">
-	
+
 	<section id="container">
 		<header class="header black-bg">
 			<a class="logo"><b>TREE<span>CORE</span></b></a>
@@ -55,6 +56,22 @@
 				</ul>
 			</div>
 		</header>
+
+		<div class="openMenu">
+			<span onclick="app.openNav()">&#9776; Opciones</span>
+		</div>
+
+
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="app.closeNav()">&times;</a>
+
+			<div class="colabDiv">
+				<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAddCollaborator()">
+					Agregar Colaborador
+				</button>
+			</div>
+		</div>
+
 		<section class="sec1">
 			<div id="sample">
 				<div id="myDiagramCanvas" class="myDiagramDiv"></div>
@@ -66,7 +83,7 @@
 
 			<div class="wrap-contact100">
 
-				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
 					<span>Componente</span>
 				</div>
 
@@ -97,19 +114,19 @@
 							onclick="map.addRootInfo(rootName.value, message.value)">
 							Enviar
 						</button>
-						<br/>
+						<br />
 					</div>
 
 					<div class="container-contact100-form-btn">
 						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
 							Cerrar
 						</button>
-						<br/>
+						<br />
 					</div>
 
 				</form>
 			</div>
-		</section>	
+		</section>
 
 		<br />
 
@@ -132,16 +149,11 @@
 		</section>
 		<br />
 
-		<button type="button" class="contact100-form-btn" style="position: absolute; top:500px"
-			onclick="map.hiddenComponentAddCollaborator()">
-			Agregar Colaborador
-		</button>
-		
 		<section class="container-contact100" id="componentCollaborator" style="position: absolute; top:100px">
 
 			<div class="wrap-contact100">
 
-				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-03.png);">
 					<span>Agregar Colaborador</span>
 				</div>
 
@@ -155,18 +167,25 @@
 						</label>
 					</div>
 					<div class="container-contact100-form-btn">
-						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAddCollaborator()">
+						<button type="button" class="contact100-form-btn"
+							onclick="map.hiddenComponentAddCollaborator()">
 							Cerrar
 						</button>
 						&nbsp; &nbsp; &nbsp; &nbsp;
-						<button type="button" class="contact100-form-btn"
-							onclick="map.invitar()">
+						<button type="button" class="contact100-form-btn" onclick="map.invitar()">
 							Invitar
 						</button>
 					</div>
 				</form>
 			</div>
 		</section>
+
+	</section>
+
+
+
+
+
 
 </body>
 

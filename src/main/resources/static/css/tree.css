@@ -65,3 +65,72 @@
 	z-index: 10;
 }
 
+.colabDiv{
+	position: absolute;
+	margin: 0 auto;
+	left: 0.5%;
+	right: 0;
+	top: 20%;
+}
+
+.openMenu{
+	position: absolute;
+	cursor:pointer;
+	font-size:140%;
+	margin: 0 auto;
+	left: 0.5%;
+	right: 0;
+	top: 14%;
+	z-index: 40;
+}
+
+
+.sidenav {
+	height: 50%;
+	width: 0;
+	position: absolute;
+	z-index: 50;
+	top: 8%;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	transition: 0.5s;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.sidenav a {
+	padding: 10% 3% 3% 10%;
+	text-decoration: none;
+	font-size: 200%;
+	color: #818181;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 5%;
+	font-size: 250%;
+	margin-left: 100%;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 10%;
+	}
+
+	.sidenav a {
+		font-size: 5%;
+	}
+}
+
