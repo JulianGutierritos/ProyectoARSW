@@ -67,7 +67,7 @@
 			<div class="wrap-contact100">
 
 				<div class="contact100-form-title" style="background-image: url(layer/images/bg-01.jpg);">
-					<span>Agregar Componente</span>
+					<span>Componente</span>
 				</div>
 
 				<form class="contact100-form validate-form">
@@ -89,27 +89,27 @@
 					</div>
 
 					<div class="container-contact100-form-btn">
-						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
-							Cerrar
+						<button type="button" class="contact100-form-btn" onclick="map.delComponent()">
+							Eliminar
 						</button>
 						&nbsp; &nbsp; &nbsp; &nbsp;
 						<button type="button" class="contact100-form-btn"
 							onclick="map.addRootInfo(rootName.value, message.value)">
 							Enviar
 						</button>
-
+						<br/>
 					</div>
+
+					<div class="container-contact100-form-btn">
+						<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
+							Cerrar
+						</button>
+						<br/>
+					</div>
+
 				</form>
 			</div>
-		</section>
-
-		<section class="sec2">
-			<div id="info" class="info">
-				<button id="SaveButton" onclick="map.save()">Save</button>
-				<button onclick="map.load()">Load</button>
-				<button onclick="map.layoutAll()">Layout</button>
-			</div>
-		</section>
+		</section>	
 
 		<br />
 

@@ -92,6 +92,14 @@ public interface ProyectoDAO {
 	public void insertarRama(Rama rama, Proyecto proyecto) throws PersistenceException;
 
 	/**
+	 * Metodo para eliminar una rama
+	 * 
+	 * @param rama Rama a eliminar
+	 * @throws PersistenceException Si no encuentra a la rama
+	 */
+	public void deleteRama(Rama rama) throws PersistenceException;
+
+	/**
 	 * Metodo para adicionar un nuevo proyecto
 	 * 
 	 * @param proyecto Nuevo proyecto
@@ -128,8 +136,9 @@ public interface ProyectoDAO {
 
 	/**
 	 * Metodo que obtiene el token de la app
+	 * 
 	 * @param tokenId id del token en la base de datos.
-	 * @return 
+	 * @return
 	 */
 	public String getAccessToken(int tokenId) throws PersistenceException;
 

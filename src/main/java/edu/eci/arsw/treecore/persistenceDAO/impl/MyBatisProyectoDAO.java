@@ -120,6 +120,17 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error al insertar rama");
         }
     }
+    
+    @Override
+	public void deleteRama(Rama rama) throws PersistenceException {
+    	try{
+            proyectoMapper.delRama(rama);   
+        }
+        catch (Exception e){
+            throw new PersistenceException("No se ha podido eliminar la rama");
+        } 	
+	}
+    
     @Override
     public void insertarMensaje (Mensaje mensaje, int proyecto) throws PersistenceException{
         try{
@@ -159,4 +170,6 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error consiguiendo el token");
         }
     }
+
 }
+

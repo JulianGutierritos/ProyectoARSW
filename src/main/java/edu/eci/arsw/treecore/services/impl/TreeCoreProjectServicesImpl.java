@@ -107,18 +107,18 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 		}
 		return ramas;
 	}
-	
+
 	@Override
-	public Rama getSpecificProjectRama(int idProyecto, int idRama) throws ServiciosTreeCoreException{
-		Rama rama=null;
+	public Rama getSpecificProjectRama(int idProyecto, int idRama) throws ServiciosTreeCoreException {
+		Rama rama = null;
 		try {
-			ArrayList<Rama> ramas= proyectoDAO.getRamas(idProyecto);
-			int ramasSize=ramas.size();
-			int cont=0;
-			while(rama==null && cont<ramasSize) {
-				Rama ramaLista=ramas.get(cont);
-				if(ramaLista.getId()==idRama) {
-					rama=ramaLista;
+			ArrayList<Rama> ramas = proyectoDAO.getRamas(idProyecto);
+			int ramasSize = ramas.size();
+			int cont = 0;
+			while (rama == null && cont < ramasSize) {
+				Rama ramaLista = ramas.get(cont);
+				if (ramaLista.getId() == idRama) {
+					rama = ramaLista;
 				}
 				cont++;
 			}
@@ -141,6 +141,15 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException {
 		try {
 			proyectoDAO.insertarRama(rama, proyecto);
+		} catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("No hay proyectos");
+		}
+	}
+
+	@Override
+	public void deleteRama(Rama rama) throws ServiciosTreeCoreException {
+		try {
+			proyectoDAO.deleteRama(rama);
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("No hay proyectos");
 		}
@@ -171,7 +180,6 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("Error al actualizar la rama");
 		}
-		
-	}
 
+	}
 }

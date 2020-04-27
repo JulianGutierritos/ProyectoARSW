@@ -429,11 +429,11 @@ ul.sidebar-menu li a.active i {
 .detailBox {
     width: 40%;
     border: 1px solid #bbb;
-    position: relative;
+    position: absolute;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
-    margin-top: 35%;
+    top: 80%;
 }
 
 .titleBox {

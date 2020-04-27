@@ -8,6 +8,7 @@ var map = (function () {
 	var currentRootParent;
 	var currentProject;
 	var currentUser;
+	var currentRoot;
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -362,15 +363,15 @@ var map = (function () {
 	}
 
 	var publicar = function (rem) {
-		if ($("#mensaje").val() != ""){
+		if ($("#mensaje").val() != "") {
 			var mensaje = new Mensaje(rem, null, $("#mensaje").val());
 			$("#mensaje").val("");
 			stompClient.send("/treecore/mensaje." + sessionStorage.proyecto, {}, JSON.stringify(mensaje));
 		}
 	}
 
-	var invitar = function (){
-		if ($("#colaborador").val() != ""){
+	var invitar = function () {
+		if ($("#colaborador").val() != "") {
 			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
 			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
 		}
@@ -402,7 +403,7 @@ var map = (function () {
 	}
 
 	class Invitacion {
-		constructor(remitente, proyecto, nombreProyecto, receptor){
+		constructor(remitente, proyecto, nombreProyecto, receptor) {
 			this.remitente = remitente;
 			this.proyecto = proyecto;
 			this.nombreProyecto = nombreProyecto;
@@ -439,6 +440,9 @@ var map = (function () {
 			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
 			apiclient.getUser(setCurrentUser);
 		}
+
+		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+
 		hiddenComponentAdd();
 
 	}
@@ -447,8 +451,12 @@ var map = (function () {
 		currentRootParent = rootParent;
 	}
 
-	setCurrentUser=function(user){
-		currentUser=user;
+	setCurrentUser = function (user) {
+		currentUser = user;
+	}
+
+	setCurrentRootObject = function(root){
+		currentRoot=root;
 	}
 
 
@@ -468,6 +476,12 @@ var map = (function () {
 		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
 	}
 
+
+	var delComponent = function () {		
+		apiclient.deleteRoot(JSON.stringify(currentRoot));
+	}
+
+
 	var back = function () {
 		location.replace("/profile.html")
 	}
@@ -481,6 +495,7 @@ var map = (function () {
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
+		delComponent: delComponent,
 		save: save,
 		load: load,
 		layoutAll: layoutAll,
@@ -488,7 +503,7 @@ var map = (function () {
 		addRootInfo: addRootInfo,
 		back: back,
 		verificar: verificar,
-		hiddenComponentAddCollaborator : hiddenComponentAddCollaborator,
-		invitar : invitar
+		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
+		invitar: invitar
 	}
 })();

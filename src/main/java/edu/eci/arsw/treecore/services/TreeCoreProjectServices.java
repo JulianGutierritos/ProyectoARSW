@@ -110,6 +110,14 @@ public interface TreeCoreProjectServices {
 	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException;
 
 	/**
+	 * Metodo para eliminar una rama
+	 * 
+	 * @param rama Rama a eliminar
+	 * @throws ServiciosTreeCoreException Si no encuentra la rama
+	 */
+	public void deleteRama(Rama rama) throws ServiciosTreeCoreException;
+
+	/**
 	 * Metodo para adicionar un nuevo mensaje a un proyecto
 	 * 
 	 * @param mensaje  Nuevo mensaje

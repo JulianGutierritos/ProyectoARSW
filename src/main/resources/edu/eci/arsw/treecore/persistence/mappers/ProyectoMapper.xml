@@ -146,6 +146,17 @@
       where ramaid = #{rama.id} and proyecto=#{project.id}
     </update>
 
+    <update id="updateRamaNombre">
+      update rama set
+        nombre = #{rama.nombre},
+      where ramaid = #{rama.id} and proyecto=#{project.id}
+    </update>
+
+    <delete id="delRama">
+      delete from rama where ramaid = #{rama.id}
+    </delete>
+
+
     <select parameterType="map" id="getAccessToken" resultType="String">
       select access_token
       from public.dropbox_token
@@ -153,33 +164,31 @@
     </select>
 
     <resultMap id="MensajeResult" type="Mensaje">
-		<result property="fecha" column="mensaje_fecha"/>
-		<result property="contenido" column="mensaje_contenido"/>
-    <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+      <result property="fecha" column="mensaje_fecha"/>
+      <result property="contenido" column="mensaje_contenido"/>
+      <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
   	</resultMap>
 
     <resultMap id="RamaResult" type="Rama">
-    <id property="id" column="rama_id"/>
-    <result property="nombre" column="rama_nombre"/>
-    <result property="fechaDeCreacion" column="rama_fecha"/>
-    <result property="descripcion" column="rama_desc"/>
-    <association property="ramaPadre" column="rama_padre" javaType="Rama" select="getRama"/>
-    <association property="creador" column="rama_creador" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
-
+      <id property="id" column="rama_id"/>
+      <result property="nombre" column="rama_nombre"/>
+      <result property="fechaDeCreacion" column="rama_fecha"/>
+      <result property="descripcion" column="rama_desc"/>
+      <association property="ramaPadre" column="rama_padre" javaType="Rama" select="getRama"/>
+      <association property="creador" column="rama_creador" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>   
     </resultMap>    
-    
   
     <resultMap id="ProyectoResult" type="Proyecto">
-		<id property="id" column="id_proyecto"/>
-		<result property="nombre" column="nombre_proyecto"/>
-		<result property="descripcion" column="descripcion_proyecto"/>
-    <result property="fechaDeCreacion" column="fecha_proyecto"/>
-    <association property="creador" column="creador_proyecto" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
-    <collection property="participantes" javaType="ArrayList" ofType="Usuario" column="id_proyecto"
-     select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getParticipantes"/> 
-    <collection property="mensajes" javaType="ArrayList" ofType="Mensaje"
-    resultMap="MensajeResult"/> 
-    <collection property="ramas" javaType="ArrayList" ofType="Rama" column="id_proyecto"
-    select="getProyectosRamas"/> 
+      <id property="id" column="id_proyecto"/>
+      <result property="nombre" column="nombre_proyecto"/>
+      <result property="descripcion" column="descripcion_proyecto"/>
+      <result property="fechaDeCreacion" column="fecha_proyecto"/>
+      <association property="creador" column="creador_proyecto" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>
+      <collection property="participantes" javaType="ArrayList" ofType="Usuario" column="id_proyecto"
+      select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getParticipantes"/> 
+      <collection property="mensajes" javaType="ArrayList" ofType="Mensaje"
+      resultMap="MensajeResult"/> 
+      <collection property="ramas" javaType="ArrayList" ofType="Rama" column="id_proyecto"
+      select="getProyectosRamas"/> 
     </resultMap>
 </mapper>

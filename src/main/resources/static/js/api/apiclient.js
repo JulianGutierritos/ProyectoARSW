@@ -203,7 +203,23 @@ var apiclient = (function () {
 					alert("failed root creation");
 				}
 			);
+		},
 
+		deleteRoot:function (rama){
+			var delRequest = $.ajax({
+				url: appUrl + "/delete/project/rama",
+				type: 'DELETE',
+				data: rama,
+				contentType: "application/json"
+			});
+			delRequest.then(
+				function () {
+					location.reload();
+				},
+				function () {
+					alert("failure delete");
+				}
+			);
 		}
 
 	};

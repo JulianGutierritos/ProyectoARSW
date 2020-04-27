@@ -82,6 +82,20 @@ public interface ProyectoMapper {
 	public void updateRama(@Param("project") Proyecto proyecto, @Param("rama") Rama rama);
 
 	/**
+	 * Metodo para actualizar el nombre de una rama
+	 * 
+	 * @param rama Rama con sus nuevos datos
+	 */
+	public void updateRamaNombre(@Param("rama") Rama rama);
+
+	/**
+	 * Metodo para eliminar una rama
+	 * 
+	 * @param rama Rama a eliminar
+	 */
+	public void delRama(@Param("rama") Rama rama);
+
+	/**
 	 * Metodo para adicionar un mensaje a un proyecto
 	 * 
 	 * @param mensaje  Nuevo mensaje
@@ -91,6 +105,7 @@ public interface ProyectoMapper {
 
 	/**
 	 * Metodo para obtener el token de la app
+	 * 
 	 * @param tokenId id del token en la base de datos.
 	 */
 	public String getAccessToken(@Param("tokenId") int tokenId);
