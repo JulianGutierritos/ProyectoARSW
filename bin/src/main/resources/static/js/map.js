@@ -1,7 +1,18 @@
+var apiclient = apiclient;
+var stompClient = null;
+var proyecto = null;
 var map = (function () {
+
+	var currentRootId;
+	var currentRootParentId;
+	var currentRootParent;
+	var currentProject;
+	var currentUser;
+	var currentRoot;
+
 	function init() {
 		var $ = go.GraphObject.make;
-		
+
 		myDiagram =
 			$(go.Diagram, "myDiagramCanvas",
 				{
@@ -78,7 +89,7 @@ var map = (function () {
 					{
 						alignment: go.Spot.Right,
 						alignmentFocus: go.Spot.Right,
-						click: hiddenComponentAdd  // define click behavior for this Button in the Adornment
+						click: currentRoot,
 					},
 					$(go.TextBlock, "me",  // the Button content
 						{ font: "bold 8pt sans-serif" })
@@ -177,8 +188,9 @@ var map = (function () {
 			});
 		});
 
-		// read in the predefined graph using the JSON format data held in the "mySavedModel" textarea
-		load();
+		apiclient.getProject(sessionStorage.proyecto, map.load);
+		hiddenComponentAddCollaborator();
+
 	}
 
 	function spotConverter(dir, from) {
@@ -233,7 +245,7 @@ var map = (function () {
 
 		//dataList.add(newdata)
 		// alert(dataList.length)
-		alert(myDiagram.model.toJson())
+		//alert(myDiagram.model.toJson())
 
 		diagram.model.addNodeData(newdata);
 		layoutTree(oldnode);
@@ -295,10 +307,108 @@ var map = (function () {
 	// Show the diagram's model in JSON format
 	function save() {
 		document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+		console.log(myDiagram.model.toJson());
 		myDiagram.isModified = false;
 	}
-	function load() {
+
+	function load(project) {
+		proyecto = project
+		var ramlist = project.ramas;
+		var list = [];
+		var pro = { "key": 0, "text": project.nombre, "loc": "0 0" };
+		list.push(pro);
+		currentProject = project;
+		for (var i = 1; i <= ramlist.length; i++) {
+			var rama = ramlist[i - 1];
+			//alert(JSON.stringify(rama))
+			//alert(rama.ramaPadre)
+
+			var padre = rama.ramaPadre;
+			var idPadre;
+			if (padre == null) {
+				idPadre = 0;
+			}
+			else {
+				idPadre = padre.id;
+			}
+			//alert(JSON.stringify(padre))
+			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
+			list.push(cadena);
+		};
+
+
+
+		var val = { "class": "go.TreeModel", "nodeDataArray": list };
+		myDiagram.model = go.Model.fromJson(val);
+		layoutAll();
+		conectar();
+		mensajes(project);
+	}
+
+	function loadN() {
 		myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+	}
+
+	var mensajes = function (project) {
+		for (var i = 0; i < project.mensajes.length; i++) {
+			var mensaje = project.mensajes[i];
+			$("#chat").append(
+				'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
+			);
+		}
+	}
+
+	var enviar = function () {
+		apiclient.getUser(publicar)
+	}
+
+	var publicar = function (rem) {
+		if ($("#mensaje").val() != "") {
+			var mensaje = new Mensaje(rem, null, $("#mensaje").val());
+			$("#mensaje").val("");
+			stompClient.send("/treecore/mensaje." + sessionStorage.proyecto, {}, JSON.stringify(mensaje));
+		}
+	}
+
+	var invitar = function () {
+		if ($("#colaborador").val() != "") {
+			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
+		}
+		$("#colaborador").val("");
+		hiddenComponentAddCollaborator();
+	}
+
+	var conectar = function () {
+		var socket = new SockJS('/stompendpoint');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function (frame) {
+			stompClient.subscribe('/project/mensaje.' + sessionStorage.proyecto, function (eventbody) {
+				var mensaje = JSON.parse(eventbody.body);
+				console.log(mensaje);
+				console.log("si entro");
+				$("#chat").append(
+					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
+				);
+			});
+		});
+	}
+
+	class Mensaje {
+		constructor(usuario, fecha, contenido) {
+			this.usuario = usuario;
+			this.fecha = fecha;
+			this.contenido = contenido;
+		}
+	}
+
+	class Invitacion {
+		constructor(remitente, proyecto, nombreProyecto, receptor) {
+			this.remitente = remitente;
+			this.proyecto = proyecto;
+			this.nombreProyecto = nombreProyecto;
+			this.receptor = receptor;
+		}
 	}
 
 
@@ -307,11 +417,93 @@ var map = (function () {
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
+	var hiddenComponentAddCollaborator = function () {
+		var el = document.getElementById("componentCollaborator");
+		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+	}
+
+	var currentRoot = function (e, obj) {
+		var adorn = obj.part;
+		var diagram = adorn.diagram;
+		diagram.startTransaction("Add Node");
+		var oldnode = adorn.adornedPart;
+		var olddata = oldnode.data;//oldata is the current root
+
+		currentRootId = olddata.key; //current root id 
+		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
+
+		if (currentRootParentId == 0) {
+			currentRootParentId = null;
+		}
+
+		if (currentRootParentId != null) {
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getUser(setCurrentUser);
+		}
+
+		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+
+		hiddenComponentAdd();
+
+	}
+
+	setCurrentRootParent = function (rootParent) {
+		currentRootParent = rootParent;
+	}
+
+	setCurrentUser = function (user) {
+		currentUser = user;
+	}
+
+	setCurrentRootObject = function(root){
+		currentRoot=root;
+	}
+
+
+
+	var addRootInfo = function (name, messDecr) {
+
+		var newRoot = {
+			id: currentRootId,
+			nombre: name,
+			ramaPadre: currentRootParent,
+			descripcion: messDecr,
+			archivos: [],
+			fechaDeCreacion: "",
+			creador: currentUser
+
+		};
+		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
+	}
+
+
+	var delComponent = function () {		
+		apiclient.deleteRoot(JSON.stringify(currentRoot));
+	}
+
+
+	var back = function () {
+		location.replace("/profile.html")
+	}
+
+	var verificar = function () {
+		if (sessionStorage.proyecto == null) {
+			location.replace("/profile.html")
+		}
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
+		delComponent: delComponent,
 		save: save,
 		load: load,
-		layoutAll: layoutAll
+		layoutAll: layoutAll,
+		enviar: enviar,
+		addRootInfo: addRootInfo,
+		back: back,
+		verificar: verificar,
+		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
+		invitar: invitar
 	}
 })();

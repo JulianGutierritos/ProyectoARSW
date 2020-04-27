@@ -68,9 +68,10 @@
 .colabDiv{
 	position: absolute;
 	margin: 0 auto;
-	left: 0.5%;
+	left: 0;
 	right: 0;
 	top: 20%;
+	text-align:center;
 }
 
 .openMenu{
@@ -102,6 +103,8 @@
 	display: -ms-flexbox;
 	display: flex;
 	flex-wrap: wrap;
+
+	text-align:center;
 }
 
 .sidenav a {
