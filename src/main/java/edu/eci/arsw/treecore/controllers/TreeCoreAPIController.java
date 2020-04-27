@@ -18,7 +18,6 @@ import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
-import edu.eci.arsw.treecore.persistence.TreeCoreStore;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreStoreServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;

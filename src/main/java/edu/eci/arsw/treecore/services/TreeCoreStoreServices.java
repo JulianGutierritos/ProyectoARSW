@@ -1,6 +1,5 @@
 package edu.eci.arsw.treecore.services;
 
-import java.io.File;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
