@@ -89,4 +89,10 @@ public interface ProyectoMapper {
 	 */
 	public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
 
+	/**
+	 * Metodo para obtener el token de la app
+	 * @param tokenId id del token en la base de datos.
+	 */
+	public String getAccessToken(@Param("tokenId") int tokenId);
+
 }

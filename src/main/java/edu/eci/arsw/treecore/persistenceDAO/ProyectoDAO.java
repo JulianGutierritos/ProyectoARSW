@@ -126,4 +126,11 @@ public interface ProyectoDAO {
 	 */
 	public void updateRama(Proyecto proyecto, Rama rama) throws PersistenceException;
 
+	/**
+	 * Metodo que obtiene el token de la app
+	 * @param tokenId id del token en la base de datos.
+	 * @return 
+	 */
+	public String getAccessToken(int tokenId) throws PersistenceException;
+
 }

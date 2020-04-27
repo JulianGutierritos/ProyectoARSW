@@ -146,6 +146,12 @@
       where ramaid = #{rama.id} and proyecto=#{project.id}
     </update>
 
+    <select parameterType="map" id="getAccessToken" resultType="String">
+      select access_token
+      from public.dropbox_token
+      where id = #{tokenId}
+    </select>
+
     <resultMap id="MensajeResult" type="Mensaje">
 		<result property="fecha" column="mensaje_fecha"/>
 		<result property="contenido" column="mensaje_contenido"/>
