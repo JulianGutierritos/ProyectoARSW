@@ -53,7 +53,7 @@ var apiclient = (function () {
 			postRequest.then(
 				function () {
 					localStorage.correo = username;
-					location.replace(appUrl + "/profile.html");
+					location.replace("/profile.html")
 				},
 				function () {
 					alert("failure login");
