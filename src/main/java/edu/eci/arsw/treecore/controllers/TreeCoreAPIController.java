@@ -20,9 +20,9 @@ import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.persistence.TreeCoreStore;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
+import edu.eci.arsw.treecore.services.TreeCoreStoreServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +34,7 @@ public class TreeCoreAPIController {
 	@Autowired
 	TreeCoreProjectServices treeCoreProjectServices;
 	@Autowired
-    TreeCoreStore treeCoreStore;
+    TreeCoreStoreServices treeCoreStoreServices;
 
 	/**
 	 * 
@@ -327,7 +327,7 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/files/{ruta}", method = RequestMethod.GET)
     public ResponseEntity<?> getFiles(@PathVariable("ruta") String ruta) {
         try {
-            return new ResponseEntity<>(treeCoreStore.consultar(ruta), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(treeCoreStoreServices.consultar(ruta), HttpStatus.ACCEPTED);
         } catch ( TreeCoreStoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -341,7 +341,7 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/file/{ruta}", method = RequestMethod.GET)
     public ResponseEntity<?> getFile(@PathVariable("ruta") String ruta) {
         try {
-            return new ResponseEntity<>(treeCoreStore.downloadFile(ruta), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(treeCoreStoreServices.downloadFile(ruta), HttpStatus.ACCEPTED);
         } catch ( TreeCoreStoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -356,7 +356,7 @@ public class TreeCoreAPIController {
     @RequestMapping(path = "/file/{ruta}", method = RequestMethod.POST)
     public ResponseEntity<?> postFile(@PathVariable("ruta") String ruta,@RequestParam("file") MultipartFile file) {
         try {
-			treeCoreStore.receiveFile(file,ruta,"post");
+			treeCoreStoreServices.receiveFile(file,ruta,"post");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch ( TreeCoreStoreException e) {
             Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);

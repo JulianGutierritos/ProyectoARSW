@@ -152,7 +152,6 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 
     @Override
     public String getAccessToken(int tokenId) throws PersistenceException {
-        System.out.println(tokenId);
         try{
             String token = proyectoMapper.getAccessToken(0);
             return token;

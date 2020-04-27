@@ -30,15 +30,15 @@ import java.io.IOException;
  * 
  * @author Ricardo Martinez
  */
-@Service
 public class TreeCoreStoreImpl implements TreeCoreStore {
-    private static final String ACCESS_TOKEN = "OAn_tALL5dAAAAAAAAAANIysHzsxgb9xvKzwEZgeChMqfxPZCvPexSzT2sNUDiIU";
-    private static DbxClientV2 client;
+    private String ACCESS_TOKEN;
+    private DbxClientV2 client;
 
     /**
      * Constructor of TreeCoreStore
      */
-    public TreeCoreStoreImpl() {
+    public TreeCoreStoreImpl(String token) {
+        this.ACCESS_TOKEN = token;
         final DbxRequestConfig config = new DbxRequestConfig("");
         client = new DbxClientV2(config, ACCESS_TOKEN);
     }
