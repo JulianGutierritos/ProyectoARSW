@@ -88,7 +88,7 @@
 
 	<insert id ="insertarInvitacion">
 		INSERT into invitacion (remitente, receptor, proyecto)
-    	VALUES (#{invitacion.remitente}, #{receptor},#{invitacion.proyecto})                     
+    	VALUES (#{invitacion.remitente}, #{invitacion.receptor},#{invitacion.proyecto})                     
     </insert>
 
 	<update id = "setContraseña">

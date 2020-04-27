@@ -207,7 +207,7 @@ iframe {
 [ Content container ]*/
 .container-contact100 {
   width: 100%;  
-  height:100%;
+  height:130%;
   position: absolute;
 	margin: 0 auto;
 	left: 0;
@@ -229,7 +229,8 @@ iframe {
   position: absolute;
 	margin: 0 auto;
 	left: 0;
-	right: 0;
+  right: 0;
+  top: 10%;
   width:50%;
   background: #fff;
   border-radius: 3px;
@@ -255,7 +256,6 @@ iframe {
   display: -ms-flexbox;
   display: flex;
   justify-content: center;
-  align-items: center;
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -412,7 +412,7 @@ textarea.input100 {
 .contact100-form-btn {
   font-family: Montserrat-Bold;
   font-size: 12px;
-  color: #fff;
+  color: gray;
   line-height: 1.2;
   text-transform: uppercase;
 
@@ -427,13 +427,13 @@ textarea.input100 {
   min-width: 160px;
   height: 42px;
   border-radius: 21px;
-  background: #846add;
+  background: #efffb2;
 
-  box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
-  -moz-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
-  -o-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+  box-shadow: 0 10px 30px 0px rgba(227, 242, 169, 0.5);
+  -moz-box-shadow: 0 10px 30px 0px rgba(227, 242, 169, 0.5);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(227, 242, 169, 0.5);
+  -o-box-shadow: 0 10px 30px 0px rgba(227, 242, 169, 0.5);
+  -ms-box-shadow: 0 10px 30px 0px rgba(227, 242, 169, 0.5);
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
