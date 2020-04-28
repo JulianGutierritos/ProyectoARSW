@@ -49,12 +49,6 @@ public class TreeCoreAPIMessage {
 	 */
 	@MessageMapping("/invitacion.{correo}")
 	public void handlerInvitation(Invitacion inv, @DestinationVariable String correo) {
-		try {
-			treeCoreUserServices.addInvitacion(inv);
-			msgt.convertAndSend("/project/user/invitacion." + correo, inv);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		msgt.convertAndSend("/project/user/invitacion." + correo, inv);
 	}
-
 }

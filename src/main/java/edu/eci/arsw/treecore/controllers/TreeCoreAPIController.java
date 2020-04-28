@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.exceptions.TreeCoreStoreException;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
+import edu.eci.arsw.treecore.model.impl.Mensaje;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
@@ -251,6 +252,23 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 
+	}
+
+
+	/**
+	 * * Metodo que recibe la peticion para adicionar un nueva invitacion
+	 * 
+	 * @param invitacion Nueva invitacion
+	 * @return Respuesta http con el estado de la solicitud
+	 */
+	@RequestMapping(path = "/user/invitation", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addNewMessage(@RequestBody Invitacion invitacion) {
+		try {
+			this.treeCoreUserServices.addInvitacion(invitacion);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 
 	/**

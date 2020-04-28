@@ -113,6 +113,24 @@ var apiclient = (function () {
 			);
 		},
 
+		addInvitacion: function (invitacion, callback) {
+			var postRequest = $.ajax({
+				url: appUrl + "/user/invitation",
+				type: 'POST',
+				data: invitacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					callback(invitacion);
+					alert("Se ha enviado la invitacion");
+				},
+				function () {
+					alert(postRequest.responseText);
+				}
+			);
+		},
+
 		getProjects: function (callback) {
 			jQuery.ajax({
 				url: appUrl + "/projects",

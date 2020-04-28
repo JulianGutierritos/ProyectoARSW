@@ -32,7 +32,7 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
             return usuarioDAO.getUser(correo);
         }
         catch (PersistenceException e) {
-            throw new ServiciosTreeCoreException("Usuario no encontrado");
+            throw new ServiciosTreeCoreException("El usuario " + correo + " no existe");
         }
     }
     
@@ -95,11 +95,24 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
     @Override
     public void addInvitacion(Invitacion invitacion) throws ServiciosTreeCoreException{
         try {
-			this.usuarioDAO.insertarInvitacion(invitacion);
+            boolean flag = true;
+            Usuario u = getUsuario(invitacion.getReceptor());
+            ArrayList<Invitacion> inv = u.getInvitaciones();
+            for (int i= 0; i < inv.size(); i++){
+                if (inv.get(i).getProyecto() == invitacion.getProyecto()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                this.usuarioDAO.insertarInvitacion(invitacion);
+            }
+            else{
+                throw new ServiciosTreeCoreException("El usuario " + invitacion.getReceptor() + " ya ha sido invitado a este proyecto");
+            }
 		} 
 		catch (PersistenceException e) {
-			throw new ServiciosTreeCoreException("Error al agregar invitacion");
-		}
+			throw new ServiciosTreeCoreException("El usuario " + invitacion.getReceptor() + " no existe");
+        }
     }
-
 }

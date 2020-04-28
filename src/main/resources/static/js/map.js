@@ -400,9 +400,25 @@ var map = (function () {
 
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
-			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
-			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
+			var flag = true;
+			for (var i = 0; i<proyecto.participantes.length; i++){
+				if ($("#colaborador").val() == proyecto.participantes[i].correo){
+					flag = false;
+					break;
+				}
+			}
+			if (flag){
+				var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+				apiclient.addInvitacion(JSON.stringify(invitacion), publicarInvitacion);
+			}
+			else{
+				alert("Este usuario ya es colaborador del proyecto");
+			}
 		}
+	}
+
+	var publicarInvitacion = function(invitacion){
+		stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, invitacion);
 		$("#colaborador").val("");
 		hiddenComponentAddCollaborator();
 	}
