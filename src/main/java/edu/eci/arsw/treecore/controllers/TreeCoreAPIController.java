@@ -382,9 +382,9 @@ public class TreeCoreAPIController {
 	}
 
 	/**
-	 * 
-	 * @param ruta
-	 * @return
+	 * Metodo para consultar los archivos y carpetas en una ruta.
+	 * @param ruta ruta de la carpeta que se quiere consultar
+	 * @return	Respuesta http con el estado de la solicitud
 	 */
 	@RequestMapping(path = "/files/{ruta}", method = RequestMethod.GET)
 	public ResponseEntity<?> getFiles(@PathVariable("ruta") String ruta) {
@@ -397,9 +397,9 @@ public class TreeCoreAPIController {
 	}
 
 	/**
-	 * 
-	 * @param ruta
-	 * @return
+	 * Metodo para obtener un link de descarga de un archivo.
+	 * @param ruta ruta del archivo
+	 * @return Respuesta http con el estado de la solicitud
 	 */
 	@RequestMapping(path = "/file/{ruta}", method = RequestMethod.GET)
 	public ResponseEntity<?> getFile(@PathVariable("ruta") String ruta) {
@@ -412,8 +412,8 @@ public class TreeCoreAPIController {
 	}
 
 	/**
-	 * 
-	 * @param ruta
+	 * Metodo para subir un archivo a una ruta.
+	 * @param ruta ruta a la que se quiere subir un archivo.
 	 * @return
 	 */
 	@RequestMapping(path = "/file/{ruta}", method = RequestMethod.POST)
