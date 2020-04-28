@@ -255,7 +255,35 @@ var map = (function () {
 		// if the new node is off-screen, scroll the diagram to show the new node
 		var newnode = diagram.findNodeForData(newdata);
 		if (newnode !== null) diagram.scrollToRect(newnode.actualBounds);
+
+		newCurrentRoot(newnode)
 	}
+
+	var newCurrentRoot = function (newnode) {
+		
+		currentRootId = newnode.data.key; //current root id 
+		currentRootParentId = newnode.data.parent; //cuando es 0, el padre es el proyecto
+
+		setValuesToAddRoot();
+	}
+
+
+	var setValuesToAddRoot=function(){
+		if (currentRootParentId == 0) {
+			currentRootParentId = null;
+		}
+
+		if (currentRootParentId != null) {
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getUser(setCurrentUser);
+		}
+
+		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+
+		hiddenComponentAdd();
+
+	}
+
 
 	function layoutTree(node) {
 		if (node.data.key === 0) {  // adding to the root?
@@ -432,18 +460,7 @@ var map = (function () {
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
 
-		if (currentRootParentId == 0) {
-			currentRootParentId = null;
-		}
-
-		if (currentRootParentId != null) {
-			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
-			apiclient.getUser(setCurrentUser);
-		}
-
-		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
-
-		hiddenComponentAdd();
+		setValuesToAddRoot();
 
 	}
 
