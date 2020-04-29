@@ -427,4 +427,19 @@ public class TreeCoreAPIController {
 		}
 	}
 
+	/**
+	 * Metodo para subir un archivo a una ruta.
+	 * @param ruta ruta a la que se quiere subir un archivo.
+	 * @return
+	 */
+	@RequestMapping(path = "/ramas/lastId", method = RequestMethod.GET)
+	public ResponseEntity<?> getLastBranchId() {
+		try {
+			return new ResponseEntity<>(treeCoreProjectServices.getLastBranchId(),HttpStatus.CREATED);
+		} catch (Exception e) {
+			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
 }

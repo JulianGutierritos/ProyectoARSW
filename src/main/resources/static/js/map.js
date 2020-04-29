@@ -241,7 +241,8 @@ var map = (function () {
 		var oldnode = adorn.adornedPart;
 		var olddata = oldnode.data;
 		// copy the brush and direction to the new node data
-		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
+		var newKey = olddata.key + 1; 
+		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key,key : newKey };
 
 		//dataList.add(newdata)
 		// alert(dataList.length)
@@ -269,16 +270,17 @@ var map = (function () {
 
 
 	var setValuesToAddRoot=function(){
-		if (currentRootParentId == 0) {
-			currentRootParentId = null;
-		}
-
-		if (currentRootParentId != null) {
-			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+		if (currentRootParentId == "0" ) {
+			setCurrentRootParent(null);
 			apiclient.getUser(setCurrentUser);
 		}
 
-		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+		if (currentRootParentId != null && currentRootParentId!="0") {
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getUser(setCurrentUser);
+		}
+		//alert("2 "+currentRootId + "-" + currentRootParentId);
+		//apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
 
 		hiddenComponentAdd();
 
@@ -363,8 +365,6 @@ var map = (function () {
 			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
 			list.push(cadena);
 		};
-
-
 
 		var val = { "class": "go.TreeModel", "nodeDataArray": list };
 		myDiagram.model = go.Model.fromJson(val);
@@ -482,6 +482,7 @@ var map = (function () {
 
 	setCurrentRootParent = function (rootParent) {
 		currentRootParent = rootParent;
+		console.log(rootParent);
 	}
 
 	setCurrentUser = function (user) {
@@ -495,7 +496,7 @@ var map = (function () {
 
 
 	var addRootInfo = function (name, messDecr) {
-
+		
 		var newRoot = {
 			id: currentRootId,
 			nombre: name,
@@ -506,6 +507,7 @@ var map = (function () {
 			creador: currentUser
 
 		};
+		console.log(newRoot);
 		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
 	}
 

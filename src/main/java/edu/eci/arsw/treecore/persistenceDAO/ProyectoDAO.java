@@ -142,4 +142,10 @@ public interface ProyectoDAO {
 	 */
 	public String getAccessToken(int tokenId) throws PersistenceException;
 
+	/**
+	 * Metodo para obtener el ultimo id de rama.
+	 * 
+	 */
+	public int getLastBranchId();
+
 }

@@ -144,4 +144,9 @@ public interface TreeCoreProjectServices {
 	 */
 	public void updateRama(Proyecto proyecto, Rama rama) throws ServiciosTreeCoreException;
 
+	/**
+	 * Metodo que obtiene el ultimo id de las ramas
+	*/
+	public int getLastBranchId();
+
 }

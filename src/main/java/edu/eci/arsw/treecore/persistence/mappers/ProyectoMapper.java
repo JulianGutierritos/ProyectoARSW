@@ -110,4 +110,10 @@ public interface ProyectoMapper {
 	 */
 	public String getAccessToken(@Param("tokenId") int tokenId);
 
+	/**
+	 * Metodo para obtener el ultimo id de rama.
+	 * 
+	 */
+	public int getLastBranchId();
+
 }

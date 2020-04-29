@@ -170,6 +170,11 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
             throw new PersistenceException("Error consiguiendo el token");
         }
     }
+    @Override
+    public int getLastBranchId(){
+        return proyectoMapper.getLastBranchId();
+    }
+    
 
 }
 

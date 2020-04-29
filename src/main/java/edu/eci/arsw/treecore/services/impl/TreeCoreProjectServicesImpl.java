@@ -182,4 +182,9 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 		}
 
 	}
+
+	@Override
+	public int getLastBranchId() {
+		return proyectoDAO.getLastBranchId();
+	}
 }

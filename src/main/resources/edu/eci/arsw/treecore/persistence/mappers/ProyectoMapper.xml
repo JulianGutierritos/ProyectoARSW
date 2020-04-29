@@ -163,6 +163,10 @@
       where id = #{tokenId}
     </select>
 
+    <select id="getLastBranchId" resultType="int">
+      select MAX(ramaid)+1 from rama
+    </select>
+
     <resultMap id="MensajeResult" type="Mensaje">
       <result property="fecha" column="mensaje_fecha"/>
       <result property="contenido" column="mensaje_contenido"/>
