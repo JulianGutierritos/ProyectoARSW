@@ -2,13 +2,13 @@ var apiclient = apiclient;
 var stompClient = null;
 var proyecto = null;
 var map = (function () {
-
 	var currentRootId;
 	var currentRootParentId;
 	var currentRootParent;
 	var currentProject;
 	var currentUser;
 	var currentRoot;
+	var currentNewKey;
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -190,6 +190,7 @@ var map = (function () {
 
 		apiclient.getProject(sessionStorage.proyecto, map.load);
 		hiddenComponentAddCollaborator();
+		apiclient.getLastId(setCurrentNewKey);
 
 	}
 
@@ -241,7 +242,7 @@ var map = (function () {
 		var oldnode = adorn.adornedPart;
 		var olddata = oldnode.data;
 		// copy the brush and direction to the new node data
-		var newKey = olddata.key + 1; 
+		var newKey = currentNewKey; 
 		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key,key : newKey };
 
 		//dataList.add(newdata)
@@ -276,6 +277,7 @@ var map = (function () {
 		}
 
 		if (currentRootParentId != null && currentRootParentId!="0") {
+
 			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
 			apiclient.getUser(setCurrentUser);
 		}
@@ -284,6 +286,10 @@ var map = (function () {
 
 		hiddenComponentAdd();
 
+	}
+
+	setCurrentNewKey= function(respuesta){
+		currentNewKey=respuesta;
 	}
 
 
@@ -482,7 +488,7 @@ var map = (function () {
 
 	setCurrentRootParent = function (rootParent) {
 		currentRootParent = rootParent;
-		console.log(rootParent);
+		//console.log(rootParent);
 	}
 
 	setCurrentUser = function (user) {
@@ -507,6 +513,9 @@ var map = (function () {
 			creador: currentUser
 
 		};
+		if (currentRootParent ==null){
+			delete newRoot.ramaPadre;
+		}
 		console.log(newRoot);
 		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
 	}

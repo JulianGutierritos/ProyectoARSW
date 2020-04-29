@@ -82,4 +82,11 @@ public class Rama {
 	public void setFechaDeCreacion(Date fechaDeCreacion) {
 		this.fechaDeCreacion = fechaDeCreacion;
 	}
+
+	@Override
+	public String toString() {
+		return "{Id: "+ this.id +" Nombre: "+ this.nombre + " RamaPadre: " + this.ramaPadre +  " Descripcion: " +this.descripcion + " Archivos: " + this.archivos + 
+		 " fechaDeCreacion: " + this.fechaDeCreacion +" Creador: " + creador;
+	}
+	
 }

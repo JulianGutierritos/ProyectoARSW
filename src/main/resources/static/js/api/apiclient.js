@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	//var appUrl = "https://treecore.herokuapp.com/treecore";
-	var appUrl = "http://localhost:8080/treecore";
+	var appUrl = "https://treecore.herokuapp.com/treecore";
+	//var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
@@ -238,7 +238,16 @@ var apiclient = (function () {
 					alert("failure delete");
 				}
 			);
-		}
+		},
+		getLastId: function (callback) {
+			jQuery.ajax({
+				url: appUrl + "/ramas/lastId",
+				type: "GET",
+				success: function (respuesta) {
+					callback(respuesta);
+				}
+			});
+		},
 
 	};
 })();
