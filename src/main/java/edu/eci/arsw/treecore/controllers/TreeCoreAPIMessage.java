@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
+import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
@@ -50,5 +51,18 @@ public class TreeCoreAPIMessage {
 	@MessageMapping("/invitacion.{correo}")
 	public void handlerInvitation(Invitacion inv, @DestinationVariable String correo) {
 		msgt.convertAndSend("/project/user/invitacion." + correo, inv);
+	}
+
+	/**
+	 * Metodo para adicionar una nueva invitacion a un proyecto
+	 * 
+	 * @param inv Nuevo mensaje
+	 * @param correo correo del usuario
+	 */
+	@MessageMapping("/notificacion.{correo}")
+	public void handlerNotificacion(Notificacion not, @DestinationVariable String correo) {
+		Date currentDate = new Date();
+		not.setFecha(currentDate);
+		msgt.convertAndSend("/project/user/notificacion." + correo, not);
 	}
 }

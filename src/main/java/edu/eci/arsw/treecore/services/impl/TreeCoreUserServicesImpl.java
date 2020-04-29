@@ -36,6 +36,15 @@ public class TreeCoreUserServicesImpl implements TreeCoreUserServices {
         }
     }
     
+    @Override
+    public void insertarNotificacion(Notificacion notificacion, String correo) throws ServiciosTreeCoreException{
+        try {
+            usuarioDAO.insertarNotifiacion(notificacion, correo);
+        }
+        catch (PersistenceException e) {
+            throw new ServiciosTreeCoreException("El usuario " + correo + " no existe");
+        }
+    }
     
     @Override
 	public Usuario verificarCredenciales(String correo, String passwd) throws ServiciosTreeCoreException{
