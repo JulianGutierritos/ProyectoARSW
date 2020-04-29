@@ -16,6 +16,7 @@ import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.exceptions.TreeCoreStoreException;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
+import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.model.impl.Usuario;
@@ -97,6 +98,16 @@ public class TreeCoreAPIController {
 		} catch (ServiciosTreeCoreException e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping(path = "/users/{correo}/notification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addNewProject(@RequestBody Notificacion notificacion, @PathVariable("correo") String correo) {
+		try {
+			this.treeCoreUserServices.insertarNotificacion(notificacion, correo);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 
@@ -251,7 +262,6 @@ public class TreeCoreAPIController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
-
 	}
 
 

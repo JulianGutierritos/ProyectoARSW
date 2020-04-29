@@ -80,7 +80,7 @@
 
 	<insert id ="insertarNotificacion">
 		<selectKey keyProperty="id_notificacion" resultType="int" order="BEFORE">
-			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{notificacion.usuario.correo}
+			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{usuario}
     	</selectKey>
 		INSERT into notificacion (notificacionid, usuario, informacion) 
     	VALUES (#{id_notificacion}, #{usuario},#{notificacion.informacion})                     

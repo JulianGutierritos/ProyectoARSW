@@ -50,7 +50,18 @@ public class MyBatisUsuarioDAO implements UsuarioDAO{
 		else n = user.getNotificaciones();
 		return n; 
 	} 
-	
+
+	@Override
+	public void insertarNotifiacion(Notificacion notificacion, String correo) throws PersistenceException{
+		try {
+			this.usuarioMapper.insertarNotificacion(notificacion, correo);
+		}
+		catch(Exception e) {
+			throw new PersistenceException("Usuario no encontrado");
+		}
+	}
+
+
 	
 	@Override
 	public ArrayList<Invitacion> getInvitaciones(String correo) throws PersistenceException{

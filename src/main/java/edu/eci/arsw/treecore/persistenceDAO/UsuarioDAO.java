@@ -46,6 +46,15 @@ public interface UsuarioDAO {
 	public ArrayList<Notificacion> getNotificaciones(String correo) throws PersistenceException;
 
 	/**
+	 * Inserta una nueva notifiacion
+	 * 
+	 * @param correo Correo del usuario
+	 * @param notificacion notificacion a insertar
+	 * @throws PersistenceException Si no encuentra al usuario
+	 */
+	public void insertarNotifiacion(Notificacion notificacion, String correo) throws PersistenceException;
+
+	/**
 	 * Metodo que retorna las invitaciones de un usuario segun su correo
 	 * 
 	 * @param correo Correo del usuario

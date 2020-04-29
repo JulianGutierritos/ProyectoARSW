@@ -70,7 +70,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					apiprofile.getProyectos();
+					//apiprofile.getProyectos();
 				},
 				function () {
 					alert("failure acept");
@@ -87,7 +87,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					location.reload();
+					//location.reload();
 				},
 				function () {
 					alert("failure delete");
@@ -131,6 +131,23 @@ var apiclient = (function () {
 			);
 		},
 
+		addNotificacion: function (notificacion, usuario, callback) {
+			var postRequest = $.ajax({
+				url: appUrl + "/users/" + usuario + "/notification",
+				type: 'POST',
+				data: notificacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					callback(notificacion, usuario);
+				},
+				function () {
+					alert(postRequest.responseText);
+				}
+			);
+		},
+
 		getProjects: function (callback) {
 			jQuery.ajax({
 				url: appUrl + "/projects",
@@ -157,6 +174,15 @@ var apiclient = (function () {
 				type: "GET",
 				success: function (response) {
 					callback(response);
+				}
+			});
+		},
+		getProjectTeam: function (id, callback, n) {
+			jQuery.ajax({
+				url: appUrl + "/projects/" + id + "/team",
+				type: "GET",
+				success: function (response) {
+					callback(response, n);
 				}
 			});
 		},

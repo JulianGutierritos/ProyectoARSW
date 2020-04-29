@@ -46,6 +46,16 @@ public interface TreeCoreUserServices {
 	 */
 	public ArrayList<Notificacion> getNotificaciones(String correo) throws ServiciosTreeCoreException;
 
+
+	/**
+	 * Inserta una nueva notifiacion
+	 * 
+	 * @param notificacion notificacion a insertar
+	 * @param correo Correo del usuario
+	 * @throws ServiciosTreeCoreException No existe el usuario
+	 */
+	public void insertarNotificacion(Notificacion notificacion, String correo) throws ServiciosTreeCoreException;
+
 	/**
 	 * Metodo que las invitaciones del usuario segun su correo
 	 * 
