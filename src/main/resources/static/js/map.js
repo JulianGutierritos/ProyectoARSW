@@ -442,6 +442,14 @@ var map = (function () {
 				);
 			});
 		});
+		var socket2 = new SockJS('/stompendpoint');
+		stompClient2 = Stomp.over(socket2);
+		stompClient2.connect({}, function (frame) {
+			stompClient.subscribe('/project/ramas.' + sessionStorage.proyecto, function (eventbody) {
+				//apiclient.getProject(sessionStorage.proyecto, map.load);
+				console.log(currentProject);
+			});
+		});
 	}
 
 	class Mensaje {
@@ -465,6 +473,21 @@ var map = (function () {
 	var hiddenComponentAdd = function () {
 		var el = document.getElementById("componentInfo");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+		
+		// if (currentRootId!=null){
+
+		// 	document.getElementById("Files").innerHTML = "";
+		// 	var lista = document.getElementById("Files");
+		// 	console.log(currentRootParent);
+		// 	console.log(currentRootId);
+		// 	console.log(currentProject.nombre);
+		// 	newlink = document.createElement('a');
+		// 	newlink.setAttribute('class', 'list-group-item');
+		// 	var newContent = document.createTextNode("Hola!¿Qué tal?"); 
+		// 	newlink.appendChild(newContent);
+		// 	lista.appendChild(newlink);
+		// }
+
 	}
 
 	var hiddenComponentAddCollaborator = function () {
@@ -518,6 +541,7 @@ var map = (function () {
 		}
 		console.log(newRoot);
 		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
+		stompClient.send("/project/ramas." + currentProject.id, {});
 	}
 
 

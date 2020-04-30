@@ -58,7 +58,8 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
             result = client.files().listFolder("/" + ruta);
             while (true) {
                 for (final Metadata metadata : result.getEntries()) {
-                    contenido.add(metadata.getPathLower());
+                    //contenido.add(metadata.getPathLower());
+                    contenido.add(metadata.getName());
                 }
 
                 if (!result.getHasMore()) {
@@ -88,10 +89,10 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
 
         try (InputStream in = new FileInputStream(localFile)) {
             if(option=="put"){
-                client.files().deleteV2(path);
+                client.files().deleteV2("/"+path);
             }
             final ProgressListener progressListener = l -> printProgress(l, localFile.length());
-            final FileMetadata metadata = client.files().uploadBuilder(path)
+            final FileMetadata metadata = client.files().uploadBuilder("/"+path)
                 .withMode(WriteMode.ADD)
                 .withClientModified(new Date(localFile.lastModified()))
                 .uploadAndFinish(in, progressListener);
