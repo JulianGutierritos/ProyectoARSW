@@ -25,27 +25,27 @@ var apiprofile = (function () {
 		deleteInvitacion(p);
 	}
 
-	var deleteInvitacion = function(p){
-		var str = '#inv' + p; 
+	var deleteInvitacion = function (p) {
+		var str = '#inv' + p;
 		console.log(str);
-		$( str ).remove();
+		$(str).remove();
 		var act = parseInt($("#numero").text()) - 1;
 		$("#numero").text(act);
-		$("#anuncio").text("Tiene " + act  + " invitaciones");
+		$("#anuncio").text("Tiene " + act + " invitaciones");
 	}
 
-	var notificarNuevoColaborador = function(lista, nombre){
+	var notificarNuevoColaborador = function (lista, nombre) {
 		console.log(lista);
-		var notificacion = new Notificacion ("El usuario " + localStorage.correo + " se ha unido al proyecto " + nombre);
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " se ha unido al proyecto " + nombre);
 		notificacion = JSON.stringify(notificacion);
-		for (var i = 0; i < lista.length ; i++){
-			if (lista[i].correo != localStorage.correo){
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
 				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
 			}
 		}
 	}
 
-	var publicarNotificacion = function(notificacion , correo, n){
+	var publicarNotificacion = function (notificacion, correo, n) {
 		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
 	}
 
@@ -93,7 +93,7 @@ var apiprofile = (function () {
 		proyectoNombre = resp.nombreProyecto;
 		remitente = resp.remitente;
 		$("#invitaciones").append(
-			'<div id="inv' + resp.proyecto +'" > <li>  <a href=/tree.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre + '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" +  proyectoNombre + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Rechazar </button> </li> </div>'
+			'<div id="inv' + resp.proyecto + '" > <li>  <a href=/tree.html>' + remitente + '<span class="message">' + remitente + ' te invita a participar en el proyecto ' + proyectoNombre + '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + proyectoNombre + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + resp.proyecto + "' , '" + remitente + "' , '" + '\')" >Rechazar </button> </li> </div>'
 		);
 	}
 	var putProyectos = function (proyecto, id) {
@@ -114,7 +114,7 @@ var apiprofile = (function () {
 		if (localStorage.correo == null) {
 			location.replace("/login.html")
 		}
-		else{
+		else {
 			conectar()
 		}
 	}
@@ -129,6 +129,7 @@ var apiprofile = (function () {
 		location.replace("/tree.html")
 	}
 
+
 	var conectar = function () {
 		var socket = new SockJS('/stompendpoint');
 		stompClient = Stomp.over(socket);
@@ -136,11 +137,11 @@ var apiprofile = (function () {
 			stompClient.subscribe('/project/user/invitacion.' + localStorage.correo, function (eventbody) {
 				var invitacion = JSON.parse(eventbody.body);
 				$("#invitaciones").append(
-					'<div id="inv' + invitacion.proyecto +'" > <li> <a href=/tree.html>' + invitacion.remitente + '<span class="message">' + invitacion.remitente + ' te invita a participar en el proyecto ' + invitacion.nombreProyecto + '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + invitacion.proyecto + "' , '" + invitacion.remitente + "' , '" +  invitacion.nombreProyecto + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + invitacion.proyecto + "' , '" + invitacion.remitente + "' , '" + '\')" >Rechazar </button> </li> </div>'
+					'<div id="inv' + invitacion.proyecto + '" > <li> <a href=/tree.html>' + invitacion.remitente + '<span class="message">' + invitacion.remitente + ' te invita a participar en el proyecto ' + invitacion.nombreProyecto + '</span> </a><button type="button" class="btn btn-success" onclick="apiprofile.aceptarInvitacion(\'' + invitacion.proyecto + "' , '" + invitacion.remitente + "' , '" + invitacion.nombreProyecto + "' , '" + '\')" >Aceptar</button> <button type="button" class="btn btn-danger" onclick="apiprofile.eliminarInvitacion(\'' + invitacion.proyecto + "' , '" + invitacion.remitente + "' , '" + '\')" >Rechazar </button> </li> </div>'
 				);
 				var act = parseInt($("#numero").text()) + 1;
 				$("#numero").text(act);
-				$("#anuncio").text("Tiene " + act  + " invitaciones");
+				$("#anuncio").text("Tiene " + act + " invitaciones");
 			});
 			stompClient.subscribe('/project/user/notificacion.' + localStorage.correo, function (eventbody) {
 				var notificacion = JSON.parse(eventbody.body);
@@ -149,8 +150,10 @@ var apiprofile = (function () {
 				console.log("publicar notificacion");
 				$('<div class="alert alert-info"><b>' + notificacion.informacion + ' </b>' + f + '</div>').insertAfter("#notificacionTitle");
 			});
+
 		});
 	}
+	
 	return {
 		verificar: verificar,
 		invitaciones: getInvitaciones,

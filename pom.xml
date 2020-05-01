@@ -120,6 +120,13 @@
 			<version>20190722</version>
 		</dependency>
 
+<!-- https://mvnrepository.com/artifact/io.socket/socket.io-client -->
+<dependency>
+    <groupId>io.socket</groupId>
+    <artifactId>socket.io-client</artifactId>
+    <version>0.7.0</version>
+</dependency>
+
 	</dependencies>
 
 	<build>

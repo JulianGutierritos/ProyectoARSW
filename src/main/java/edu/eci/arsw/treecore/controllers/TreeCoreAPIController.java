@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,8 @@ public class TreeCoreAPIController {
 	@Autowired
 	TreeCoreStoreServices treeCoreStoreServices;
 
+	@Autowired
+	SimpMessagingTemplate msgt;
 	/**
 	 * Metodo que retorna todos los usuarios contenidos en la base de datos
 	 * 
@@ -281,40 +285,11 @@ public class TreeCoreAPIController {
 		}
 	}
 
-	/**
-	 * Metodo para adicionar una nueva rama a un proyecto dado su id
-	 * 
-	 * @param projectId Id del proyecto
-	 * @param rama      Nueva rama a adicionar
-	 * @return Respuesta http con el estado de la solicitud
-	 */
-	@RequestMapping(path = "/projects/{projectId}/ramas", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addProjectRama(@PathVariable("projectId") int projectId, @RequestBody Rama rama) {
-		try {
-			Proyecto project = treeCoreProjectServices.getProyecto(projectId);
-			Rama oldRama = treeCoreProjectServices.getSpecificProjectRama(projectId, rama.getId());
-
-			if (oldRama == null) {
-				this.treeCoreProjectServices.insertarRama(rama, project);
-			} else {
-				String ramaName = rama.getNombre();
-				String ramaDescrip = rama.getDescripcion();
-				oldRama.setNombre(ramaName);
-				oldRama.setDescripcion(ramaDescrip);
-				this.treeCoreProjectServices.updateRama(project, oldRama);
-			}
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
-	}
-	
 	
 	@RequestMapping(path = "/delete/project/rama", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteRama(@RequestBody Rama rama) {
 		try {
 			treeCoreProjectServices.deleteRama(rama);
-			System.out.println(rama.getId());
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
@@ -451,5 +426,7 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
+	
+	
 
 }

@@ -2,13 +2,15 @@ var apiclient = apiclient;
 var stompClient = null;
 var proyecto = null;
 var map = (function () {
+
 	var currentRootId;
 	var currentRootParentId;
 	var currentRootParent;
 	var currentProject;
 	var currentUser;
 	var currentRoot;
-	var currentNewKey;
+	var stompClient = null;
+
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -190,7 +192,6 @@ var map = (function () {
 
 		apiclient.getProject(sessionStorage.proyecto, map.load);
 		hiddenComponentAddCollaborator();
-		apiclient.getLastId(setCurrentNewKey);
 
 	}
 
@@ -242,8 +243,7 @@ var map = (function () {
 		var oldnode = adorn.adornedPart;
 		var olddata = oldnode.data;
 		// copy the brush and direction to the new node data
-		var newKey = currentNewKey; 
-		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key,key : newKey };
+		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
 
 		//dataList.add(newdata)
 		// alert(dataList.length)
@@ -262,7 +262,7 @@ var map = (function () {
 	}
 
 	var newCurrentRoot = function (newnode) {
-		
+
 		currentRootId = newnode.data.key; //current root id 
 		currentRootParentId = newnode.data.parent; //cuando es 0, el padre es el proyecto
 
@@ -270,26 +270,20 @@ var map = (function () {
 	}
 
 
-	var setValuesToAddRoot=function(){
-		if (currentRootParentId == "0" ) {
-			setCurrentRootParent(null);
-			apiclient.getUser(setCurrentUser);
+	var setValuesToAddRoot = function () {
+		if (currentRootParentId == 0) {
+			currentRootParentId = null;
 		}
 
-		if (currentRootParentId != null && currentRootParentId!="0") {
-
+		if (currentRootParentId != null) {
 			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
 			apiclient.getUser(setCurrentUser);
 		}
-		//alert("2 "+currentRootId + "-" + currentRootParentId);
-		//apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+
+		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
 
 		hiddenComponentAdd();
 
-	}
-
-	setCurrentNewKey= function(respuesta){
-		currentNewKey=respuesta;
 	}
 
 
@@ -372,6 +366,8 @@ var map = (function () {
 			list.push(cadena);
 		};
 
+
+
 		var val = { "class": "go.TreeModel", "nodeDataArray": list };
 		myDiagram.model = go.Model.fromJson(val);
 		layoutAll();
@@ -406,25 +402,9 @@ var map = (function () {
 
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
-			var flag = true;
-			for (var i = 0; i<proyecto.participantes.length; i++){
-				if ($("#colaborador").val() == proyecto.participantes[i].correo){
-					flag = false;
-					break;
-				}
-			}
-			if (flag){
-				var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
-				apiclient.addInvitacion(JSON.stringify(invitacion), publicarInvitacion);
-			}
-			else{
-				alert("Este usuario ya es colaborador del proyecto");
-			}
+			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
 		}
-	}
-
-	var publicarInvitacion = function(invitacion){
-		stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, invitacion);
 		$("#colaborador").val("");
 		hiddenComponentAddCollaborator();
 	}
@@ -440,14 +420,6 @@ var map = (function () {
 				$("#chat").append(
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
-			});
-		});
-		var socket2 = new SockJS('/stompendpoint');
-		stompClient2 = Stomp.over(socket2);
-		stompClient2.connect({}, function (frame) {
-			stompClient.subscribe('/project/ramas.' + sessionStorage.proyecto, function (eventbody) {
-				//apiclient.getProject(sessionStorage.proyecto, map.load);
-				console.log(currentProject);
 			});
 		});
 	}
@@ -473,21 +445,6 @@ var map = (function () {
 	var hiddenComponentAdd = function () {
 		var el = document.getElementById("componentInfo");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
-		
-		// if (currentRootId!=null){
-
-		// 	document.getElementById("Files").innerHTML = "";
-		// 	var lista = document.getElementById("Files");
-		// 	console.log(currentRootParent);
-		// 	console.log(currentRootId);
-		// 	console.log(currentProject.nombre);
-		// 	newlink = document.createElement('a');
-		// 	newlink.setAttribute('class', 'list-group-item');
-		// 	var newContent = document.createTextNode("Hola!¿Qué tal?"); 
-		// 	newlink.appendChild(newContent);
-		// 	lista.appendChild(newlink);
-		// }
-
 	}
 
 	var hiddenComponentAddCollaborator = function () {
@@ -511,21 +468,20 @@ var map = (function () {
 
 	setCurrentRootParent = function (rootParent) {
 		currentRootParent = rootParent;
-		//console.log(rootParent);
 	}
 
 	setCurrentUser = function (user) {
 		currentUser = user;
 	}
 
-	setCurrentRootObject = function(root){
-		currentRoot=root;
+	setCurrentRootObject = function (root) {
+		currentRoot = root;
 	}
 
 
 
 	var addRootInfo = function (name, messDecr) {
-		
+
 		var newRoot = {
 			id: currentRootId,
 			nombre: name,
@@ -536,17 +492,16 @@ var map = (function () {
 			creador: currentUser
 
 		};
-		if (currentRootParent ==null){
-			delete newRoot.ramaPadre;
-		}
-		console.log(newRoot);
-		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
-		stompClient.send("/project/ramas." + currentProject.id, {});
+		let jroot = JSON.stringify(newRoot);
+		//apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
+		stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
 	}
+	
 
-
-	var delComponent = function () {		
-		apiclient.deleteRoot(JSON.stringify(currentRoot));
+	var delComponent = function () {
+		let jroot = JSON.stringify(currentRoot);
+		//apiclient.deleteRoot(JSON.stringify(currentRoot));
+		stompClient.send("/treecore/project/delete/rama",{},jroot);
 	}
 
 
@@ -558,7 +513,29 @@ var map = (function () {
 		if (sessionStorage.proyecto == null) {
 			location.replace("/profile.html")
 		}
+
+		if (stompClient == null) {
+			conectar();
+		}
 	}
+
+	var conectar = function () {
+		var socket = new SockJS('/stompendpoint');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function (frame) {
+			stompClient.subscribe('/project/update/tree', function (root) {
+				updateTree(root);
+			});
+
+		});
+	}
+
+	var updateTree=function(root){
+		if(root!=null){
+			location.reload();
+		}
+	}
+
 
 	return {
 		init: init,

@@ -1,15 +1,29 @@
 package edu.eci.arsw.treecore.controllers;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.model.impl.Invitacion;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
+import edu.eci.arsw.treecore.model.impl.Proyecto;
+import edu.eci.arsw.treecore.model.impl.Rama;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
@@ -65,4 +79,49 @@ public class TreeCoreAPIMessage {
 		not.setFecha(currentDate);
 		msgt.convertAndSend("/project/user/notificacion." + correo, not);
 	}
+	
+	/**
+	 * Metodo para adicionar una nueva rama a un proyecto dado su id
+	 * @param idProyecto Id del proyecto
+	 * @param rama Nueva rama a adicionar
+	 * @return Respuesta http con el estado de la solicitud
+	 */
+	@MessageMapping("/projects/{idProyecto}"+"/add/rama")
+	public ResponseEntity<?> addProjectRama(@DestinationVariable String idProyecto, @RequestBody Rama rama) {
+		try {
+			int projectId=Integer.parseInt(idProyecto);
+			Proyecto project = treeCoreProjectServices.getProyecto(projectId);
+			Rama oldRama = treeCoreProjectServices.getSpecificProjectRama(projectId, rama.getId());
+
+			if (oldRama == null) {
+				this.treeCoreProjectServices.insertarRama(rama, project);
+			} else {
+				String ramaName = rama.getNombre();
+				String ramaDescrip = rama.getDescripcion();
+				oldRama.setNombre(ramaName);
+				oldRama.setDescripcion(ramaDescrip);
+				this.treeCoreProjectServices.updateRama(project, oldRama);
+			}
+			msgt.convertAndSend("/project/update/tree", rama);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param root
+	 * @throws ServiciosTreeCoreException
+	 */
+	@MessageMapping("/project/delete/rama")
+    public void handlerRootDelete(Rama root) throws ServiciosTreeCoreException  {
+		treeCoreProjectServices.deleteRama(root);
+		msgt.convertAndSend("/project/update/tree", root);
+	}
+	
+	
+	
+	
+	
 }
