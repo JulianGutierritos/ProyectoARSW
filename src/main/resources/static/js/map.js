@@ -537,6 +537,10 @@ var map = (function () {
 	}
 
 
+	var closeOption=function(){
+		location.reload();
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -549,6 +553,7 @@ var map = (function () {
 		back: back,
 		verificar: verificar,
 		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
-		invitar: invitar
+		invitar: invitar,
+		closeOption:closeOption
 	}
 })();
