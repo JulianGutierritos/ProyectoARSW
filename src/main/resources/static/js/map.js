@@ -421,9 +421,6 @@ var map = (function () {
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
 			});
-			stompClient.subscribe('/project/update/tree', function (root) {
-				updateTree(root);
-			});
 		});
 	}
 
@@ -520,6 +517,17 @@ var map = (function () {
 		if (stompClient == null) {
 			conectar();
 		}
+	}
+
+	var conectar = function () {
+		var socket = new SockJS('/stompendpoint');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function (frame) {
+			stompClient.subscribe('/project/update/tree', function (root) {
+				updateTree(root);
+			});
+
+		});
 	}
 
 	var updateTree=function(root){
