@@ -134,6 +134,14 @@ var apiprofile = (function () {
 		var socket = new SockJS('/stompendpoint');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function (frame) {
+			stompClient.subscribe('/project/mensaje.' + sessionStorage.proyecto, function (eventbody) {
+				var mensaje = JSON.parse(eventbody.body);
+				console.log(mensaje);
+				console.log("si entro");
+				$("#chat").append(
+					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
+				);
+			});
 			stompClient.subscribe('/project/user/invitacion.' + localStorage.correo, function (eventbody) {
 				var invitacion = JSON.parse(eventbody.body);
 				$("#invitaciones").append(
@@ -153,7 +161,7 @@ var apiprofile = (function () {
 
 		});
 	}
-	
+
 	return {
 		verificar: verificar,
 		invitaciones: getInvitaciones,
