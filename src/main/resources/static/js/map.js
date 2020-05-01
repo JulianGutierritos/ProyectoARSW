@@ -9,8 +9,6 @@ var map = (function () {
 	var currentProject;
 	var currentUser;
 	var currentRoot;
-	var stompClient = null;
-
 
 	function init() {
 		var $ = go.GraphObject.make;
@@ -419,6 +417,9 @@ var map = (function () {
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
 			});
+			stompClient.subscribe('/project/update/tree', function (root) {
+				updateTree(root);
+			});
 		});
 	}
 
@@ -513,16 +514,6 @@ var map = (function () {
 		}
 	}
 
-	var conectar = function () {
-		var socket = new SockJS('/stompendpoint');
-		stompClient = Stomp.over(socket);
-		stompClient.connect({}, function (frame) {
-			stompClient.subscribe('/project/update/tree', function (root) {
-				updateTree(root);
-			});
-
-		});
-	}
 
 	var updateTree=function(root){
 		if(root!=null){

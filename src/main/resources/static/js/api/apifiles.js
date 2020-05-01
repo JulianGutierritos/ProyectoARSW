@@ -1,6 +1,6 @@
 var apifiles = (function () {
-    //var appUrl = "https://treecore.herokuapp.com/treecore";
-    var appUrl = "http://localhost:8080/treecore";
+    var appUrl = "https://treecore.herokuapp.com/treecore";
+    //var appUrl = "http://localhost:8080/treecore";
 
     var showFiles = function(resp){
 		for(var i = 0; i < resp.length; i++) {
