@@ -512,6 +512,7 @@ var map = (function () {
 
 	var publicarRama = function (rama){
 		stompClient.send("/treecore/newRoot." + sessionStorage.proyecto,{},rama);
+		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, rama.nombre);
 	}
 
 	var addRootInfo = function (name, messDecr, padre) {
@@ -610,6 +611,16 @@ var map = (function () {
 
 	var setCurrentRootParent = function(parent){
 		currentRootParent = parent;
+	}
+
+	var notificarNuevaRama = function (lista, nombre) {
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha creado una nueva rama en el proyecto " + currentProject.nombre + " llamada: " + nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
 	}
 
 	return {
