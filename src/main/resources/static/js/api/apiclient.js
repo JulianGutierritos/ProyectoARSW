@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore";
-	//var appUrl = "http://localhost:8080/treecore";
+	//var appUrl = "https://treecore.herokuapp.com/treecore";
+	var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
@@ -258,6 +258,7 @@ var apiclient = (function () {
 		},
 
 		deleteRoot:function (rama){
+			console.log(rama);
 			var delRequest = $.ajax({
 				url: appUrl + "/delete/project/rama",
 				type: 'DELETE',

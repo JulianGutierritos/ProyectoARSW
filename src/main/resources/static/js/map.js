@@ -9,6 +9,7 @@ var map = (function () {
 	var currentUser;
 	var currentRoot;
 	var centralKey;
+	var olddata;
 
 	function init() {
 		hiddenComponentAddCollaborator();
@@ -324,7 +325,6 @@ var map = (function () {
 	// Show the diagram's model in JSON format
 	function save() {
 		document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-		console.log(myDiagram.model.toJson());
 		myDiagram.isModified = false;
 	}
 
@@ -338,12 +338,12 @@ var map = (function () {
 			var idPadre;
 			if (padre == null) {
 				idPadre = 0;
-				var cadena = { "loc": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador};
+				var cadena = { "loc": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador, "ramaPadre" : rama.ramaPadre};
 				centralKey = rama.id;
 			}
 			else {
 				idPadre = padre.id;
-				var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador};
+				var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador, "ramaPadre" : rama.ramaPadre};
 			}
 			list.push(cadena);
 		};
@@ -354,8 +354,10 @@ var map = (function () {
 	}
 
 	var updateTree = function(ramlist){
+		myDiagram.model.clear();
+		console.log(ramlist);
 		var list = [];
-		currentProject.ramas = ramlist;
+		//currentProject.ramas = ramlist;
 		for (var i = 1; i <= ramlist.length; i++) {
 			var rama = ramlist[i - 1];
 			var padre = rama.ramaPadre;
@@ -423,6 +425,7 @@ var map = (function () {
 			});
 			stompClient.subscribe('/project/tree.' + sessionStorage.proyecto , function (root) {
 				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
+				//location.reload();
 			});
 		});
 	}
@@ -465,16 +468,12 @@ var map = (function () {
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
 		var oldnode = adorn.adornedPart;
-		var olddata = oldnode.data;//oldata is the current root
-
+		olddata = oldnode.data;//oldata is the current root
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
-		console.log(olddata);
 		$("#tituloRama").text(olddata.text);
-		console.log(olddata.descripcion);
 		$("#descripcionRama").val(olddata.descripcion);
 		setValuesToAddRoot();
-
 	}
 
 	setCurrentRootParent = function (rootParent) {
@@ -528,7 +527,6 @@ var map = (function () {
 			creador: currentUser
 
 		};
-		console.log(newRoot);
 		let jroot = JSON.stringify(newRoot);
 		//apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
 		//stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
@@ -536,9 +534,18 @@ var map = (function () {
 	
 
 	var delComponent = function () {
-		let jroot = JSON.stringify(currentRoot);
-		//apiclient.deleteRoot(JSON.stringify(currentRoot));
-		stompClient.send("/treecore/project/delete/rama",{},jroot);
+		var newRoot = {
+			id: olddata.key,
+			nombre: olddata.text,
+			ramaPadre: olddata.ramaPadre,
+			descripcion: olddata.descripcion,
+			archivos: olddata.archivos,
+			fechaDeCreacion: olddata.fechaDeCreacion,
+			creador: olddata.creador
+		};
+		var jroot = JSON.stringify(newRoot);
+		stompClient.send("/treecore/delRoot." + sessionStorage.proyecto,{},jroot);
+		hiddenComponentAdd();
 	}
 
 
@@ -603,7 +610,6 @@ var map = (function () {
 					var path = "proyectos/"+currentProject.id+"/"+currentRootId + "/" +file.name;
 					path= path.replace(/[/]/g, '+++');;
 					path= path.replace(/" "/g, "%20");
-					//console.log(path);
 					apifiles.postFile(path,file);
 				}
 			}

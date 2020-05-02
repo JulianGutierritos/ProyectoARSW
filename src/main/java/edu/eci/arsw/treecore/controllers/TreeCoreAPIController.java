@@ -307,6 +307,8 @@ public class TreeCoreAPIController {
 	@RequestMapping(path = "/delete/project/rama", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteRama(@RequestBody Rama rama) {
 		try {
+			System.out.println("lllllllllllllllllll");
+			System.out.println(rama);
 			treeCoreProjectServices.deleteRama(rama);
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
