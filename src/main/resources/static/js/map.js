@@ -512,7 +512,8 @@ var map = (function () {
 
 	var publicarRama = function (rama){
 		stompClient.send("/treecore/newRoot." + sessionStorage.proyecto,{},rama);
-		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, rama.nombre);
+		var r = JSON.parse(rama);
+		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, r.nombre);
 	}
 
 	var addRootInfo = function (name, messDecr, padre) {
@@ -625,6 +626,14 @@ var map = (function () {
 
 	var publicarNotificacion = function (notificacion, correo) {
 		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
+	}
+
+	class Notificacion {
+		constructor(informacion) {
+			this.id = 0;
+			this.fecha = null;
+			this.informacion = informacion;
+		}
 	}
 
 	return {
