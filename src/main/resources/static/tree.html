@@ -114,12 +114,9 @@
 							<span class="lnr lnr-bubble"></span>
 						</label>
 					</div>
-					<div class="container">
+					<div class="container" id="contenedor" style="display:none">
 						<h2>Files</h2>
 						<div id="Files" class="list-group">
-						  <a href="https://www.youtube.com/" class="list-group-item">First item</a>
-						  <a href="#" class="list-group-item">Second item</a>
-						  <a href="#" class="list-group-item">Third item</a>
 						</div>
 					</div>
 					
@@ -153,20 +150,22 @@
 							</button>
 							<br />
 						</div>
+						<br />
+						<input type="file" id="archivo" multiple size="50" class="inputfile" />
+						
 					</div>
 
 					<div class="col3">
 
-						<div class="container-contact100-form-btn"></div>
-							<button class="btn2"><i class="fa fa-upload fa-4x" ></i>
+						<div class="container-contact100-form-btn"></div>							
+							<button class="btn2"><i class="fa fa-upload fa-4x" onclick="map.upload() ; return false;"></i>
 								<br/>
 								Upload 
 							</button>
+						</div>
+						
 					</div>
 					
-					</div>
-
-						
 
 				</form>
 			</div>

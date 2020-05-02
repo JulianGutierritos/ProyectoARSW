@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	//var appUrl = "https://treecore.herokuapp.com/treecore";
-	var appUrl = "http://localhost:8080/treecore";
+	var appUrl = "https://treecore.herokuapp.com/treecore";
+	//var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
@@ -221,7 +221,7 @@ var apiclient = (function () {
 
 		getRoot: function (idProyecto, idRama, callback) {
 
-			alert(appUrl + "/projects/" + idProyecto + "/rama/" + idRama)
+			//alert(appUrl + "/projects/" + idProyecto + "/rama/" + idRama)
 			jQuery.ajax({
 				url: appUrl + "/projects/" + idProyecto + "/rama/" + idRama,
 				type: "GET",

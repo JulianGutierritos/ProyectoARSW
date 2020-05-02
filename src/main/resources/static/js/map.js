@@ -527,6 +527,7 @@ var map = (function () {
 	}
 
 	var loadFiles = function(){
+		document.getElementById("Files").innerHTML = "";
 		var path = "proyectos/"+currentProject.id+"/"+currentRootId;
 		//var path = "proyectos/"+0+"/"+0;
 		path= path.replace(/[/]/g, '+++');;
@@ -534,7 +535,9 @@ var map = (function () {
 		apifiles.searchFiles(path,showFiles);
 	}
 	var showFiles = function(resp){
-		document.getElementById("Files").innerHTML = "";
+		if (resp.length > 0){
+			document.getElementById('contenedor').style.display = "block";
+		}
 		for(var i = 0; i < resp.length; i++) {
 			var path = resp[i];
 			path= path.replace(/[/]/g, '+++');;
@@ -556,6 +559,31 @@ var map = (function () {
 		}
 	}
 
+	var upload = function(){
+		var x = document.getElementById("archivo");
+		var txt = "";
+		var pasa = true;
+		if (currentRootId<0){
+			pasa = false;
+			alert("Por favor, cree la rama primero.")
+		}
+		if (('files' in x)&& pasa) {
+			if (x.files.length == 0) {
+				txt = "Select one or more files.";
+				alert(txt);
+			} else {
+				for (var i = 0; i < x.files.length; i++) {
+					var file = x.files[i];
+					var path = "proyectos/"+currentProject.id+"/"+currentRootId + "/" +file.name;
+					path= path.replace(/[/]/g, '+++');;
+					path= path.replace(/" "/g, "%20");
+					//console.log(path);
+					apifiles.postFile(path,file);
+				}
+			}
+		}
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -570,6 +598,7 @@ var map = (function () {
 		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
 		invitar: invitar,
 		closeOption:closeOption,
-		loadFiles:loadFiles
+		loadFiles:loadFiles,
+		upload: upload
 	}
 })();
