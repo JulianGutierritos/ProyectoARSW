@@ -545,6 +545,7 @@ var map = (function () {
 		};
 		var jroot = JSON.stringify(newRoot);
 		stompClient.send("/treecore/delRoot." + sessionStorage.proyecto,{},jroot);
+		apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
 		hiddenComponentAdd();
 	}
 
@@ -622,6 +623,16 @@ var map = (function () {
 
 	var notificarNuevaRama = function (lista, nombre) {
 		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha creado una nueva rama en el proyecto " + currentProject.nombre + " llamada: " + nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
+	}
+
+	var notificarEliminacion = function (lista, nombre) {
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha eliminado la rama " + nombre + " del proyecto " + currentProject.nombre);
 		notificacion = JSON.stringify(notificacion);
 		for (var i = 0; i < lista.length; i++) {
 			if (lista[i].correo != localStorage.correo) {
