@@ -179,7 +179,7 @@ var map = (function () {
 			);
 
 		myDiagram.addDiagramListener("SelectionMoved", function (e) {
-			var rootX = myDiagram.findNodeForKey(0).location.x;
+			var rootX = myDiagram.findNodeForKey(centralKey).location.x;
 			myDiagram.selection.each(function (node) {
 				if (node.data.parent !== 0) return; // Only consider nodes connected to the root
 				var nodeX = node.location.x;
@@ -338,7 +338,7 @@ var map = (function () {
 			var idPadre;
 			if (padre == null) {
 				idPadre = 0;
-				var cadena = { "loc": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador, "ramaPadre" : rama.ramaPadre};
+				var cadena = { "location": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador, "ramaPadre" : rama.ramaPadre};
 				centralKey = rama.id;
 			}
 			else {
