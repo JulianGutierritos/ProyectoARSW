@@ -119,5 +119,15 @@ public class TreeCoreAPIMessage {
 		treeCoreProjectServices.deleteRama(root);
 		msgt.convertAndSend("/project/update/tree", root);
 	}
+
+	/**
+	 * 
+	 * @param root rama
+	 * @throws ServiciosTreeCoreException
+	 */
+	@MessageMapping("/newRoot.{project}")
+	public void updateTree(Rama root, @DestinationVariable int project) throws ServiciosTreeCoreException {
+		msgt.convertAndSend("/project/tree." + project, root);
+	}
 	
 }

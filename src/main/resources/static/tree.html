@@ -43,7 +43,7 @@
 
 </head>
 
-<body onload="map.verificar(), map.hiddenComponentAdd(), map.init()">
+<body onload="map.verificar(), map.init()">
 
 	<section id="container">
 		<header class="header black-bg">
@@ -93,27 +93,14 @@
 
 			<div class="wrap-contact100">
 
-				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
+				<div class="contact100-form-title" id="tituloRama" style="background-image: url(layer/images/bg-04.jpg);">
 					<span>Componente</span>
 				</div>
 
+				<output id="descripcionRama"></output>
+
 				<form class="contact100-form validate-form">
-
-					<div class="wrap-input100 validate-input">
-						<input id="rootName" class="input100" type="text" name="name" placeholder="Name">
-						<span class="focus-input100"></span>
-						<label class="label-input100" for="name">
-							<span class="lnr lnr-user m-b-2"></span>
-						</label>
-					</div>
-
-					<div class="wrap-input100 validate-input">
-						<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
-						<span class="focus-input100"></span>
-						<label class="label-input100 rs1" for="message">
-							<span class="lnr lnr-bubble"></span>
-						</label>
-					</div>
+					
 					<div class="container" id="contenedor" style="display:none">
 						<h2>Files</h2>
 						<div id="Files" class="list-group">
@@ -131,21 +118,13 @@
 					</div>
 
 					<div class="col2">
-
 						<div class="container-contact100-form-btn">
 							<button type="button" class="contact100-form-btn" onclick="map.delComponent()">
 								Eliminar
 							</button>
-							&nbsp; &nbsp; &nbsp; &nbsp;
-							<button type="button" class="contact100-form-btn"
-								onclick="map.addRootInfo(rootName.value, message.value)">
-								Enviar
-							</button>
-							<br />
 						</div>
-
 						<div class="container-contact100-form-btn">
-							<button type="button" class="contact100-form-btn" onclick="map.closeOption()">
+							<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
 								Cerrar
 							</button>
 							<br />
@@ -165,8 +144,55 @@
 						</div>
 						
 					</div>
-					
+				</form>
+			</div>
+		</section>
 
+
+		<section class="container-contact100" id="nuevaRama">
+
+			<div class="wrap-contact100">
+
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
+					<span>Nueva Rama</span>
+				</div>
+
+				<form class="contact100-form validate-form">
+
+					<div class="wrap-input100 validate-input">
+						<input id="rootName" class="input100" type="text" name="name" placeholder="Name">
+						<span class="focus-input100"></span>
+						<label class="label-input100" for="name">
+							<span class="lnr lnr-user m-b-2"></span>
+						</label>
+					</div>
+
+					<div class="wrap-input100 validate-input">
+						<textarea id="message" class="input100" name="message" placeholder="Description"></textarea>
+						<span class="focus-input100"></span>
+						<label class="label-input100 rs1" for="message">
+							<span class="lnr lnr-bubble"></span>
+						</label>
+					</div>
+					
+					<div class="col1">
+						<div class="container-contact100-form-btn">
+							<button type="button" class="contact100-form-btn"
+								onclick="map.agregarRama(rootName.value, message.value)">
+								Crear
+							</button>
+						</div>
+					</div>
+
+					<div class="col2">
+						<div class="container-contact100-form-btn">
+							<button type="button" class="contact100-form-btn" onclick="map.hiddenNuevaRama()">
+								Cerrar
+							</button>
+							<br />
+						</div>
+					</div>
+					
 				</form>
 			</div>
 		</section>

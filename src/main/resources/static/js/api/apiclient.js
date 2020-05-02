@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore";
-	//var appUrl = "http://localhost:8080/treecore";
+	//var appUrl = "https://treecore.herokuapp.com/treecore";
+	var appUrl = "http://localhost:8080/treecore";
 	return {
 
 		getUser: function (callback) {
@@ -186,6 +186,15 @@ var apiclient = (function () {
 				}
 			});
 		},
+		getProjectRamas: function (id, callback) {
+			jQuery.ajax({
+				url: appUrl + "/projects/" + id + "/ramas",
+				type: "GET",
+				success: function (response) {
+					callback(response);
+				}
+			});
+		},
 
 		getAutenticado: function () {
 			return localStorage.correo;
@@ -231,7 +240,7 @@ var apiclient = (function () {
 			});
 		},
 
-		addProjectRoot: function (projectId, root) {
+		addProjectRoot: function (projectId, root, callback) {
 			var postRequest = $.ajax({
 				url: appUrl + "/projects/" + projectId + "/ramas",
 				type: 'POST',
@@ -240,8 +249,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					alert("successful root creation");
-					//location.reload();
+					callback(root);
 				},
 				function () {
 					alert("failed root creation");

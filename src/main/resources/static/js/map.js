@@ -1,6 +1,5 @@
 var apiclient = apiclient;
 var stompClient = null;
-var proyecto = null;
 var map = (function () {
 
 	var currentRootId;
@@ -9,10 +8,14 @@ var map = (function () {
 	var currentProject;
 	var currentUser;
 	var currentRoot;
+	var centralKey;
 
 	function init() {
+		hiddenComponentAddCollaborator();
+		hiddenComponentAdd();
+		hiddenNuevaRama();
+		conectar();
 		var $ = go.GraphObject.make;
-
 		myDiagram =
 			$(go.Diagram, "myDiagramCanvas",
 				{
@@ -189,8 +192,6 @@ var map = (function () {
 		});
 
 		apiclient.getProject(sessionStorage.proyecto, map.load);
-		hiddenComponentAddCollaborator();
-
 	}
 
 	function spotConverter(dir, from) {
@@ -236,27 +237,15 @@ var map = (function () {
 
 	function addNodeAndLink(e, obj) {
 		var adorn = obj.part;
-		var diagram = adorn.diagram;
-		diagram.startTransaction("Add Node");
 		var oldnode = adorn.adornedPart;
 		var olddata = oldnode.data;
-		// copy the brush and direction to the new node data
-		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
-
-		//dataList.add(newdata)
-		// alert(dataList.length)
-		//alert(myDiagram.model.toJson())
-
-		diagram.model.addNodeData(newdata);
-		layoutTree(oldnode);
-		//Add new component
-		diagram.commitTransaction("Add Node");
-
-		// if the new node is off-screen, scroll the diagram to show the new node
-		var newnode = diagram.findNodeForData(newdata);
-		if (newnode !== null) diagram.scrollToRect(newnode.actualBounds);
-
-		newCurrentRoot(newnode)
+		if (olddata.key != 0){
+			apiclient.getRoot(sessionStorage.proyecto, olddata.key, setCurrentRootParent);
+		}
+		else{
+			currentProject = null;
+		}
+		hiddenNuevaRama();
 	}
 
 	var newCurrentRoot = function (newnode) {
@@ -308,7 +297,7 @@ var map = (function () {
 	}
 
 	function layoutAll() {
-		var root = myDiagram.findNodeForKey(0);
+		var root = myDiagram.findNodeForKey(centralKey);
 		if (root === null) return;
 		myDiagram.startTransaction("Layout");
 		// split the nodes and links into two collections
@@ -340,17 +329,35 @@ var map = (function () {
 	}
 
 	function load(project) {
-		proyecto = project
 		var ramlist = project.ramas;
 		var list = [];
-		var pro = { "key": 0, "text": project.nombre, "loc": "0 0" };
-		list.push(pro);
 		currentProject = project;
 		for (var i = 1; i <= ramlist.length; i++) {
 			var rama = ramlist[i - 1];
-			//alert(JSON.stringify(rama))
-			//alert(rama.ramaPadre)
+			var padre = rama.ramaPadre;
+			var idPadre;
+			if (padre == null) {
+				idPadre = 0;
+				var cadena = { "loc": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador};
+				centralKey = rama.id;
+			}
+			else {
+				idPadre = padre.id;
+				var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador};
+			}
+			list.push(cadena);
+		};
+		var val = { "class": "go.TreeModel", "nodeDataArray": list };
+		myDiagram.model = go.Model.fromJson(val);
+		layoutAll();
+		mensajes(project);
+	}
 
+	var updateTree = function(ramlist){
+		var list = [];
+		currentProject.ramas = ramlist;
+		for (var i = 1; i <= ramlist.length; i++) {
+			var rama = ramlist[i - 1];
 			var padre = rama.ramaPadre;
 			var idPadre;
 			if (padre == null) {
@@ -359,18 +366,12 @@ var map = (function () {
 			else {
 				idPadre = padre.id;
 			}
-			//alert(JSON.stringify(padre))
-			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
+			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre , "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador" : rama.creador};
 			list.push(cadena);
 		};
-
-
-
 		var val = { "class": "go.TreeModel", "nodeDataArray": list };
 		myDiagram.model = go.Model.fromJson(val);
 		layoutAll();
-		conectar();
-		mensajes(project);
 	}
 
 	function loadN() {
@@ -400,7 +401,7 @@ var map = (function () {
 
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
-			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+			var invitacion = new Invitacion(localStorage.correo, currentProject.id, currentProject.nombre, $("#colaborador").val());
 			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
 		}
 		$("#colaborador").val("");
@@ -419,6 +420,9 @@ var map = (function () {
 			});
 			stompClient.subscribe('/project/update/tree', function (root) {
 				updateTree(root);
+			});
+			stompClient.subscribe('/project/tree.' + sessionStorage.proyecto , function (root) {
+				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
 			});
 		});
 	}
@@ -451,6 +455,11 @@ var map = (function () {
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
+	var hiddenNuevaRama = function() {
+		var el = document.getElementById("nuevaRama");
+		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+
+	}		
 	var currentRoot = function (e, obj) {
 		var adorn = obj.part;
 		var diagram = adorn.diagram;
@@ -460,7 +469,10 @@ var map = (function () {
 
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
-
+		console.log(olddata);
+		$("#tituloRama").text(olddata.text);
+		console.log(olddata.descripcion);
+		$("#descripcionRama").val(olddata.descripcion);
 		setValuesToAddRoot();
 
 	}
@@ -477,9 +489,32 @@ var map = (function () {
 		currentRoot = root;
 	}
 
+	var agregarRama = function(name, messDecr){
+		var newUser = {
+			correo: localStorage.correo,
+			nombre: "",
+			passwd: "",
+			invitaciones: [],
+			notificaciones: []
+		};
+		var newRoot = {
+			id: 0,
+			nombre: name,
+			ramaPadre: currentRootParent,
+			descripcion: messDecr,
+			archivos: [],
+			fechaDeCreacion: "",
+			creador: newUser
+		};
+		apiclient.addProjectRoot(sessionStorage.proyecto, JSON.stringify(newRoot), publicarRama);
+		hiddenNuevaRama();
+	}
 
+	var publicarRama = function (rama){
+		stompClient.send("/treecore/newRoot." + sessionStorage.proyecto,{},rama);
+	}
 
-	var addRootInfo = function (name, messDecr) {
+	var addRootInfo = function (name, messDecr, padre) {
 
 		var newRoot = {
 			id: currentRootId,
@@ -491,9 +526,10 @@ var map = (function () {
 			creador: currentUser
 
 		};
+		console.log(newRoot);
 		let jroot = JSON.stringify(newRoot);
 		//apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
-		stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
+		//stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
 	}
 	
 
@@ -512,18 +548,6 @@ var map = (function () {
 		if (sessionStorage.proyecto == null) {
 			location.replace("/profile.html")
 		}
-	}
-
-
-	var updateTree=function(root){
-		if(root!=null){
-			location.reload();
-		}
-	}
-
-
-	var closeOption=function(){
-		location.reload();
 	}
 
 	var loadFiles = function(){
@@ -584,6 +608,10 @@ var map = (function () {
 		}
 	}
 
+	var setCurrentRootParent = function(parent){
+		currentRootParent = parent;
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -592,12 +620,12 @@ var map = (function () {
 		load: load,
 		layoutAll: layoutAll,
 		enviar: enviar,
-		addRootInfo: addRootInfo,
+		agregarRama: agregarRama,
 		back: back,
 		verificar: verificar,
 		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
+		hiddenNuevaRama: hiddenNuevaRama,
 		invitar: invitar,
-		closeOption:closeOption,
 		loadFiles:loadFiles,
 		upload: upload
 	}

@@ -204,10 +204,7 @@ public class TreeCoreAPIController {
 	@RequestMapping(path = "/project/{projectName}", method = RequestMethod.GET)
 	public ResponseEntity<?> getProjectByName(@PathVariable("projectName") String projectName) {
 		try {
-			System.out.println(projectName);
-
 			Proyecto p = treeCoreProjectServices.getProyectoByName(projectName);
-			System.out.println(p);
 			return new ResponseEntity<>(treeCoreProjectServices.getProyectoByName(projectName), HttpStatus.ACCEPTED);
 		} catch (ServiciosTreeCoreException e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
@@ -231,6 +228,27 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
+
+
+	/**
+	 * Metodo para crear una nueva rama
+	 * 
+	 * @param rama rama a crear
+	 * @param projetId Id del proyecto
+	 * @return Respuesta http con una lista de las ramas pertenecientes a un
+	 *         proyecto
+	 */
+	@RequestMapping(path = "/projects/{id}/ramas", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addNewRoot(@RequestBody Rama rama,  @PathVariable("id") int projectId) {
+		try {
+			Proyecto project = treeCoreProjectServices.getProyecto(projectId);
+			this.treeCoreProjectServices.insertarRama(rama, project);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
 
 	/**
 	 * Metodo para obtener una rama en particular perteneciente a un proyecto
