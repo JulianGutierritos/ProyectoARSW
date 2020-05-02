@@ -623,6 +623,10 @@ var map = (function () {
 		}
 	}
 
+	var publicarNotificacion = function (notificacion, correo) {
+		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,

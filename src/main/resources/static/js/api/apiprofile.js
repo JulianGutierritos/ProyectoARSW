@@ -45,7 +45,7 @@ var apiprofile = (function () {
 		}
 	}
 
-	var publicarNotificacion = function (notificacion, correo, n) {
+	var publicarNotificacion = function (notificacion, correo) {
 		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
 	}
 
