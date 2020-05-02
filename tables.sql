@@ -118,6 +118,7 @@ EXECUTE PROCEDURE proyecto_fecha();
 CREATE OR REPLACE FUNCTION proyecto_participante() RETURNS trigger LANGUAGE plpgsql AS $function$
 declare
 begin 
+  insert into rama 
   insert into participante (usuario, proyecto) values (new.creador, new.proyectoid);
   return null;
 END;
@@ -129,4 +130,24 @@ insert
     on
     public.proyecto for each row execute function proyecto_participante();
 
-insert into proyecto (proyectoid, nombre, creador, descripcion) values (4, 'prueba', 'j@mail.com', 'holaaa');
+
+CREATE OR REPLACE FUNCTION delete_rama() RETURNS trigger LANGUAGE plpgsql AS $function$
+declare
+ id INTEGER; 
+begin 
+  select ramapadre into id from rama where ramaid = old.ramaid; 
+  if id is null then
+  	 RAISE EXCEPTION 'no se puede eliminar una rama padre';
+  else 
+  	 update public.rama set ramapadre = id where ramapadre = old.ramaid;
+  end if;
+  return old;
+END;
+$function$
+;
+
+create trigger eliminarRama before
+delete
+    on
+    public.rama for each row execute function delete_rama();
+
