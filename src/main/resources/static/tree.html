@@ -15,6 +15,7 @@
 	<script src="release/go.js"></script>
 	<script src="/js/api/apiclient.js"></script>
 	<script src="js/api/apiprofile.js"></script>
+	<script src="js/api/apifiles.js"></script>
 	<script src="js/map.js"></script>
 	<script src="js/api/app.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -121,25 +122,50 @@
 						  <a href="#" class="list-group-item">Third item</a>
 						</div>
 					</div>
+					
+					<div class="col1">
 
-					<div class="container-contact100-form-btn">
-						<button type="button" class="contact100-form-btn" onclick="map.delComponent()">
-							Eliminar
-						</button>
-						&nbsp; &nbsp; &nbsp; &nbsp;
-						<button type="button" class="contact100-form-btn"
-							onclick="map.addRootInfo(rootName.value, message.value)">
-							Enviar
-						</button>
-						<br />
+						<div class="container-contact100-form-btn">
+							<button class="btn2"><i class="fa fa-folder fa-4x" onclick="apifiles.getFiles('asignaturas')"></i>
+								<br/>
+								Files
+							</button>
+						</div>
 					</div>
 
-					<div class="container-contact100-form-btn">
-						<button type="button" class="contact100-form-btn" onclick="map.closeOption()">
-							Cerrar
-						</button>
-						<br />
+					<div class="col2">
+
+						<div class="container-contact100-form-btn">
+							<button type="button" class="contact100-form-btn" onclick="map.delComponent()">
+								Eliminar
+							</button>
+							&nbsp; &nbsp; &nbsp; &nbsp;
+							<button type="button" class="contact100-form-btn"
+								onclick="map.addRootInfo(rootName.value, message.value)">
+								Enviar
+							</button>
+							<br />
+						</div>
+
+						<div class="container-contact100-form-btn">
+							<button type="button" class="contact100-form-btn" onclick="map.closeOption()">
+								Cerrar
+							</button>
+							<br />
+						</div>
 					</div>
+
+					<div class="col3">
+
+					
+						<button class="btn2"><i class="fa fa-upload fa-4x" ></i>
+							<br/>
+							Upload 
+						</button>
+					
+					</div>
+
+						
 
 				</form>
 			</div>
