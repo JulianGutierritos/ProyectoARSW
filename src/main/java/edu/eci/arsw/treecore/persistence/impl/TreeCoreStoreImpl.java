@@ -59,7 +59,7 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
             while (true) {
                 for (final Metadata metadata : result.getEntries()) {
                     //contenido.add(metadata.getPathLower());
-                    contenido.add(metadata.getName());
+                    contenido.add(metadata.getPathLower());
                 }
 
                 if (!result.getHasMore()) {
@@ -139,7 +139,7 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
         String ruta = path.replace("+++", "/"); 
         List<String> datos = new ArrayList<String>();
 		try {
-            GetTemporaryLinkResult DownloadLinkData = client.files().getTemporaryLink("/"+ruta);
+            GetTemporaryLinkResult DownloadLinkData = client.files().getTemporaryLink(ruta);
             datos.add(DownloadLinkData.getMetadata().getName());
             datos.add(DownloadLinkData.getLink());
 		} catch (final DbxException e) {

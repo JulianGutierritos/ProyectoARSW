@@ -1,17 +1,7 @@
 var apifiles = (function () {
-    var appUrl = "https://treecore.herokuapp.com/treecore";
-    //var appUrl = "http://localhost:8080/treecore";
+    //var appUrl = "https://treecore.herokuapp.com/treecore";
+    var appUrl = "http://localhost:8080/treecore";
 
-    var showFiles = function(resp){
-		for(var i = 0; i < resp.length; i++) {
-			console.log(resp[i]);
-		};
-	}
-	var showFile = function(resp){
-		if (resp != null){
-			console.log(resp);
-		}
-	}
     return {
 		
 		searchFiles: function (path, callback) {
@@ -55,16 +45,17 @@ var apifiles = (function () {
 		},
 	
 		
-		getFiles: function(opt){
-			var path = document.getElementById("getPath").value;
+		getFiles: function(proyecto,rama){
+			// var path = "proyectos/"+proyecto+"/"+rama;
+			var path = "proyectos/"+0+"/"+0;
 			path= path.replace(/[/]/g, '+++');;
 			path= path.replace(/" "/g, "%20");
-			//console.log(path);
-			if(opt=="C"){
-				this.searchFiles(path,showFiles);
-			}else if (opt=="A"){
-				this.searchFile(path,showFile);
-			}
+			this.searchFiles(path,showFiles);
+			// if(opt=="C"){
+			// 	this.searchFiles(path,showFiles);
+			// }else if (opt=="A"){
+			// 	this.searchFile(path,showFile);
+			// }
 			
 		},
 

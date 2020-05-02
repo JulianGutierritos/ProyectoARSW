@@ -526,6 +526,36 @@ var map = (function () {
 		location.reload();
 	}
 
+	var loadFiles = function(){
+		var path = "proyectos/"+currentProject.id+"/"+currentRootId;
+		//var path = "proyectos/"+0+"/"+0;
+		path= path.replace(/[/]/g, '+++');;
+		path= path.replace(/" "/g, "%20");
+		apifiles.searchFiles(path,showFiles);
+	}
+	var showFiles = function(resp){
+		document.getElementById("Files").innerHTML = "";
+		for(var i = 0; i < resp.length; i++) {
+			var path = resp[i];
+			path= path.replace(/[/]/g, '+++');;
+			path= path.replace(/" "/g, "%20");
+			apifiles.searchFile(path,showFile);
+		};
+
+	}
+
+	var showFile = function(resp){
+		if (resp != null){
+			var lista = document.getElementById("Files");
+			var newlink = document.createElement('a');
+			newlink.setAttribute('class', 'list-group-item');
+			newlink.setAttribute('href', resp[1]);
+			var newContent = document.createTextNode(resp[0]); 
+			newlink.appendChild(newContent);
+			lista.appendChild(newlink);
+		}
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -539,6 +569,7 @@ var map = (function () {
 		verificar: verificar,
 		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
 		invitar: invitar,
-		closeOption:closeOption
+		closeOption:closeOption,
+		loadFiles:loadFiles
 	}
 })();
