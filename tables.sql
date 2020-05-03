@@ -29,8 +29,8 @@ create table participante(
 usuario varchar(100),
 proyecto int,
 primary key (usuario, proyecto),
-foreign key (usuario) references usuario(correo),
-foreign key (proyecto) references proyecto(proyectoID)
+foreign key (usuario) references usuario(correo)
+/*foreign key (proyecto) references proyecto(proyectoID)*/
 );
 
 create table mensaje(
@@ -39,8 +39,8 @@ proyecto int,
 fecha date,
 contenido varchar(200),
 primary key (usuario, proyecto),
-foreign key (usuario) references usuario(correo),
-foreign key (proyecto) references proyecto(proyectoID)
+foreign key (usuario) references usuario(correo)
+/*foreign key (proyecto) references proyecto(proyectoID)*/
 );
 
 create table invitacion(
@@ -49,8 +49,8 @@ receptor varchar(100),
 proyecto int,
 primary key (remitente, receptor, proyecto),
 foreign key (remitente) references usuario(correo),
-foreign key (receptor) references usuario(correo),
-foreign key (proyecto) references proyecto(proyectoID)
+foreign key (receptor) references usuario(correo)
+/*foreign key (proyecto) references proyecto(proyectoID)*/
 );
 
 create table rama(
@@ -61,7 +61,7 @@ ramaPadre int,
 fechaDeCreacion date,
 creador varchar(100),
 primary key (ramaID),
-foreign key (proyecto) references proyecto(proyectoID),
+/*foreign key (proyecto) references proyecto(proyectoID),*/
 foreign key (ramaPadre) references rama(ramaID),
 foreign key (creador) references usuario(correo)
 );
@@ -150,4 +150,39 @@ create trigger eliminarRama before
 delete
     on
     public.rama for each row execute function delete_rama();
+
+/*
+  Índices
+*/
+
+CREATE UNIQUE INDEX index_nombre_proy ON rama (nombre, proyecto);
+
+
+/*
+  Foreign keys
+*/
+ALTER TABLE rama
+ADD CONSTRAINT fk_rama_proyecto
+FOREIGN KEY (proyecto)
+REFERENCES proyecto(proyectoID)
+ON DELETE CASCADE;
+
+ALTER TABLE participante 
+ADD CONSTRAINT fk_part_proyecto
+FOREIGN KEY (proyecto)
+REFERENCES proyecto(proyectoID)
+ON DELETE CASCADE;
+
+ALTER TABLE mensaje
+ADD CONSTRAINT fk_mensaje_proyecto
+FOREIGN KEY (proyecto)
+REFERENCES proyecto(proyectoID)
+ON DELETE CASCADE;
+
+
+ALTER TABLE invitacion
+ADD CONSTRAINT fk_invitacion_proyecto
+FOREIGN KEY (proyecto)
+REFERENCES proyecto(proyectoID)
+ON DELETE CASCADE;
 
