@@ -169,3 +169,28 @@
 	float: right;
 	font-size: 15px;
 }
+
+.delBot{
+	border: none;
+	color: red;
+	cursor: pointer;
+	float: right;
+	margin-left: 14px;
+}
+
+.delBot:hover {
+	background-color: red;
+	color: white;
+}
+
+.putBot{
+	border: none;
+	color: red;
+	cursor: pointer;
+	float: right;
+}
+
+.putBot:hover {
+	background-color: red;
+	color: white;
+}

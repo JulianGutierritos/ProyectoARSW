@@ -589,8 +589,42 @@ var map = (function () {
 			newlink.setAttribute('href', resp[1]);
 			var newContent = document.createTextNode(resp[0]); 
 			newlink.appendChild(newContent);
+			var boton1= crearDelBot(resp[0]);
+			newlink.appendChild(boton1);
+			var boton2= crearPutBot(resp[0]);
+			newlink.appendChild(boton2);
 			lista.appendChild(newlink);
 		}
+	}
+
+	var crearDelBot= function(name){
+		var boton = document.createElement("button");
+		boton.setAttribute('class', 'delBot');
+
+		var icon = document.createElement("i");
+		icon.setAttribute('class', 'fa fa-trash fa-2x');
+		boton.appendChild(icon);
+		boton.onclick = function() {
+			var path = "proyectos/"+currentProject.id+"/"+currentRootId+"/"+name;
+			alert(path);
+			return false;
+		  };
+		return boton;
+	}
+
+	var crearPutBot= function(name){
+		var boton = document.createElement("button");
+		boton.setAttribute('class', 'putBot');
+
+		var icon = document.createElement("i");
+		icon.setAttribute('class', 'fa fa-arrow-circle-up fa-2x');
+		boton.appendChild(icon);
+		boton.onclick = function() {
+			var path = "proyectos/"+currentProject.id+"/"+currentRootId+"/"+name;
+			alert(path);
+			return false;
+		  };
+		return boton;
 	}
 
 	var upload = function(){
