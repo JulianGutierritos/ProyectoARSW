@@ -33,7 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(value = "/treecore")
+@RequestMapping(value = "/treecore/v1")
 public class TreeCoreAPIController {
 	@Autowired
 	TreeCoreUserServices treeCoreUserServices;
@@ -436,6 +436,23 @@ public class TreeCoreAPIController {
 		try {
 			treeCoreStoreServices.receiveFile(file, ruta, "post");
 			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (TreeCoreStoreException e) {
+			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
+	 * Metodo para subir un archivo a una ruta ya existente.
+	 * 
+	 * @param ruta Ruta a la que se quiere subir un archivo.
+	 * @return
+	 */
+	@RequestMapping(path = "/file/{ruta}", method = RequestMethod.PUT)
+	public ResponseEntity<?> putFile(@PathVariable("ruta") String ruta, @RequestParam("file") MultipartFile file) {
+		try {
+			treeCoreStoreServices.receiveFile(file, ruta, "put");
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (TreeCoreStoreException e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);

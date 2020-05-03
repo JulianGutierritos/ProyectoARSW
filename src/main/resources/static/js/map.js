@@ -564,10 +564,29 @@ var map = (function () {
 		document.getElementById("Files").innerHTML = "";
 		var path = "proyectos/"+currentProject.id+"/"+currentRootId;
 		//var path = "proyectos/"+0+"/"+0;
-		path= path.replace(/[/]/g, '+++');;
+		path= path.replace(/[/]/g, '+++');
 		path= path.replace(/" "/g, "%20");
 		apifiles.searchFiles(path,showFiles);
+		loadInput();
 	}
+
+	var loadInput = function(){
+		var input = document.getElementById("archivoPut");
+		input.onchange = function(){
+			var file = input.files[0];
+			var path = "proyectos/"+currentProject.id+"/"+currentRootId + "/" +input.name;
+			path= path.replace(/[/]/g, '+++');
+			path= path.replace(/" "/g, "%20");
+			var oldEnd=input.name.split(".").pop();
+			var newEnd =file.name.split(".").pop();
+			if (oldEnd==newEnd){
+				apifiles.putFile(path,file);
+			}else{
+				alert("Los archivos no son del mismo tipo");
+			}
+		}
+	}
+
 	var showFiles = function(resp){
 		if (resp.length > 0){
 			document.getElementById('contenedor').style.display = "block";
@@ -621,11 +640,18 @@ var map = (function () {
 		var icon = document.createElement("i");
 		icon.setAttribute('class', 'fa fa-arrow-circle-up fa-2x');
 		boton.appendChild(icon);
+		
 		boton.onclick = function() {
 			var path = "proyectos/"+currentProject.id+"/"+currentRootId+"/"+name;
-			alert(path);
+			path= path.replace(/[/]/g, '+++');;
+			path= path.replace(/" "/g, "%20");
+			var input = document.getElementById("archivoPut");
+			input.setAttribute("name",name);
+			input.click();
+			//apifiles.putFile(path);
 			return false;
 		  };
+		
 		return boton;
 	}
 

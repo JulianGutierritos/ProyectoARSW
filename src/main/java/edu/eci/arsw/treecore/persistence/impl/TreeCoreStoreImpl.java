@@ -108,8 +108,6 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
 
     public void receiveFile(MultipartFile file, String path, String option) throws TreeCoreStoreException {
         path = path.replace("+++", "/");
-        
-
         try {
             File localFile = new File(file.getOriginalFilename());
             localFile.createNewFile();

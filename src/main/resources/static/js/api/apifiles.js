@@ -1,6 +1,6 @@
 var apifiles = (function () {
-    //var appUrl = "https://treecore.herokuapp.com/treecore";
-    var appUrl = "http://localhost:8080/treecore";
+    var appUrl = "https://treecore.herokuapp.com/treecore/v1";
+    // var appUrl = "http://localhost:8080/treecore/v1";
 
     return {
 		
@@ -44,9 +44,30 @@ var apifiles = (function () {
             });
 			
         },
+
+        putFile: function (path,file) {
+			var putRequest = $.ajax({
+                url: appUrl+"/file/" + path,
+                type: "PUT",
+                data: function () {
+                    var data = new FormData();
+                    data.append("name", file.name);
+                    data.append("file", file);
+                    return data;
+                }(),
+                contentType: false,
+                processData: false,
+                success: function (response) {   
+					alert("Archivo " + file.name+ " cargado")                     
+                },
+                error: function (jqXHR, textStatus, errorMessage) {
+                    alert(file.name + " no cargado");
+                }
+            });
+			
+        },
         
         deleteFile:function (path){
-			console.log(path);
 			var delRequest = $.ajax({
 				url: appUrl+"/file/" + path,
 				type: 'DELETE',
@@ -59,7 +80,7 @@ var apifiles = (function () {
 					alert("failure delete");
 				}
 			);
-		},
+        },
 
     };
 })();

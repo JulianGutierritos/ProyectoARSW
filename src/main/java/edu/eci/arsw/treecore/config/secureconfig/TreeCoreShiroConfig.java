@@ -46,17 +46,17 @@ public class TreeCoreShiroConfig {
 		 * permission to access role:The resource must have role permission to access
 		 */
 		Map<String, String> filterMap = new LinkedHashMap<>();
-		filterMap.put("/tree.html", "authc");
-		filterMap.put("/addProject.html", "authc");
-		filterMap.put("/profile.html", "authc");
+		// filterMap.put("/tree.html", "authc");
+		// filterMap.put("/addProject.html", "authc");
+		// filterMap.put("/profile.html", "authc");
 
-		filterMap.put("/login", "perms[user:add]");
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
+		// filterMap.put("/login", "perms[user:add]");
+		// shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
-		// Modify the page of the blocked request jump
-		shiroFilterFactoryBean.setLoginUrl("/toLogin");
-		// Set unauthorized pages
-		shiroFilterFactoryBean.setUnauthorizedUrl("/nuAuth");
+		// // Modify the page of the blocked request jump
+		// shiroFilterFactoryBean.setLoginUrl("/toLogin");
+		// // Set unauthorized pages
+		// shiroFilterFactoryBean.setUnauthorizedUrl("/nuAuth");
 		return shiroFilterFactoryBean;
 	}
 
