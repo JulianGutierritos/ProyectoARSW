@@ -274,6 +274,24 @@ var apiclient = (function () {
 				}
 			);
 		},
+
+		deleteProject:function (proyecto){
+			var delRequest = $.ajax({
+				url: appUrl + "/delete/project",
+				type: 'DELETE',
+				data: proyecto,
+				contentType: "application/json"
+			});
+			delRequest.then(
+				function () {
+					location.replace("/profile.html")
+				},
+				function () {
+					alert("failure delete");
+				}
+			);
+		},
+		
 		getLastId: function (callback) {
 			jQuery.ajax({
 				url: appUrl + "/ramas/lastId",

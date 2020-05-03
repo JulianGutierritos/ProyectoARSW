@@ -96,6 +96,13 @@ public interface ProyectoMapper {
 	public void delRama(@Param("rama") Rama rama);
 
 	/**
+	 * Metodo para eliminar un proyecto
+	 * 
+	 * @param project Proyecto a eliminar
+	 */
+	public void delProyecto(@Param("project") Proyecto project);
+
+	/**
 	 * Metodo para adicionar un mensaje a un proyecto
 	 * 
 	 * @param mensaje  Nuevo mensaje

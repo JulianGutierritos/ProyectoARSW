@@ -92,6 +92,13 @@ public interface TreeCoreProjectServices {
 	public void insertarProyecto(Proyecto proyecto) throws ServiciosTreeCoreException;
 
 	/**
+	 * Metodo para eliminar un proyecto
+	 * @param project Proyecto a eliminar
+	 * @throws ServiciosTreeCoreException Si no puede eliminar el proyecto
+	 */
+	public void deleteProyecto(Proyecto project) throws ServiciosTreeCoreException;
+	
+	/**
 	 * Metodo que adiciona un nuevo miembro al proyecto
 	 * 
 	 * @param usuario  Usuario que va a ser miembro del proyecto
@@ -148,5 +155,6 @@ public interface TreeCoreProjectServices {
 	 * Metodo que obtiene el ultimo id de las ramas
 	*/
 	public int getLastBranchId();
+
 
 }

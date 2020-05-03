@@ -298,6 +298,22 @@ public class TreeCoreAPIController {
 	}
 
 	/**
+	 * Metodo para eliminar un proyecto
+	 * 
+	 * @param project Proyecto a eliminar
+	 * @return Respuesta http con el estado de la solicitud
+	 */
+	@RequestMapping(path = "/delete/project", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteProject(@RequestBody Proyecto project) {
+		try {
+			this.treeCoreProjectServices.deleteProyecto(project);
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
 	 * * Metodo que recibe la peticion para adicionar un nueva invitacion
 	 * 
 	 * @param invitacion Nueva invitacion
@@ -480,6 +496,7 @@ public class TreeCoreAPIController {
 
 	/**
 	 * Metodo para obtener el ultimo id disponible.
+	 * 
 	 * @return ultimo id disponible.
 	 */
 	@RequestMapping(path = "/ramas/lastId", method = RequestMethod.GET)

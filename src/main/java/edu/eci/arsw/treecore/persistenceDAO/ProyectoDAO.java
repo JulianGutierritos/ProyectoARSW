@@ -100,6 +100,14 @@ public interface ProyectoDAO {
 	public void deleteRama(Rama rama) throws PersistenceException;
 
 	/**
+	 * Metodo para eliminar un proyecto
+	 * 
+	 * @param project Proyecto a eliminar
+	 * @throws PersistenceException Si no puede eliminar al proyecto
+	 */
+	public void deleteProyecto(Proyecto project) throws PersistenceException;
+
+	/**
 	 * Metodo para adicionar un nuevo proyecto
 	 * 
 	 * @param proyecto Nuevo proyecto

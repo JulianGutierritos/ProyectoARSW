@@ -151,7 +151,18 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 		try {
 			proyectoDAO.deleteRama(rama);
 		} catch (PersistenceException e) {
-			throw new ServiciosTreeCoreException("No hay proyectos");
+			throw new ServiciosTreeCoreException("No se pudo eliminar la rama");
+		}
+	}
+
+	@Override
+	public void deleteProyecto(Proyecto project) throws ServiciosTreeCoreException {
+
+		try {
+			proyectoDAO.deleteProyecto(project);
+
+		} catch (Exception e) {
+			throw new ServiciosTreeCoreException("No se pudo eliminar el proyecto");
 		}
 	}
 
@@ -187,4 +198,5 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	public int getLastBranchId() {
 		return proyectoDAO.getLastBranchId();
 	}
+
 }

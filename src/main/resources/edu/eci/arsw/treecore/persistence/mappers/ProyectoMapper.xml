@@ -156,6 +156,9 @@
       delete from rama where ramaid = #{rama.id}
     </delete>
 
+	<delete id="delProyecto">
+      delete from proyecto where proyectoid = #{project.id}
+    </delete>
 
     <select parameterType="map" id="getAccessToken" resultType="String">
       select access_token
