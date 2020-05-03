@@ -464,6 +464,7 @@ var map = (function () {
 
 	}		
 	var currentRoot = function (e, obj) {
+		document.getElementById("Files").innerHTML = "";
 		var adorn = obj.part;
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
