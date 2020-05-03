@@ -479,8 +479,12 @@ var map = (function () {
 		olddata = oldnode.data;//oldata is the current root
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
-		$("#tituloRama").text(olddata.text);
-		$("#descripcionRama").val(olddata.descripcion);
+		
+		document.getElementById('compName').innerHTML=olddata.text;
+		document.getElementById('descripcionRama').innerHTML=olddata.descripcion;
+		//var conObj = document.getElementById('ramaName');compName
+		//conObj.value = olddata.text;
+		//$("#descripcionRama").val(olddata.descripcion);
 		setValuesToAddRoot();
 	}
 

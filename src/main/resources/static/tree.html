@@ -70,11 +70,11 @@
 				<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAddCollaborator()">
 					Agregar Colaborador
 				</button>
-				<br/>
+				<br />
 				<button type="button" class="contact100-form-btn" onclick="map.save()">
-					Exportar				
+					Exportar
 				</button>
-				<br/>
+				<br />
 				<button type="button" class="contact100-form-btn" onclick="map.save()">
 					Importar
 				</button>
@@ -93,25 +93,50 @@
 
 			<div class="wrap-contact100">
 
-				<div class="contact100-form-title" id="tituloRama" style="background-image: url(layer/images/bg-04.jpg);">
-					<span>Componente</span>
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
+					<div>
+						<span class="buttonClose" onclick="map.hiddenComponentAdd()">&times;</span>
+					</div>
+
+					<div class="oldRamaN">
+						<span id="compName">Componente</span>
+					</div>
 				</div>
 
-				<output id="descripcionRama"></output>
 
 				<form class="contact100-form validate-form">
-					
+
+					<div class="wrap-input100 validate-input">
+
+						<textarea id="descripcionRama" class="input100" name="message"
+							placeholder="Description"></textarea>
+
+						<span class="focus-input100"></span>
+						<label class="label-input100 rs1" for="message">
+							<span class="lnr lnr-bubble"></span>
+
+						</label>
+						<label class="label-input100 rs2" for="message">
+							<button class="updateButton btn-sm" value="Click me">
+								<i class="fa fa-edit fa-2x"><br/>Update</i>
+							</button>
+						</label>
+
+
+					</div>
+
 					<div class="container" id="contenedor" style="display:none">
 						<h2>Files</h2>
-						<div id="Files" class="list-group" >
+						<div id="Files" class="list-group">
 						</div>
 					</div>
-					
+
 					<div class="col1">
 
 						<div class="container-contact100-form-btn">
-							<button class="btn2" onclick="map.loadFiles() ; return false;"><i class="fa fa-folder fa-4x" ></i>
-								<br/>
+							<button class="btn2" onclick="map.loadFiles() ; return false;"><i
+									class="fa fa-folder fa-4x"></i>
+								<br />
 								Files
 							</button>
 						</div>
@@ -123,28 +148,23 @@
 								Eliminar
 							</button>
 						</div>
-						<div class="container-contact100-form-btn">
-							<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAdd()">
-								Cerrar
-							</button>
-							<br />
-						</div>
-						<br />
+
+						<br /> &nbsp;
 						<input type="file" id="archivo" multiple size="50" class="inputfile" />
 						<input type="file" id="archivoPut" class="inputfile" style="display: none;" />
-						
+
 					</div>
 
 					<div class="col3">
 
-						<div class="container-contact100-form-btn"></div>							
-							<button class="btn2" onclick="map.upload() ; return false;"><i class="fa fa-upload fa-4x"></i>
-								<br/>
-								Upload 
-							</button>
-						</div>
-						
+						<div class="container-contact100-form-btn"></div>
+						<button class="btn2" onclick="map.upload() ; return false;">
+							<i class="fa fa-upload fa-4x"></i>
+							<br />
+							Upload
+						</button>
 					</div>
+
 				</form>
 			</div>
 		</section>
@@ -154,9 +174,17 @@
 
 			<div class="wrap-contact100">
 
+
 				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
-					<span>Nueva Rama</span>
+					<div>
+						<span class="buttonClose" onclick="map.hiddenNuevaRama()">&times;</span>
+					</div>
+
+					<div class="nuevaRamaN">
+						<span>Nueva Rama</span>
+					</div>
 				</div>
+
 
 				<form class="contact100-form validate-form">
 
@@ -175,25 +203,13 @@
 							<span class="lnr lnr-bubble"></span>
 						</label>
 					</div>
-					
-					<div class="col1">
-						<div class="container-contact100-form-btn">
-							<button type="button" class="contact100-form-btn"
-								onclick="map.agregarRama(rootName.value, message.value)">
-								Crear
-							</button>
-						</div>
-					</div>
 
-					<div class="col2">
-						<div class="container-contact100-form-btn">
-							<button type="button" class="contact100-form-btn" onclick="map.hiddenNuevaRama()">
-								Cerrar
-							</button>
-							<br />
-						</div>
+					<div class="container-contact100-form-btn">
+						<button type="button" class="contact100-form-btn"
+							onclick="map.agregarRama(rootName.value, message.value)">
+							Crear
+						</button>
 					</div>
-					
 				</form>
 			</div>
 		</section>
@@ -219,7 +235,7 @@
 		</section>
 		<br />
 
-		<section class="container-contact100" id="componentCollaborator" >
+		<section class="container-contact100" id="componentCollaborator">
 
 			<div class="wrap-contact100">
 

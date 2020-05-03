@@ -284,7 +284,7 @@ var apiclient = (function () {
 			});
 			delRequest.then(
 				function () {
-					location.replace("/profile.html")
+					console.log("success")
 				},
 				function () {
 					alert("failure delete");
