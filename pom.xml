@@ -120,12 +120,24 @@
 			<version>20190722</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/io.socket/socket.io-client -->
-<dependency>
-    <groupId>io.socket</groupId>
-    <artifactId>socket.io-client</artifactId>
-    <version>0.7.0</version>
-</dependency>
+		<!-- shiro 1.4.0 thymeleaf_extras_shiro 2.0.0 combination -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!--shiro for thymeleaf Effectiveness requires joining spring boot 2.x 
+			Please use 2.0.0 Version otherwise use 1.2.1 Edition -->
+		<dependency>
+			<groupId>com.github.theborakompanioni</groupId>
+			<artifactId>thymeleaf-extras-shiro</artifactId>
+			<version>2.0.0</version>
+		</dependency>
 
 	</dependencies>
 

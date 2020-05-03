@@ -1,5 +1,8 @@
 package edu.eci.arsw.treecore.controllers;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,6 +44,7 @@ public class TreeCoreAPIController {
 
 	@Autowired
 	SimpMessagingTemplate msgt;
+
 	/**
 	 * Metodo que retorna todos los usuarios contenidos en la base de datos
 	 * 
@@ -106,7 +110,8 @@ public class TreeCoreAPIController {
 	}
 
 	@RequestMapping(path = "/users/{correo}/notification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addNewProject(@RequestBody Notificacion notificacion, @PathVariable("correo") String correo) {
+	public ResponseEntity<?> addNewProject(@RequestBody Notificacion notificacion,
+			@PathVariable("correo") String correo) {
 		try {
 			this.treeCoreUserServices.insertarNotificacion(notificacion, correo);
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -140,9 +145,15 @@ public class TreeCoreAPIController {
 	@RequestMapping(path = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> loginUser(@RequestBody Usuario user) {
 		try {
-			this.treeCoreUserServices.verificarCredenciales(user.getCorreo(), user.getPasswd());
+			Subject subject = SecurityUtils.getSubject();
+			UsernamePasswordToken token = new UsernamePasswordToken(user.getCorreo(), user.getPasswd());
+			subject.login(token);
+
+			// this.treeCoreUserServices.verificarCredenciales(user.getCorreo(),
+			// user.getPasswd());
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
-		} catch (ServiciosTreeCoreException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
@@ -229,17 +240,16 @@ public class TreeCoreAPIController {
 		}
 	}
 
-
 	/**
 	 * Metodo para crear una nueva rama
 	 * 
-	 * @param rama rama a crear
+	 * @param rama     rama a crear
 	 * @param projetId Id del proyecto
 	 * @return Respuesta http con una lista de las ramas pertenecientes a un
 	 *         proyecto
 	 */
 	@RequestMapping(path = "/projects/{id}/ramas", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addNewRoot(@RequestBody Rama rama,  @PathVariable("id") int projectId) {
+	public ResponseEntity<?> addNewRoot(@RequestBody Rama rama, @PathVariable("id") int projectId) {
 		try {
 			Proyecto project = treeCoreProjectServices.getProyecto(projectId);
 			this.treeCoreProjectServices.insertarRama(rama, project);
@@ -248,7 +258,6 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-
 
 	/**
 	 * Metodo para obtener una rama en particular perteneciente a un proyecto
@@ -286,7 +295,6 @@ public class TreeCoreAPIController {
 		}
 	}
 
-
 	/**
 	 * * Metodo que recibe la peticion para adicionar un nueva invitacion
 	 * 
@@ -303,7 +311,6 @@ public class TreeCoreAPIController {
 		}
 	}
 
-	
 	@RequestMapping(path = "/delete/project/rama", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteRama(@RequestBody Rama rama) {
 		try {
@@ -388,8 +395,9 @@ public class TreeCoreAPIController {
 
 	/**
 	 * Metodo para consultar los archivos y carpetas en una ruta.
+	 * 
 	 * @param ruta ruta de la carpeta que se quiere consultar
-	 * @return	Respuesta http con el estado de la solicitud
+	 * @return Respuesta http con el estado de la solicitud
 	 */
 	@RequestMapping(path = "/files/{ruta}", method = RequestMethod.GET)
 	public ResponseEntity<?> getFiles(@PathVariable("ruta") String ruta) {
@@ -403,6 +411,7 @@ public class TreeCoreAPIController {
 
 	/**
 	 * Metodo para obtener un link de descarga de un archivo.
+	 * 
 	 * @param ruta ruta del archivo
 	 * @return Respuesta http con el estado de la solicitud
 	 */
@@ -418,6 +427,7 @@ public class TreeCoreAPIController {
 
 	/**
 	 * Metodo para subir un archivo a una ruta.
+	 * 
 	 * @param ruta ruta a la que se quiere subir un archivo.
 	 * @return
 	 */
@@ -434,19 +444,18 @@ public class TreeCoreAPIController {
 
 	/**
 	 * Metodo para subir un archivo a una ruta.
+	 * 
 	 * @param ruta ruta a la que se quiere subir un archivo.
 	 * @return
 	 */
 	@RequestMapping(path = "/ramas/lastId", method = RequestMethod.GET)
 	public ResponseEntity<?> getLastBranchId() {
 		try {
-			return new ResponseEntity<>(treeCoreProjectServices.getLastBranchId(),HttpStatus.CREATED);
+			return new ResponseEntity<>(treeCoreProjectServices.getLastBranchId(), HttpStatus.CREATED);
 		} catch (Exception e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	
-	
 
 }
