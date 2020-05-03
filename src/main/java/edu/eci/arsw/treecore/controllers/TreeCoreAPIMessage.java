@@ -130,4 +130,14 @@ public class TreeCoreAPIMessage {
 		msgt.convertAndSend("/project/tree." + project, root);
 	}
 	
+	/**
+	 * 
+	 * @param project
+	 * @throws ServiciosTreeCoreException
+	 */
+	@MessageMapping("/delProject")
+    public void handlerProjectDelete(Proyecto project) throws ServiciosTreeCoreException  {
+		msgt.convertAndSend("/project/delete", project);
+	}
+	
 }

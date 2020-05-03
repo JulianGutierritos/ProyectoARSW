@@ -10,6 +10,7 @@ var map = (function () {
 	var currentRoot;
 	var centralKey;
 	var olddata;
+	var id_root_base_project;
 
 	function init() {
 		hiddenComponentAddCollaborator();
@@ -337,6 +338,7 @@ var map = (function () {
 			var padre = rama.ramaPadre;
 			var idPadre;
 			if (padre == null) {
+				id_root_base_project = rama.id;
 				idPadre = 0;
 				var cadena = { "location": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador, "ramaPadre": rama.ramaPadre };
 				centralKey = rama.id;
@@ -427,6 +429,11 @@ var map = (function () {
 				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
 				//location.reload();
 			});
+			stompClient.subscribe('/project/delete', function (pro) {
+				alert("Proyecto eliminado")
+				location.replace("/profile.html")
+			});
+
 		});
 	}
 
@@ -535,10 +542,10 @@ var map = (function () {
 
 
 	var delComponent = function () {
-		if (olddata.ramaPadre == null) {
+
+		if (olddata.key == id_root_base_project) {
 			delProject();
 		}
-
 		else {
 			var newRoot = {
 				id: olddata.key,
@@ -551,16 +558,20 @@ var map = (function () {
 			};
 
 			var jroot = JSON.stringify(newRoot);
+
 			stompClient.send("/treecore/delRoot." + sessionStorage.proyecto, {}, jroot);
 			apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
+
 		}
 
 		hiddenComponentAdd();
+
 	}
 
 	var delProject = function () {
-		//alert(currentProject)
-		apiclient.deleteProject(JSON.stringify(currentProject));
+		jcur = JSON.stringify(currentProject);
+		apiclient.deleteProject(jcur);
+		stompClient.send("/treecore/delProject", {}, jcur);
 	}
 
 

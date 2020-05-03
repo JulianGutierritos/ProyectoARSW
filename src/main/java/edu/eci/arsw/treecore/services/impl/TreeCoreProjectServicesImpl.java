@@ -159,6 +159,13 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	public void deleteProyecto(Proyecto project) throws ServiciosTreeCoreException {
 
 		try {
+
+			ArrayList<Rama> ramas = proyectoDAO.getRamas(project.getId());
+
+			for(Rama r:ramas) {
+				if(r.getRamaPadre()!=null) deleteRama(r);
+			}
+
 			proyectoDAO.deleteProyecto(project);
 
 		} catch (Exception e) {
