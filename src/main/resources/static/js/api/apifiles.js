@@ -43,6 +43,22 @@ var apifiles = (function () {
                 }
             });
 			
+        },
+        
+        deleteFile:function (path){
+			console.log(path);
+			var delRequest = $.ajax({
+				url: appUrl+"/file/" + path,
+				type: 'DELETE',
+			});
+			delRequest.then(
+				function () {
+					alert("Archivo borrado") 
+				},
+				function () {
+					alert("failure delete");
+				}
+			);
 		},
 
     };

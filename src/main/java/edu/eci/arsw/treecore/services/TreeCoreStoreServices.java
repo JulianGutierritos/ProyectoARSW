@@ -33,6 +33,13 @@ public interface TreeCoreStoreServices {
 	public void receiveFile(MultipartFile file, String path, String option) throws TreeCoreStoreException;
 
 	/**
+	 * Metodo para eliminar un archivo en el almacen de archivos.
+	 * @param ruta Ruta del archivo.
+	 * @throws TreeCoreStoreException Si el archivo no pudo ser eliminado o no existe.
+	 */
+	public void deleteFile(String ruta) throws TreeCoreStoreException;
+
+	/**
 	 * Metodo para obtener el token de acceso de la app.
 	 * @param tokenId id en la base de datos
 	 * @return token de acceso a la carpeta

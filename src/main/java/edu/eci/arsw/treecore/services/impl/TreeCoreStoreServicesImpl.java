@@ -41,6 +41,13 @@ public class TreeCoreStoreServicesImpl implements TreeCoreStoreServices {
     }
 
     @Override
+    public void deleteFile(String ruta) throws TreeCoreStoreException {
+        String token = this.getAccessToken(0);
+        TreeCoreStore store = new TreeCoreStoreImpl(token);
+        store.deleteFile(ruta);
+    }
+
+    @Override
     public String getAccessToken(int tokenId) throws TreeCoreStoreException {
         try {
             return proyectoDAO.getAccessToken(tokenId);
@@ -49,6 +56,5 @@ public class TreeCoreStoreServicesImpl implements TreeCoreStoreServices {
         }
 
     }
-
 
 }

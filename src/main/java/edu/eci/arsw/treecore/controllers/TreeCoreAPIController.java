@@ -443,10 +443,25 @@ public class TreeCoreAPIController {
 	}
 
 	/**
-	 * Metodo para subir un archivo a una ruta.
+	 * Metodo para borrar un archivo.
 	 * 
-	 * @param ruta ruta a la que se quiere subir un archivo.
+	 * @param ruta ruta a la que pertence un archivo.
 	 * @return
+	 */
+	@RequestMapping(path = "/file/{ruta}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteFile(@PathVariable("ruta") String ruta) {
+		try {
+			treeCoreStoreServices.deleteFile(ruta);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (TreeCoreStoreException e) {
+			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
+	 * Metodo para obtener el ultimo id disponible.
+	 * @return ultimo id disponible.
 	 */
 	@RequestMapping(path = "/ramas/lastId", method = RequestMethod.GET)
 	public ResponseEntity<?> getLastBranchId() {

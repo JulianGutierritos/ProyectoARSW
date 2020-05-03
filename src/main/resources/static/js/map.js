@@ -606,7 +606,9 @@ var map = (function () {
 		boton.appendChild(icon);
 		boton.onclick = function() {
 			var path = "proyectos/"+currentProject.id+"/"+currentRootId+"/"+name;
-			alert(path);
+			path= path.replace(/[/]/g, '+++');;
+			path= path.replace(/" "/g, "%20");
+			apifiles.deleteFile(path);
 			return false;
 		  };
 		return boton;

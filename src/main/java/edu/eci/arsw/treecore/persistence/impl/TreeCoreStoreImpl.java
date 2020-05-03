@@ -148,4 +148,14 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
         return datos;
     
     }
+
+    @Override
+    public void deleteFile(String path) throws TreeCoreStoreException {
+        try {
+            String ruta = path.replace("+++", "/"); 
+            client.files().deleteV2("/" + ruta);
+        } catch (DbxException e) {
+            throw new TreeCoreStoreException("Error deleting from Dropbox: " + e.getMessage());
+        }
+    }
 }
