@@ -5,11 +5,23 @@ var app = (function () {
 		alert("esto es una prueba")
 	}
 
+	var passHash = function (objPassId) {
+		var pwdObj = document.getElementById(objPassId);
+		var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+		hashObj.update(pwdObj.value);
+		var hash = hashObj.getHash("HEX");
+		pwdObj.value = hash;
+		return hash;
+
+	}
+
 	var loginUser = function (username, pass) {
+		passHash = passHash('pass');
+
 		var newUser = {
 			correo: username,
 			nombre: "",
-			passwd: pass,
+			passwd: passHash,
 			invitaciones: [],
 			notificaciones: []
 		};
@@ -17,15 +29,25 @@ var app = (function () {
 	}
 
 
+
 	var addUser = function (username, nombre, passwd, repPasswd) {
-		var newUser = {
-			correo: username,
-			nombre: nombre,
-			passwd: passwd,
-			invitaciones: [],
-			notificaciones: []
-		};
-		apiclient.addUser(JSON.stringify(newUser));
+		if (passwd == repPasswd) {
+			passwdHash = passHash('passwd');
+			passHash('repPasswd');
+
+			var newUser = {
+				correo: username,
+				nombre: nombre,
+				passwd: passwdHash,
+				invitaciones: [],
+				notificaciones: []
+			};
+			apiclient.addUser(JSON.stringify(newUser));
+		}
+
+		else {
+			alert("Las contraseñas no coinciden")
+		}
 	}
 
 
@@ -56,11 +78,11 @@ var app = (function () {
 		}
 	}
 
-	openNav=function(){
+	openNav = function () {
 		document.getElementById("mySidenav").style.width = "250px";
 	}
 
-	closeNav=function(){
+	closeNav = function () {
 		document.getElementById("mySidenav").style.width = "0";
 	}
 

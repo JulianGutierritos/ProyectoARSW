@@ -54,9 +54,9 @@ public class TreeCoreShiroConfig {
 		// shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
 		// // Modify the page of the blocked request jump
-		// shiroFilterFactoryBean.setLoginUrl("/toLogin");
+		shiroFilterFactoryBean.setLoginUrl("/toLogin");
 		// // Set unauthorized pages
-		// shiroFilterFactoryBean.setUnauthorizedUrl("/nuAuth");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/nuAuth");
 		return shiroFilterFactoryBean;
 	}
 
