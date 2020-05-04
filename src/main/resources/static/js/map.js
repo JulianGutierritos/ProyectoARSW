@@ -17,6 +17,7 @@ var map = (function () {
 		// hiddenComponentAdd();
 		hiddenNuevaRama();
 		conectar();
+		prepararArchivos();
 		var $ = go.GraphObject.make;
 		myDiagram =
 			$(go.Diagram, "myDiagramCanvas",
@@ -703,6 +704,18 @@ var map = (function () {
 					path = path.replace(/" "/g, "%20");
 					apifiles.postFile(path, file);
 				}
+			}
+		}
+	}
+
+	var prepararArchivos = function(){
+		var archivos =  document.getElementById('archivo');
+		archivos.onchange = function () {
+			var files = archivos.files;
+			var filePath= document.getElementById('file-path');
+			filePath.value="";
+			for (var i = 0; i < files.length; i++) {
+				filePath.value+= '"' + files[i].name +'" ';
 			}
 		}
 	}
