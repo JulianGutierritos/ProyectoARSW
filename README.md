@@ -77,13 +77,21 @@ Criterios de aceptación:
 
 A continuación presentamos el diagrama de clases de la estructura que tenemos pensada para el proyecto
 
+## Diagrama de clases
+
 ![Diagrama de clases](images/class_diagram.png)
+
+## Modelo Entidad-Relación
+
+![Modelo Entidad-Relación](images/modelo_er.png)
+
+## Diagrama de componentes
 
 ![Diagrama de Componentes](images/compon.png)
 
-![Diagrama de Despliegue](images/despl_diagram.png)
+## Diagrama de despliegue
 
-![Modelo Entidad-Relación](images/modelo_er.png)
+![Diagrama de Despliegue](images/despl_diagram.png)
 
 # Heroku
 
