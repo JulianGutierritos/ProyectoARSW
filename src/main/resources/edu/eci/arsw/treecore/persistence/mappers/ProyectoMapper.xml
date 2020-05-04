@@ -121,14 +121,12 @@
       VALUES(#{id_mensaje}, #{mensaje.usuario.correo}, #{proyecto}, #{mensaje.contenido})
     </insert>
 
-    <insert id ="insertarRamaConPadre">
-		<selectKey keyProperty="id_rama" resultType="int" order="BEFORE">
-			select COALESCE(MAX(ramaid)+1,1) from rama 
-    </selectKey>
-        INSERT INTO public.rama
-        (ramaid, nombre, proyecto, ramapadre, creador, descripcion) 
-        VALUES(#{id_rama}, #{rama.nombre}, #{proyecto.id}, #{rama.ramaPadre.id}, #{rama.creador.correo},#{rama.descripcion})     
-    </insert>  
+
+    <select id ="insertarRamaConPadre" parameterType="Rama" resultType="int">
+        INSERT INTO RAMA (ramaid, nombre, proyecto, ramapadre, creador, descripcion) 
+        VALUES((select COALESCE(MAX(ramaid)+1,1) from rama), #{rama.nombre}, #{proyecto.id}, #{rama.ramaPadre.id}, #{rama.creador.correo},#{rama.descripcion})     
+        RETURNING ramaid
+    </select>  
 
     <insert id ="insertarRama">
 		<selectKey keyProperty="id_rama" resultType="int" order="BEFORE">

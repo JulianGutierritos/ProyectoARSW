@@ -117,7 +117,7 @@ public class TreeCoreAPIMessage {
 	@MessageMapping("/delRoot.{project}")
     public void handlerRootDelete(Rama root, @DestinationVariable int project) throws ServiciosTreeCoreException  {
 		treeCoreProjectServices.deleteRama(root);
-		msgt.convertAndSend("/project/tree." + project, root);
+		msgt.convertAndSend("/project/del/tree." + project, root);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class TreeCoreAPIMessage {
 	 */
 	@MessageMapping("/newRoot.{project}")
 	public void updateTree(Rama root, @DestinationVariable int project) throws ServiciosTreeCoreException {
-		msgt.convertAndSend("/project/tree." + project, root);
+		msgt.convertAndSend("/project/add/tree." + project, root);
 	}
 	
 	/**

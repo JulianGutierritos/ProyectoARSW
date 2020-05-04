@@ -114,7 +114,7 @@ public interface TreeCoreProjectServices {
 	 * @param proyecto Proyecto al que va a pertenecer la rama
 	 * @throws ServiciosTreeCoreException Si no puede insertar la rama
 	 */
-	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException;
+	public int insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException;
 
 	/**
 	 * Metodo para eliminar una rama

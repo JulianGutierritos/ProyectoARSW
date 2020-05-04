@@ -138,9 +138,10 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	}
 
 	@Override
-	public void insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException {
+	public int insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException {
 		try {
-			proyectoDAO.insertarRama(rama, proyecto);
+			int r = proyectoDAO.insertarRama(rama, proyecto);
+			return r;
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("No hay proyectos");
 		}

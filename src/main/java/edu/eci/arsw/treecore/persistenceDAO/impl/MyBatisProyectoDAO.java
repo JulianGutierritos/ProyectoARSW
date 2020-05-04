@@ -118,15 +118,10 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	}
 
 	@Override
-	public void insertarRama(Rama rama, Proyecto proyecto) throws PersistenceException {
+	public int insertarRama(Rama rama, Proyecto proyecto) throws PersistenceException {
 		try {
-			proyectoMapper.insertarRamaConPadre(rama, proyecto);
-			// if (rama.getRamaPadre() != null){
-			// proyectoMapper.insertarRamaConPadre(rama, proyecto);
-			// }
-			// else{
-			// proyectoMapper.insertarRama(rama, proyecto);
-			// }
+			int r = proyectoMapper.insertarRamaConPadre(rama, proyecto);
+			return r;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PersistenceException("Error al insertar rama");

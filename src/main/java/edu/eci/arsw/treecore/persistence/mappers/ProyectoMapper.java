@@ -63,7 +63,7 @@ public interface ProyectoMapper {
 	 * @param rama     Nueva rama a adicionar
 	 * @param proyecto Proyecto al que pertenece la rama
 	 */
-	public void insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
+	public int insertarRamaConPadre(@Param("rama") Rama rama, @Param("proyecto") Proyecto proyecto);
 
 	/**
 	 * Metodo para adicionar una nueva rama aun proyecto

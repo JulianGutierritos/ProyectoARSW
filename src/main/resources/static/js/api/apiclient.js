@@ -249,7 +249,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					callback(root);
+					callback(postRequest.responseText);
 				},
 				function () {
 					alert("failed root creation");
