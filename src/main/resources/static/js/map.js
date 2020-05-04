@@ -14,7 +14,7 @@ var map = (function () {
 
 	function init() {
 		hiddenComponentAddCollaborator();
-		hiddenComponentAdd();
+		// hiddenComponentAdd();
 		hiddenNuevaRama();
 		conectar();
 		var $ = go.GraphObject.make;
@@ -648,6 +648,7 @@ var map = (function () {
 	var crearDelBot = function (name) {
 		var boton = document.createElement("button");
 		boton.setAttribute('class', 'delBot');
+		boton.setAttribute('title',"Delete");
 
 		var icon = document.createElement("i");
 		icon.setAttribute('class', 'fa fa-trash fa-2x');
@@ -666,18 +667,16 @@ var map = (function () {
 		var boton = document.createElement("button");
 		boton.setAttribute('class', 'putBot');
 
+		boton.setAttribute('title',"Replace");
+
 		var icon = document.createElement("i");
 		icon.setAttribute('class', 'fa fa-arrow-circle-up fa-2x');
 		boton.appendChild(icon);
 
 		boton.onclick = function () {
-			var path = "proyectos/" + currentProject.id + "/" + currentRootId + "/" + name;
-			path = path.replace(/[/]/g, '+++');;
-			path = path.replace(/" "/g, "%20");
 			var input = document.getElementById("archivoPut");
 			input.setAttribute("name", name);
 			input.click();
-			//apifiles.putFile(path);
 			return false;
 		};
 
