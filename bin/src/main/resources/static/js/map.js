@@ -1,6 +1,5 @@
 var apiclient = apiclient;
 var stompClient = null;
-var proyecto = null;
 var map = (function () {
 
 	var currentRootId;
@@ -9,10 +8,18 @@ var map = (function () {
 	var currentProject;
 	var currentUser;
 	var currentRoot;
+	var centralKey;
+	var olddata;
+	var oldnode;
+	var id_root_base_project;
 
 	function init() {
+		hiddenComponentAddCollaborator();
+		// hiddenComponentAdd();
+		hiddenNuevaRama();
+		conectar();
+		prepararArchivos();
 		var $ = go.GraphObject.make;
-
 		myDiagram =
 			$(go.Diagram, "myDiagramCanvas",
 				{
@@ -175,7 +182,7 @@ var map = (function () {
 			);
 
 		myDiagram.addDiagramListener("SelectionMoved", function (e) {
-			var rootX = myDiagram.findNodeForKey(0).location.x;
+			var rootX = myDiagram.findNodeForKey(centralKey).location.x;
 			myDiagram.selection.each(function (node) {
 				if (node.data.parent !== 0) return; // Only consider nodes connected to the root
 				var nodeX = node.location.x;
@@ -189,8 +196,6 @@ var map = (function () {
 		});
 
 		apiclient.getProject(sessionStorage.proyecto, map.load);
-		hiddenComponentAddCollaborator();
-
 	}
 
 	function spotConverter(dir, from) {
@@ -236,26 +241,42 @@ var map = (function () {
 
 	function addNodeAndLink(e, obj) {
 		var adorn = obj.part;
-		var diagram = adorn.diagram;
-		diagram.startTransaction("Add Node");
-		var oldnode = adorn.adornedPart;
-		var olddata = oldnode.data;
-		// copy the brush and direction to the new node data
-		var newdata = { text: "idea", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
-
-		//dataList.add(newdata)
-		// alert(dataList.length)
-		//alert(myDiagram.model.toJson())
-
-		diagram.model.addNodeData(newdata);
-		layoutTree(oldnode);
-		//Add new component
-		diagram.commitTransaction("Add Node");
-
-		// if the new node is off-screen, scroll the diagram to show the new node
-		var newnode = diagram.findNodeForData(newdata);
-		if (newnode !== null) diagram.scrollToRect(newnode.actualBounds);
+		oldnode = adorn.adornedPart;
+		olddata = oldnode.data;
+		if (olddata.key != 0) {
+			apiclient.getRoot(sessionStorage.proyecto, olddata.key, setCurrentRootParent);
+		}
+		else {
+			currentProject = null;
+		}
+		hiddenNuevaRama();
 	}
+
+	var newCurrentRoot = function (newnode) {
+
+		currentRootId = newnode.data.key; //current root id 
+		currentRootParentId = newnode.data.parent; //cuando es 0, el padre es el proyecto
+
+		setValuesToAddRoot();
+	}
+
+
+	var setValuesToAddRoot = function () {
+		if (currentRootParentId == 0) {
+			currentRootParentId = null;
+		}
+
+		if (currentRootParentId != null) {
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getUser(setCurrentUser);
+		}
+
+		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
+
+		hiddenComponentAdd();
+
+	}
+
 
 	function layoutTree(node) {
 		if (node.data.key === 0) {  // adding to the root?
@@ -280,7 +301,7 @@ var map = (function () {
 	}
 
 	function layoutAll() {
-		var root = myDiagram.findNodeForKey(0);
+		var root = myDiagram.findNodeForKey(centralKey);
 		if (root === null) return;
 		myDiagram.startTransaction("Layout");
 		// split the nodes and links into two collections
@@ -307,22 +328,42 @@ var map = (function () {
 	// Show the diagram's model in JSON format
 	function save() {
 		document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-		console.log(myDiagram.model.toJson());
 		myDiagram.isModified = false;
 	}
 
 	function load(project) {
-		proyecto = project
 		var ramlist = project.ramas;
 		var list = [];
-		var pro = { "key": 0, "text": project.nombre, "loc": "0 0" };
-		list.push(pro);
 		currentProject = project;
 		for (var i = 1; i <= ramlist.length; i++) {
 			var rama = ramlist[i - 1];
-			//alert(JSON.stringify(rama))
-			//alert(rama.ramaPadre)
+			var padre = rama.ramaPadre;
+			var idPadre;
+			if (padre == null) {
+				id_root_base_project = rama.id;
+				idPadre = 0;
+				var cadena = { "location": "0 0", "key": rama.id, "parent": idPadre, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador, "ramaPadre": rama.ramaPadre };
+				centralKey = rama.id;
+			}
+			else {
+				idPadre = padre.id;
+				var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador, "ramaPadre": rama.ramaPadre };
+			}
+			list.push(cadena);
+		};
+		var val = { "class": "go.TreeModel", "nodeDataArray": list };
+		myDiagram.model = go.Model.fromJson(val);
+		layoutAll();
+		mensajes(project);
+	}
 
+	var updateTree = function (ramlist) {
+		myDiagram.model.clear();
+		console.log(ramlist);
+		var list = [];
+		//currentProject.ramas = ramlist;
+		for (var i = 1; i <= ramlist.length; i++) {
+			var rama = ramlist[i - 1];
 			var padre = rama.ramaPadre;
 			var idPadre;
 			if (padre == null) {
@@ -331,18 +372,12 @@ var map = (function () {
 			else {
 				idPadre = padre.id;
 			}
-			//alert(JSON.stringify(padre))
-			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre };
+			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador };
 			list.push(cadena);
 		};
-
-
-
 		var val = { "class": "go.TreeModel", "nodeDataArray": list };
 		myDiagram.model = go.Model.fromJson(val);
 		layoutAll();
-		conectar();
-		mensajes(project);
 	}
 
 	function loadN() {
@@ -372,7 +407,7 @@ var map = (function () {
 
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
-			var invitacion = new Invitacion(localStorage.correo, proyecto.id, proyecto.nombre, $("#colaborador").val());
+			var invitacion = new Invitacion(localStorage.correo, currentProject.id, currentProject.nombre, $("#colaborador").val());
 			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
 		}
 		$("#colaborador").val("");
@@ -385,12 +420,28 @@ var map = (function () {
 		stompClient.connect({}, function (frame) {
 			stompClient.subscribe('/project/mensaje.' + sessionStorage.proyecto, function (eventbody) {
 				var mensaje = JSON.parse(eventbody.body);
-				console.log(mensaje);
-				console.log("si entro");
 				$("#chat").append(
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
 			});
+			stompClient.subscribe('/project/update/tree', function (root) {
+				updateTree(root);
+			});
+			stompClient.subscribe('/project/del/tree.' + sessionStorage.proyecto, function (root) {
+				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
+				//location.reload();
+			});
+			stompClient.subscribe('/project/add/tree.' + sessionStorage.proyecto, function (root) {
+				rama = JSON.parse(root.body);				
+				var cadena = { "key": rama.id, "parent": rama.ramaPadre.id, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador };
+				myDiagram.model.addNodeData(cadena);
+				layoutTree(oldnode);
+			});
+			stompClient.subscribe('/project/delete', function (pro) {
+				alert("Proyecto eliminado")
+				location.replace("/profile.html")
+			});
+
 		});
 	}
 
@@ -422,29 +473,28 @@ var map = (function () {
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
+	var hiddenNuevaRama = function () {
+		var el = document.getElementById("nuevaRama");
+		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+
+	}
 	var currentRoot = function (e, obj) {
+		document.getElementById("Files").innerHTML = "";
 		var adorn = obj.part;
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
-		var oldnode = adorn.adornedPart;
-		var olddata = oldnode.data;//oldata is the current root
-
+		oldnode = adorn.adornedPart;
+		olddata = oldnode.data;//oldata is the current root
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
-
-		if (currentRootParentId == 0) {
-			currentRootParentId = null;
-		}
-
-		if (currentRootParentId != null) {
-			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
-			apiclient.getUser(setCurrentUser);
-		}
-
-		apiclient.getRoot(currentProject.id, currentRootId, setCurrentRootObject);
-
-		hiddenComponentAdd();
-
+		
+		document.getElementById('compName').innerHTML=olddata.text;
+		document.getElementById('descripcionRama').innerHTML=olddata.descripcion;
+		//var conObj = document.getElementById('ramaName');compName
+		//conObj.value = olddata.text;
+		//$("#descripcionRama").val(olddata.descripcion);
+		setValuesToAddRoot();
+		loadInput();
 	}
 
 	setCurrentRootParent = function (rootParent) {
@@ -455,13 +505,38 @@ var map = (function () {
 		currentUser = user;
 	}
 
-	setCurrentRootObject = function(root){
-		currentRoot=root;
+	setCurrentRootObject = function (root) {
+		currentRoot = root;
 	}
 
+	var agregarRama = function (name, messDecr) {
+		var newUser = {
+			correo: localStorage.correo,
+			nombre: "",
+			passwd: "",
+			invitaciones: [],
+			notificaciones: []
+		};
+		var newRoot = {
+			id: 0,
+			nombre: name,
+			ramaPadre: currentRootParent,
+			descripcion: messDecr,
+			archivos: [],
+			fechaDeCreacion: "",
+			creador: newUser
+		};
+		apiclient.addProjectRoot(sessionStorage.proyecto, JSON.stringify(newRoot), publicarRama);
+		hiddenNuevaRama();
+	}
 
+	var publicarRama = function (rama) {
+		stompClient.send("/treecore/newRoot." + sessionStorage.proyecto, {}, rama);
+		var r = JSON.parse(rama);
+		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, r.nombre);
+	}
 
-	var addRootInfo = function (name, messDecr) {
+	var addRootInfo = function (name, messDecr, padre) {
 
 		var newRoot = {
 			id: currentRootId,
@@ -473,12 +548,43 @@ var map = (function () {
 			creador: currentUser
 
 		};
-		apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
+		let jroot = JSON.stringify(newRoot);
+		//apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
+		//stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
 	}
 
 
-	var delComponent = function () {		
-		apiclient.deleteRoot(JSON.stringify(currentRoot));
+	var delComponent = function () {
+
+		if (olddata.key == id_root_base_project) {
+			delProject();
+		}
+		else {
+			var newRoot = {
+				id: olddata.key,
+				nombre: olddata.text,
+				ramaPadre: olddata.ramaPadre,
+				descripcion: olddata.descripcion,
+				archivos: olddata.archivos,
+				fechaDeCreacion: olddata.fechaDeCreacion,
+				creador: olddata.creador
+			};
+
+			var jroot = JSON.stringify(newRoot);
+
+			stompClient.send("/treecore/delRoot." + sessionStorage.proyecto, {}, jroot);
+			apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
+
+		}
+
+		hiddenComponentAdd();
+
+	}
+
+	var delProject = function () {
+		jcur = JSON.stringify(currentProject);
+		apiclient.deleteProject(jcur);
+		stompClient.send("/treecore/delProject", {}, jcur);
 	}
 
 
@@ -492,6 +598,174 @@ var map = (function () {
 		}
 	}
 
+	var loadFiles = function () {
+		document.getElementById("Files").innerHTML = "";
+		var path = "proyectos/" + currentProject.id + "/" + currentRootId;
+		//var path = "proyectos/"+0+"/"+0;
+		path = path.replace(/[/]/g, '+++');
+		path = path.replace(/" "/g, "%20");
+		apifiles.searchFiles(path, showFiles);
+	}
+
+	var loadInput = function () {
+		var input = document.getElementById("archivoPut");
+		input.onchange = function () {
+			var file = input.files[0];
+			var path = "proyectos/" + currentProject.id + "/" + currentRootId + "/" + input.name;
+			path = path.replace(/[/]/g, '+++');
+			path = path.replace(/" "/g, "%20");
+			var oldEnd = input.name.split(".").pop();
+			var newEnd = file.name.split(".").pop();
+			if (oldEnd == newEnd) {
+				apifiles.putFile(path, file);
+				document.getElementById("Files").innerHTML = "";
+			} else {
+				alert("Los archivos no son del mismo tipo");
+			}
+		}
+	}
+
+	var showFiles = function (resp) {
+		if (resp.length > 0) {
+			document.getElementById('contenedor').style.display = "block";
+		}
+		for (var i = 0; i < resp.length; i++) {
+			var path = resp[i];
+			path = path.replace(/[/]/g, '+++');;
+			path = path.replace(/" "/g, "%20");
+			apifiles.searchFile(path, showFile);
+		};
+
+	}
+
+	var showFile = function (resp) {
+		if (resp != null) {
+			var lista = document.getElementById("Files");
+			var newlink = document.createElement('a');
+			newlink.setAttribute('class', 'list-group-item');
+			newlink.setAttribute('href', resp[1]);
+			var newContent = document.createTextNode(resp[0]);
+			newlink.appendChild(newContent);
+			var boton1 = crearDelBot(resp[0]);
+			newlink.appendChild(boton1);
+			var boton2 = crearPutBot(resp[0]);
+			newlink.appendChild(boton2);
+			lista.appendChild(newlink);
+		}
+	}
+
+	var crearDelBot = function (name) {
+		var boton = document.createElement("button");
+		boton.setAttribute('class', 'delBot');
+		boton.setAttribute('title',"Delete");
+
+		var icon = document.createElement("i");
+		icon.setAttribute('class', 'fa fa-trash fa-2x');
+		boton.appendChild(icon);
+		boton.onclick = function () {
+			var path = "proyectos/" + currentProject.id + "/" + currentRootId + "/" + name;
+			path = path.replace(/[/]/g, '+++');;
+			path = path.replace(/" "/g, "%20");
+			apifiles.deleteFile(path);
+			document.getElementById("Files").innerHTML = "";
+			return false;
+		};
+		return boton;
+	}
+
+	var crearPutBot = function (name) {
+		var boton = document.createElement("button");
+		boton.setAttribute('class', 'putBot');
+
+		boton.setAttribute('title',"Replace");
+
+		var icon = document.createElement("i");
+		icon.setAttribute('class', 'fa fa-arrow-circle-up fa-2x');
+		boton.appendChild(icon);
+
+		boton.onclick = function () {
+			var input = document.getElementById("archivoPut");
+			input.setAttribute("name", name);
+			input.click();
+			return false;
+		};
+
+		return boton;
+	}
+
+	var upload = function () {
+		var x = document.getElementById("archivo");
+		var txt = "";
+		var pasa = true;
+		if (currentRootId < 0) {
+			pasa = false;
+			alert("Por favor, cree la rama primero.")
+		}
+		if (('files' in x) && pasa) {
+			if (x.files.length == 0) {
+				txt = "Select one or more files.";
+				alert(txt);
+			} else {
+				for (var i = 0; i < x.files.length; i++) {
+					var file = x.files[i];
+					var path = "proyectos/" + currentProject.id + "/" + currentRootId + "/" + file.name;
+					path = path.replace(/[/]/g, '+++');;
+					path = path.replace(/" "/g, "%20");
+					apifiles.postFile(path, file);
+				}
+				document.getElementById("Files").innerHTML = "";
+			}
+		}
+	}
+
+	var prepararArchivos = function(){
+		var archivos =  document.getElementById('archivo');
+		archivos.onchange = function () {
+			var files = archivos.files;
+			var filePath= document.getElementById('file-path');
+			filePath.value="";
+			for (var i = 0; i < files.length; i++) {
+				filePath.value+= '"' + files[i].name +'" ';
+			}
+		}
+	}
+
+	var setCurrentRootParent = function (parent) {
+		currentRootParent = parent;
+	}
+
+	var notificarNuevaRama = function (lista, nombre) {
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha creado una nueva rama en el proyecto " + currentProject.nombre + " llamada: " + nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
+	}
+
+	var notificarEliminacion = function (lista, nombre) {
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha eliminado la rama " + nombre + " del proyecto " + currentProject.nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
+	}
+
+	var publicarNotificacion = function (notificacion, correo) {
+		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
+	}
+
+	class Notificacion {
+		constructor(informacion) {
+			this.id = 0;
+			this.fecha = null;
+			this.informacion = informacion;
+		}
+	}
+
 	return {
 		init: init,
 		hiddenComponentAdd: hiddenComponentAdd,
@@ -500,10 +774,13 @@ var map = (function () {
 		load: load,
 		layoutAll: layoutAll,
 		enviar: enviar,
-		addRootInfo: addRootInfo,
+		agregarRama: agregarRama,
 		back: back,
 		verificar: verificar,
 		hiddenComponentAddCollaborator: hiddenComponentAddCollaborator,
-		invitar: invitar
+		hiddenNuevaRama: hiddenNuevaRama,
+		invitar: invitar,
+		loadFiles: loadFiles,
+		upload: upload
 	}
 })();

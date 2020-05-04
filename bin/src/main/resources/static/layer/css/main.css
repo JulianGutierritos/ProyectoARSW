@@ -222,7 +222,7 @@ iframe {
   align-items: center;
   background: rgba(245,245,220,0.8);
   position: relative;
-  z-index: 10;
+  z-index: 60;
 }
 
 .wrap-contact100 {
@@ -237,11 +237,12 @@ iframe {
   position: relative;
 }
 
+
 /*==================================================================
 [ Title form ]*/
 .contact100-form-title {
   font-family: Montserrat-Bold;
-  font-size: 30px;
+  font-size: 220%;
   color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
@@ -326,6 +327,17 @@ iframe {
 
 .label-input100.rs1 {
   height: 60px;
+}
+
+.label-input100.rs2 {
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  width: 10%;
+  left: 90%;
+  top: -2%;
+
+
 }
 
 .input100 {

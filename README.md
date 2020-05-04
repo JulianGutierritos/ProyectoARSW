@@ -79,6 +79,12 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 
 ![Diagrama de clases](images/class_diagram.png)
 
+![Diagrama de Componentes](images/compon.png)
+
+![Diagrama de Despliegue](images/despl_diagram.png)
+
+![Modelo Entidad-Relación](images/modelo_er.png)
+
 # Heroku
 
 ```markdown

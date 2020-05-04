@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore";
-	//var appUrl = "http://localhost:8080/treecore";
+	var appUrl = "https://treecore.herokuapp.com/treecore/v1";
+	//var appUrl = "http://localhost:8080/treecore/v1";
 	return {
 
 		getUser: function (callback) {
@@ -70,7 +70,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					apiprofile.getProyectos();
+					//apiprofile.getProyectos();
 				},
 				function () {
 					alert("failure acept");
@@ -87,7 +87,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					location.reload();
+					//location.reload();
 				},
 				function () {
 					alert("failure delete");
@@ -109,6 +109,41 @@ var apiclient = (function () {
 				},
 				function () {
 					alert("sign up failed");
+				}
+			);
+		},
+
+		addInvitacion: function (invitacion, callback) {
+			var postRequest = $.ajax({
+				url: appUrl + "/user/invitation",
+				type: 'POST',
+				data: invitacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					callback(invitacion);
+					alert("Se ha enviado la invitacion");
+				},
+				function () {
+					alert(postRequest.responseText);
+				}
+			);
+		},
+
+		addNotificacion: function (notificacion, usuario, callback) {
+			var postRequest = $.ajax({
+				url: appUrl + "/users/" + usuario + "/notification",
+				type: 'POST',
+				data: notificacion,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					callback(notificacion, usuario);
+				},
+				function () {
+					alert(postRequest.responseText);
 				}
 			);
 		},
@@ -136,6 +171,24 @@ var apiclient = (function () {
 		getProject: function (id, callback) {
 			jQuery.ajax({
 				url: appUrl + "/projects/" + id,
+				type: "GET",
+				success: function (response) {
+					callback(response);
+				}
+			});
+		},
+		getProjectTeam: function (id, callback, n) {
+			jQuery.ajax({
+				url: appUrl + "/projects/" + id + "/team",
+				type: "GET",
+				success: function (response) {
+					callback(response, n);
+				}
+			});
+		},
+		getProjectRamas: function (id, callback) {
+			jQuery.ajax({
+				url: appUrl + "/projects/" + id + "/ramas",
 				type: "GET",
 				success: function (response) {
 					callback(response);
@@ -177,7 +230,7 @@ var apiclient = (function () {
 
 		getRoot: function (idProyecto, idRama, callback) {
 
-			alert(appUrl + "/projects/" + idProyecto + "/rama/" + idRama)
+			//alert(appUrl + "/projects/" + idProyecto + "/rama/" + idRama)
 			jQuery.ajax({
 				url: appUrl + "/projects/" + idProyecto + "/rama/" + idRama,
 				type: "GET",
@@ -187,7 +240,7 @@ var apiclient = (function () {
 			});
 		},
 
-		addProjectRoot: function (projectId, root) {
+		addProjectRoot: function (projectId, root, callback) {
 			var postRequest = $.ajax({
 				url: appUrl + "/projects/" + projectId + "/ramas",
 				type: 'POST',
@@ -196,8 +249,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					alert("successful root creation");
-					location.reload();
+					callback(postRequest.responseText);
 				},
 				function () {
 					alert("failed root creation");
@@ -206,6 +258,7 @@ var apiclient = (function () {
 		},
 
 		deleteRoot:function (rama){
+			console.log(rama);
 			var delRequest = $.ajax({
 				url: appUrl + "/delete/project/rama",
 				type: 'DELETE',
@@ -220,6 +273,37 @@ var apiclient = (function () {
 					alert("failure delete");
 				}
 			);
+		},
+
+		deleteProject:function (proyecto){
+			var delRequest = $.ajax({
+				url: appUrl + "/delete/project",
+				type: 'DELETE',
+				data: proyecto,
+				contentType: "application/json"
+			});
+			delRequest.then(
+				function () {
+					console.log("success")
+				},
+				function () {
+					alert("failure delete");
+				}
+			);
+		},
+		
+		getLastId: function (callback) {
+			jQuery.ajax({
+				url: appUrl + "/ramas/lastId",
+				type: "GET",
+				success: function (respuesta) {
+					callback(respuesta);
+				}
+			});
+		},
+
+		projectSinc:function(){
+			
 		}
 
 	};
