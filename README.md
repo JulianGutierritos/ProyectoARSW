@@ -79,7 +79,7 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 
 ## Diagrama de clases
 
-![Diagrama de clases](images/class_diagram.png)
+![Diagrama de clases](images/diagram_classes.png)
 
 ## Modelo Entidad-Relación
 
