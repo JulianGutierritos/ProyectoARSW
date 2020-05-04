@@ -487,6 +487,7 @@ var map = (function () {
 		//conObj.value = olddata.text;
 		//$("#descripcionRama").val(olddata.descripcion);
 		setValuesToAddRoot();
+		loadInput();
 	}
 
 	setCurrentRootParent = function (rootParent) {
@@ -597,7 +598,6 @@ var map = (function () {
 		path = path.replace(/[/]/g, '+++');
 		path = path.replace(/" "/g, "%20");
 		apifiles.searchFiles(path, showFiles);
-		loadInput();
 	}
 
 	var loadInput = function () {
@@ -611,6 +611,7 @@ var map = (function () {
 			var newEnd = file.name.split(".").pop();
 			if (oldEnd == newEnd) {
 				apifiles.putFile(path, file);
+				document.getElementById("Files").innerHTML = "";
 			} else {
 				alert("Los archivos no son del mismo tipo");
 			}
@@ -659,6 +660,7 @@ var map = (function () {
 			path = path.replace(/[/]/g, '+++');;
 			path = path.replace(/" "/g, "%20");
 			apifiles.deleteFile(path);
+			document.getElementById("Files").innerHTML = "";
 			return false;
 		};
 		return boton;
@@ -704,6 +706,7 @@ var map = (function () {
 					path = path.replace(/" "/g, "%20");
 					apifiles.postFile(path, file);
 				}
+				document.getElementById("Files").innerHTML = "";
 			}
 		}
 	}
