@@ -118,7 +118,7 @@
 						</label>
 						<label class="label-input100 rs2" for="message">
 							<button class="updateButton btn-sm" value="Click me">
-								<i class="fa fa-edit fa-2x"><br/>Update</i>
+								<i class="fa fa-edit fa-2x"><br />Update</i>
 							</button>
 						</label>
 
@@ -131,37 +131,39 @@
 						</div>
 					</div>
 
-					<div class="col1">
-
-						<div class="container-contact100-form-btn">
-							<button class="btn2" onclick="map.loadFiles() ; return false;"><i
-									class="fa fa-folder fa-4x"></i>
-								<br />
-								Files
-							</button>
-						</div>
-					</div>
-
+					<br />
+					
 					<div class="col2">
-						<div class="container-contact100-form-btn">
-							<button type="button" class="contact100-form-btn" onclick="map.delComponent()">
-								Eliminar
-							</button>
-						</div>
+						<input type="file" id="archivo" multiple size="50" class="hidden"
+							onchange="document.getElementById('file-path').value = this.value.split('\\')[this.value.split('\\').length-1];" />
+						<label for="archivo" class="inputfile">Adicionar archivo</label>
+						<output type="text" id="file-path" />
 
-						<br /> &nbsp;
-						<input type="file" id="archivo" multiple size="50" class="inputfile" />
 						<input type="file" id="archivoPut" class="inputfile" style="display: none;" />
 
 					</div>
+					
+					<br />
+					
+					<div class="col1">
 
-					<div class="col3">
+						<button class="btn2" onclick="map.loadFiles() ; return false;"><i
+								class="fa fa-folder fa-2x"></i>
+							<br />
+							Files
+						</button>
+						&nbsp; &nbsp; &nbsp; &nbsp;
 
-						<div class="container-contact100-form-btn"></div>
 						<button class="btn2" onclick="map.upload() ; return false;">
-							<i class="fa fa-upload fa-4x"></i>
+							<i class="fa fa-upload fa-2x"></i>
 							<br />
 							Upload
+						</button>
+					</div>
+
+					<div class="deleteDiv">
+						<button type="button" class="deleteButton btn-danger" onclick="map.delComponent()">
+							<i class=" fa fa-trash fa-2x"></i>
 						</button>
 					</div>
 
