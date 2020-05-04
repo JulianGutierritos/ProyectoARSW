@@ -254,8 +254,9 @@ public class TreeCoreAPIController {
 	public ResponseEntity<?> addNewRoot(@RequestBody Rama rama, @PathVariable("id") int projectId) {
 		try {
 			Proyecto project = treeCoreProjectServices.getProyecto(projectId);
-			this.treeCoreProjectServices.insertarRama(rama, project);
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			int r = this.treeCoreProjectServices.insertarRama(rama, project);
+			rama.setId(r);
+			return new ResponseEntity<>(rama, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}

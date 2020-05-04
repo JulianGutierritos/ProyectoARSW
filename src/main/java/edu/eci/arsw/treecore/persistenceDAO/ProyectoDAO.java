@@ -89,7 +89,7 @@ public interface ProyectoDAO {
 	 * @param proyecto Proyecto al que va a pertenecer la rama
 	 * @throws PersistenceException Si no puede insertar la rama
 	 */
-	public void insertarRama(Rama rama, Proyecto proyecto) throws PersistenceException;
+	public int insertarRama(Rama rama, Proyecto proyecto) throws PersistenceException;
 
 	/**
 	 * Metodo para eliminar una rama

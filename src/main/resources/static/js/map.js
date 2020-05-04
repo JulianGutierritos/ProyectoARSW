@@ -10,6 +10,7 @@ var map = (function () {
 	var currentRoot;
 	var centralKey;
 	var olddata;
+	var oldnode;
 	var id_root_base_project;
 
 	function init() {
@@ -240,8 +241,8 @@ var map = (function () {
 
 	function addNodeAndLink(e, obj) {
 		var adorn = obj.part;
-		var oldnode = adorn.adornedPart;
-		var olddata = oldnode.data;
+		oldnode = adorn.adornedPart;
+		olddata = oldnode.data;
 		if (olddata.key != 0) {
 			apiclient.getRoot(sessionStorage.proyecto, olddata.key, setCurrentRootParent);
 		}
@@ -426,9 +427,15 @@ var map = (function () {
 			stompClient.subscribe('/project/update/tree', function (root) {
 				updateTree(root);
 			});
-			stompClient.subscribe('/project/tree.' + sessionStorage.proyecto, function (root) {
+			stompClient.subscribe('/project/del/tree.' + sessionStorage.proyecto, function (root) {
 				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
 				//location.reload();
+			});
+			stompClient.subscribe('/project/add/tree.' + sessionStorage.proyecto, function (root) {
+				rama = JSON.parse(root.body);				
+				var cadena = { "key": rama.id, "parent": rama.ramaPadre.id, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador };
+				myDiagram.model.addNodeData(cadena);
+				layoutTree(oldnode);
 			});
 			stompClient.subscribe('/project/delete', function (pro) {
 				alert("Proyecto eliminado")
@@ -476,7 +483,7 @@ var map = (function () {
 		var adorn = obj.part;
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
-		var oldnode = adorn.adornedPart;
+		oldnode = adorn.adornedPart;
 		olddata = oldnode.data;//oldata is the current root
 		currentRootId = olddata.key; //current root id 
 		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
