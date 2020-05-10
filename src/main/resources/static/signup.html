@@ -24,7 +24,10 @@
 	<script src="js/api/apiclient.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
 	<script src="js/api/app.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+	<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 	<link rel="icon" type="image/png" href="images/reg/icons/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="css/reg/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/reg/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -38,7 +41,7 @@
 	<link rel="stylesheet" type="text/css" href="css/reg/css/main.css">
 </head>
 
-<body>
+<body onload="app.hiddenErrorRegMessage()">
 
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
@@ -51,6 +54,8 @@
 						<input class="input100" type="text" id="username" name="username" placeholder="Username">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
+
+					<div id="errorMesRegPos"></div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter your name">
 						<input class="input100" type="text" id="nameUser" name="name" placeholder="Name">
@@ -73,6 +78,10 @@
 							onclick="app.addUser(username.value, nameUser.value, passwd.value, repPasswd.value)">Enrol
 							me</button>
 					</div>
+
+					<div id="errorMesMailReg" title="Error">Invalid Mail</div>
+					<div id="errorMesReg" title="Error">Failure Register</div>
+
 
 				</form>
 

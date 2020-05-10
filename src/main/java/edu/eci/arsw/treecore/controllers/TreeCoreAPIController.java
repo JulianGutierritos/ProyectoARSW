@@ -52,7 +52,7 @@ public class TreeCoreAPIController {
 	 * @return Respuesta http con una lista de todos los usuarios
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getAllUsers() {
+	private ResponseEntity<?> getAllUsers() {
 		try {
 			return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
 		} catch (ServiciosTreeCoreException e) {
@@ -155,7 +155,6 @@ public class TreeCoreAPIController {
 			// user.getPasswd());
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

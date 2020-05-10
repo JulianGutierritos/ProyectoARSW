@@ -56,7 +56,10 @@ var apiclient = (function () {
 					location.replace("/profile.html")
 				},
 				function () {
-					alert("failure login");
+					//alert("failure login");
+					app.manegeLoginError();
+					//location.reload();
+
 				}
 			);
 		},
@@ -108,7 +111,8 @@ var apiclient = (function () {
 					location.reload();
 				},
 				function () {
-					alert("sign up failed");
+					app.manegeRegError();
+					//alert("sign up failed");
 				}
 			);
 		},

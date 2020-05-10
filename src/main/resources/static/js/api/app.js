@@ -5,17 +5,23 @@ var app = (function () {
 		alert("esto es una prueba")
 	}
 
+	var clearField = function (object) {
+		object.value = "";
+	}
+
 	var passHash = function (objPassId) {
 		var pwdObj = document.getElementById(objPassId);
 		var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
 		hashObj.update(pwdObj.value);
 		var hash = hashObj.getHash("HEX");
-		pwdObj.value = hash;
+		clearField(pwdObj);
+
 		return hash;
 
 	}
 
-	var loginUser = function (username, pass) {
+	var loginUser = function (username) {
+		clearField(document.getElementById('username'));
 		passHash = passHash('pass');
 
 		var newUser = {
@@ -29,24 +35,44 @@ var app = (function () {
 	}
 
 
+	var validarEmail = function (valor) {
+		var patron = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+
+		if (valor.search(patron) == 0) {
+			return true;
+		}
+		return false;
+
+	}
+
+
 
 	var addUser = function (username, nombre, passwd, repPasswd) {
-		if (passwd == repPasswd) {
-			passwdHash = passHash('passwd');
-			passHash('repPasswd');
+		validEmail = validarEmail(username);
 
-			var newUser = {
-				correo: username,
-				nombre: nombre,
-				passwd: passwdHash,
-				invitaciones: [],
-				notificaciones: []
-			};
-			apiclient.addUser(JSON.stringify(newUser));
+		if (validEmail) {
+
+			if (passwd == repPasswd) {
+				passwdHash = passHash('passwd');
+				passHash('repPasswd');
+
+				var newUser = {
+					correo: username,
+					nombre: nombre,
+					passwd: passwdHash,
+					invitaciones: [],
+					notificaciones: []
+				};
+				apiclient.addUser(JSON.stringify(newUser));
+			}
+
+			else {
+				alert("Las contraseñas no coinciden")
+			}
 		}
 
 		else {
-			alert("Las contraseñas no coinciden")
+			manegeRegMailError();
 		}
 	}
 
@@ -78,12 +104,65 @@ var app = (function () {
 		}
 	}
 
-	openNav = function () {
-		document.getElementById("mySidenav").style.width = "250px";
+	var openNav = function () {
+		document.getElementById("mySidenav").style.width = "20%";
 	}
 
-	closeNav = function () {
+	var closeNav = function () {
 		document.getElementById("mySidenav").style.width = "0";
+	}
+
+	var hiddenElem = function (elemId) {
+		var el = document.getElementById(elemId);
+		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+	}
+
+	var hiddenErrorLoginMessage = function () {
+		hiddenElem("errorMesLog");
+	}
+
+	var hiddenErrorRegMessage = function () {
+		hiddenElem("errorMesMailReg");
+		hiddenElem("errorMesReg");
+	}
+
+	var manageErrorPanel = function (panelDiv, panelPos) {
+		$(panelDiv).dialog({
+			autoOpen: false,
+			hide: "puff",
+			show: "slide",
+			height: 100,
+			modal: true,
+			close: function () {
+				location.reload();
+			},
+			overlay: {
+				opacity: 0.5,
+				background: "black"
+			}
+		});
+
+		$(panelDiv).dialog({
+			position: {
+				my: 'top',
+				at: 'top',
+				of: $(panelPos)
+			}
+		});
+
+		$(panelDiv).dialog("open");
+	}
+
+	var manegeLoginError = function () {
+		manageErrorPanel("#errorMesLog", '#errorMesLogPos');
+	}
+
+	var manegeRegMailError = function () {
+		manageErrorPanel("#errorMesMailReg", '#errorMesRegPos');
+	}
+
+	var manegeRegError = function () {
+		manageErrorPanel("#errorMesReg", '#errorMesRegPos');
 	}
 
 	return {
@@ -93,6 +172,10 @@ var app = (function () {
 		addProject: addProject,
 		verificar: verificar,
 		openNav: openNav,
-		closeNav: closeNav
+		closeNav: closeNav,
+		hiddenErrorLoginMessage: hiddenErrorLoginMessage,
+		hiddenErrorRegMessage: hiddenErrorRegMessage,
+		manegeLoginError: manegeLoginError,
+		manegeRegError:manegeRegError
 	};
 })();
