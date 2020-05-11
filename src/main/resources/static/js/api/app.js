@@ -63,7 +63,7 @@ var app = (function () {
 					invitaciones: [],
 					notificaciones: []
 				};
-				apiclient.addUser(JSON.stringify(newUser));
+				apiclient.addUser(JSON.stringify(newUser), manageRegError);
 			}
 
 			else {
@@ -72,7 +72,7 @@ var app = (function () {
 		}
 
 		else {
-			manegeRegMailError();
+			manageRegMailError();
 		}
 	}
 
@@ -121,9 +121,8 @@ var app = (function () {
 		hiddenElem("errorMesLog");
 	}
 
-	var hiddenErrorRegMessage = function () {
-		hiddenElem("errorMesMailReg");
-		hiddenElem("errorMesReg");
+	var hiddenRegMessage = function () {
+		hiddenElem("mesReg");
 	}
 
 	var manageErrorPanel = function (panelDiv, panelPos) {
@@ -153,16 +152,22 @@ var app = (function () {
 		$(panelDiv).dialog("open");
 	}
 
-	var manegeLoginError = function () {
+	var manageLoginError = function () {
 		manageErrorPanel("#errorMesLog", '#errorMesLogPos');
 	}
 
-	var manegeRegMailError = function () {
-		manageErrorPanel("#errorMesMailReg", '#errorMesRegPos');
+	var manageRegMailError = function () {
+		changeRegErrorDivText("Invaid Mail");
+		manageErrorPanel("#mesReg", '#errorMesRegPos');
 	}
 
-	var manegeRegError = function () {
-		manageErrorPanel("#errorMesReg", '#errorMesRegPos');
+	var manageRegError = function (ans) {
+		changeRegErrorDivText(ans["responseText"]);
+		manageErrorPanel("#mesReg", '#errorMesRegPos');
+	}
+
+	var changeRegErrorDivText = function (message) {
+		$('#mesReg').html(message);
 	}
 
 	return {
@@ -174,8 +179,9 @@ var app = (function () {
 		openNav: openNav,
 		closeNav: closeNav,
 		hiddenErrorLoginMessage: hiddenErrorLoginMessage,
-		hiddenErrorRegMessage: hiddenErrorRegMessage,
-		manegeLoginError: manegeLoginError,
-		manegeRegError:manegeRegError
+		hiddenRegMessage: hiddenRegMessage,
+		manageLoginError: manageLoginError,
+		manageRegError: manageRegError,
+		print: print
 	};
 })();

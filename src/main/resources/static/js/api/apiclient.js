@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore/v1";
-	//var appUrl = "http://localhost:8080/treecore/v1";
+	//var appUrl = "https://treecore.herokuapp.com/treecore/v1";
+	var appUrl = "http://localhost:8080/treecore/v1";
 	return {
 
 		getUser: function (callback) {
@@ -56,10 +56,7 @@ var apiclient = (function () {
 					location.replace("/profile.html")
 				},
 				function () {
-					//alert("failure login");
-					app.manegeLoginError();
-					//location.reload();
-
+					app.manageLoginError();
 				}
 			);
 		},
@@ -98,7 +95,7 @@ var apiclient = (function () {
 			);
 		},
 
-		addUser: function (user) {
+		addUser: function (user, callback) {
 			var postRequest = $.ajax({
 				url: appUrl,
 				type: 'POST',
@@ -107,11 +104,10 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					alert("successful sign up");
-					location.reload();
+					location.replace("/login.html")
 				},
-				function () {
-					app.manegeRegError();
+				function (ans) {
+					callback(ans);
 					//alert("sign up failed");
 				}
 			);

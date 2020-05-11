@@ -238,10 +238,11 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 500px;
+  width: 35%;
+
   border-radius: 10px;
   overflow: hidden;
-  padding: 55px 55px 37px 55px;
+  padding:3% 3% 2% 3%;
 
   background: #9152f8;
   background: -webkit-linear-gradient(top, #7579ff, #b224ef);
@@ -278,7 +279,7 @@ iframe {
 
 .login100-form-title {
   font-family: Poppins-Medium;
-  font-size: 180%;
+  font-size: 160%;
   color: #fff;
   line-height: 1.2;
   text-align: center;
@@ -592,5 +593,9 @@ iframe {
     visibility: visible;
     opacity: 1;
   }
+}
+
+.signInDiv {
+  text-align: center;
 }
 
