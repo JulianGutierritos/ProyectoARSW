@@ -1,6 +1,6 @@
 var apiclient = (function () {
 	var appUrl = "https://treecore.herokuapp.com/treecore/v1";
-	//var appUrl = "http://localhost:8080/treecore/v1";
+	// var appUrl = "http://localhost:8080/treecore/v1";
 	return {
 
 		getUser: function (callback) {

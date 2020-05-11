@@ -573,6 +573,9 @@ var map = (function () {
 			var jroot = JSON.stringify(newRoot);
 
 			stompClient.send("/treecore/delRoot." + sessionStorage.proyecto, {}, jroot);
+			var path = "proyectos/" + currentProject.id + "/" + currentRootId;
+			path = path.replace(/[/]/g, '+++');
+			apifiles.deleteFile(path);
 			apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
 
 		}
@@ -584,6 +587,9 @@ var map = (function () {
 	var delProject = function () {
 		jcur = JSON.stringify(currentProject);
 		apiclient.deleteProject(jcur);
+		var path = "proyectos/" + currentProject.id;
+		path = path.replace(/[/]/g, '+++');
+		apifiles.deleteFile(path);
 		stompClient.send("/treecore/delProject", {}, jcur);
 	}
 
@@ -601,7 +607,6 @@ var map = (function () {
 	var loadFiles = function () {
 		document.getElementById("Files").innerHTML = "";
 		var path = "proyectos/" + currentProject.id + "/" + currentRootId;
-		//var path = "proyectos/"+0+"/"+0;
 		path = path.replace(/[/]/g, '+++');
 		path = path.replace(/" "/g, "%20");
 		apifiles.searchFiles(path, showFiles);
