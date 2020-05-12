@@ -29,7 +29,7 @@ public interface TeeCoreCacheService {
 
     public void agregarParticipante (Usuario participante, int proyecto);
 
-    public void eliminarRama (Rama rama, int proyecto);
+    public void eliminarRama (ArrayList<Rama> ramas, int proyecto);
 
     public void updateRama (Rama rama, int proyecto);
 
@@ -42,4 +42,8 @@ public interface TeeCoreCacheService {
     public void insertarNotificacion (Notificacion notificacion, String usuario);
 
     public void insertarInvitacion (Invitacion invitacion, String usuario);
+
+    public void eliminarInvitacion (ArrayList<Invitacion> invitaciones, String correo);
+
+    public void eliminarProyecto (Proyecto proyecto);
 }

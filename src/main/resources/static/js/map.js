@@ -435,7 +435,7 @@ var map = (function () {
 				rama = JSON.parse(root.body);				
 				var cadena = { "key": rama.id, "parent": rama.ramaPadre.id, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador };
 				myDiagram.model.addNodeData(cadena);
-				layoutTree(oldnode);
+				layoutAll();
 			});
 			stompClient.subscribe('/project/delete', function (pro) {
 				alert("Proyecto eliminado")

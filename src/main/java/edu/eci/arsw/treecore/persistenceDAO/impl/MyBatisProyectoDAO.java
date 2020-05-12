@@ -187,8 +187,7 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	public void deleteRama(Rama rama, int proyecto) throws PersistenceException {
 		try {
 			proyectoMapper.delRama(rama);
-			Proyecto p = proyectoMapper.getProyecto(proyecto);
-			treeCoreCacheService.insertarProyecto(p);
+			treeCoreCacheService.eliminarRama(proyectoMapper.getProyectosRamas(proyecto), proyecto);
 		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido eliminar la rama");
 		}
@@ -198,10 +197,10 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	public void deleteProyecto(Proyecto project) throws PersistenceException {
 		try {
 			proyectoMapper.delProyecto(project);
+			treeCoreCacheService.eliminarProyecto(project);
 		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido eliminar el proyecto");
 		}
-
 	}
 
 	@Override

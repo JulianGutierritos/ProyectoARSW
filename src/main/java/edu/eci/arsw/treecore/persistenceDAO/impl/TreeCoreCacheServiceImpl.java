@@ -104,16 +104,9 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
     }
 
     @Override
-    public void eliminarRama (Rama rama, int proyecto){
+    public void eliminarRama (ArrayList<Rama> ramas, int proyecto){
         synchronized(proyectos){
             if (proyectos.get(proyecto) != null){ 
-                ArrayList<Rama> ramas = proyectos.get(proyecto).getRamas();
-                for (int i = 0; i < ramas.size(); i++){
-                    if (ramas.get(i).getId() == rama.getId()){
-                        ramas.remove(i);
-                        break;
-                    }
-                }
                 proyectos.get(proyecto).setRamas(ramas);
             }
         }
@@ -173,6 +166,35 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
             if (usuarios.get(usuario) != null){
                 usuarios.get(usuario).addInvitacion(invitacion);
             }           
+        }
+    }
+
+    @Override
+    public void eliminarInvitacion (ArrayList<Invitacion> invitaciones, String correo){
+        synchronized(usuarios){
+            if (usuarios.get(correo) != null){ 
+                usuarios.get(correo).setInvitaciones(invitaciones);
+            }
+        }
+    }
+
+    public void eliminarProyecto (Proyecto proyecto){
+        synchronized (proyectosDeUsuario){
+            String correo;
+            for (int i=0; i<proyecto.getParticipantes().size(); i++){
+                correo = proyecto.getParticipantes().get(i).getCorreo();
+                if (proyectosDeUsuario.get(correo) != null){
+                    for (int j=0; j<proyectosDeUsuario.get(correo).size(); j++){
+                        if (proyectosDeUsuario.get(correo).get(j).getId() == proyecto.getId()){
+                            proyectosDeUsuario.get(correo).remove(j);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        synchronized(this.proyectos){
+            this.proyectos.remove(proyecto.getId());
         }
     }
 }

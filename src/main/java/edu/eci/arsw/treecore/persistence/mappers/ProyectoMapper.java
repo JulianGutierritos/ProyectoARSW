@@ -123,4 +123,10 @@ public interface ProyectoMapper {
 	 */
 	public int getLastBranchId();
 
+	/**
+	 * Metodo para obtener las ramas de un proyecto.
+	 * 
+	 */
+	public ArrayList<Rama> getProyectosRamas(@Param("proyectoid") int proyectoId);
+
 }
