@@ -132,8 +132,7 @@ public class MyBatisUsuarioDAO implements UsuarioDAO {
 	public void deleteInvitacion(Invitacion invitacion) throws PersistenceException{
 		try {
 			this.usuarioMapper.deleteInvitacion(invitacion);
-			Usuario u = this.usuarioMapper.getUser(invitacion.getReceptor());
-			treeCoreCacheService.insertarUsuario(u);
+			treeCoreCacheService.eliminarInvitacion(this.usuarioMapper.getInvitaciones(invitacion.getReceptor()), invitacion.getReceptor());
 		}
 		catch(Exception e) {
 			throw new PersistenceException("No se ha podido eliminar la invitacion");

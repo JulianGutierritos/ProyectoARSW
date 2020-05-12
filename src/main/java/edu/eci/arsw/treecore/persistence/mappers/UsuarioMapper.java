@@ -117,4 +117,6 @@ public interface UsuarioMapper {
 	 */
 	public void deleteInvitaciones(@Param("usuario") Usuario u);
 
+	public ArrayList<Invitacion> getInvitaciones(@Param("correo") String correo);
+
 }

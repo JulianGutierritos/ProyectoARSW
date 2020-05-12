@@ -62,7 +62,7 @@ public class Usuario {
 	}
 
 	public void addNotificacion (Notificacion notificacion){
-		this.notificaciones.add(notificacion);
+		this.notificaciones.add(0, notificacion);
 	}
 
 	public void addInvitacion (Invitacion invitacion){

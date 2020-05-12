@@ -408,10 +408,14 @@ var map = (function () {
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
 			var invitacion = new Invitacion(localStorage.correo, currentProject.id, currentProject.nombre, $("#colaborador").val());
-			stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, JSON.stringify(invitacion));
+			apiclient.addInvitacion(JSON.stringify(invitacion), publicarInvitacion);
 		}
-		$("#colaborador").val("");
 		hiddenComponentAddCollaborator();
+	}
+
+	var publicarInvitacion = function (invitacion){
+		stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, invitacion);
+		$("#colaborador").val("");
 	}
 
 	var conectar = function () {
