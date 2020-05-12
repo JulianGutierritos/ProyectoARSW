@@ -3,17 +3,27 @@ package edu.eci.arsw.treecore.model.impl;
 import java.util.Date;
 
 public class Mensaje {
+	private int id; 
 	private Usuario usuario;
 	private Date fecha;
 	private String contenido;
 
-	public Mensaje(Usuario usuario, Date fecha, String contenido) {
+	public Mensaje(int id, Usuario usuario, Date fecha, String contenido) {
 		this.usuario = usuario;
 		this.fecha = fecha;
 		this.contenido = contenido;
+		this.id = id;
 	}
 
 	public Mensaje() {
+	}
+
+	public int getId(){
+		return this.id;
+	}
+
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public Date getFecha() {

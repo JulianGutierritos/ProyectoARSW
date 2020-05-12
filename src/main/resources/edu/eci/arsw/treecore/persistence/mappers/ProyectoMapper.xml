@@ -28,6 +28,7 @@
         p.fechadecreacion as fecha_proyecto,
         p.creador as creador_proyecto,
 
+        m.id as mensaje_id,
         m.usuario as mensaje_usuario,
         m.fechadecreacion as mensaje_fecha,
         m.contenido as mensaje_contenido
@@ -46,6 +47,7 @@
         p.fechadecreacion as fecha_proyecto,
         p.creador as creador_proyecto,
 
+        m.id as mensaje_id,
         m.usuario as mensaje_usuario,
         m.fechadecreacion as mensaje_fecha,
         m.contenido as mensaje_contenido
@@ -100,26 +102,22 @@
   	  where r.proyecto = #{proyectoid}
     </select>
 
-    <insert id ="insertarProyecto">
-		<selectKey keyProperty="id_proyecto" resultType="int" order="BEFORE">
-			select COALESCE(MAX(proyectoid)+1,1) from proyecto 
-    </selectKey>
+    <select id ="insertarProyecto" parameterType="Proyecto" resultType="int">
         INSERT INTO proyecto (proyectoid, nombre, creador, descripcion)
-        VALUES(#{id_proyecto}, #{proyecto.nombre}, #{proyecto.creador.correo}, #{proyecto.descripcion})
-    </insert>
+        VALUES((select COALESCE(MAX(proyectoid)+1,1) from proyecto), #{proyecto.nombre}, #{proyecto.creador.correo}, #{proyecto.descripcion})
+        RETURNING proyectoid
+    </select>
 
     <insert id ="insertarParticipante">
         INSERT INTO public.participante (usuario, proyecto)
-        VALUES(#{usuario.correo}, #{proyecto.id});
+        VALUES(#{usuario.correo}, #{proyecto.id})
     </insert>  
 
-    <insert id ="insertarMensaje">
-      <selectKey keyProperty="id_mensaje" resultType="int" order="BEFORE">
-			select COALESCE(MAX(id)+1,1) from mensaje where usuario=#{mensaje.usuario.correo} and proyecto=#{proyecto}
-      </selectKey>
+    <select id ="insertarMensaje" parameterType="Mensaje" resultType="int">
       INSERT INTO mensaje (id, usuario, proyecto, contenido)
-      VALUES(#{id_mensaje}, #{mensaje.usuario.correo}, #{proyecto}, #{mensaje.contenido})
-    </insert>
+      VALUES((select COALESCE(MAX(id)+1,1) from mensaje where usuario=#{mensaje.usuario.correo} and proyecto=#{proyecto}), #{mensaje.usuario.correo}, #{proyecto}, #{mensaje.contenido})
+      RETURNING id
+    </select>
 
 
     <select id ="insertarRamaConPadre" parameterType="Rama" resultType="int">
@@ -169,6 +167,7 @@
     </select>
 
     <resultMap id="MensajeResult" type="Mensaje">
+      <id property="id" column="mensaje_id"/>
       <result property="fecha" column="mensaje_fecha"/>
       <result property="contenido" column="mensaje_contenido"/>
       <association property="usuario" column="mensaje_usuario" javaType="Usuario" select="edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper.getUser"/>

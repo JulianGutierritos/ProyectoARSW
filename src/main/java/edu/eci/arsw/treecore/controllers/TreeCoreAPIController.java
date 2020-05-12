@@ -329,12 +329,10 @@ public class TreeCoreAPIController {
 		}
 	}
 
-	@RequestMapping(path = "/delete/project/rama", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteRama(@RequestBody Rama rama) {
+	@RequestMapping(path = "/delete/project/{id}/rama", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteRama(@RequestBody Rama rama, @PathVariable("id") int id) {
 		try {
-			System.out.println("lllllllllllllllllll");
-			System.out.println(rama);
-			treeCoreProjectServices.deleteRama(rama);
+			treeCoreProjectServices.deleteRama(rama, id);
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);

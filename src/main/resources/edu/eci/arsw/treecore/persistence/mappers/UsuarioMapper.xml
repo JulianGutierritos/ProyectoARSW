@@ -78,13 +78,11 @@
     	VALUES (#{usuario.correo},#{usuario.nombre},#{usuario.passwd})                     
     </insert>
 
-	<insert id ="insertarNotificacion">
-		<selectKey keyProperty="id_notificacion" resultType="int" order="BEFORE">
-			select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{usuario}
-    	</selectKey>
+	<select id ="insertarNotificacion" parameterType="Notificacion" resultType="int">
 		INSERT into notificacion (notificacionid, usuario, informacion) 
-    	VALUES (#{id_notificacion}, #{usuario},#{notificacion.informacion})                     
-    </insert>
+    	VALUES ((select COALESCE(MAX(notificacionid)+1,1) from notificacion where usuario=#{usuario}), #{usuario},#{notificacion.informacion})                     
+		RETURNING notificacionid
+	</select>
 
 	<insert id ="insertarInvitacion">
 		INSERT into invitacion (remitente, receptor, proyecto)

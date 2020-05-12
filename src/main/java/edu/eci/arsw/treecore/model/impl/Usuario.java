@@ -61,6 +61,14 @@ public class Usuario {
 		this.invitaciones = invitaciones;
 	}
 
+	public void addNotificacion (Notificacion notificacion){
+		this.notificaciones.add(notificacion);
+	}
+
+	public void addInvitacion (Invitacion invitacion){
+		this.invitaciones.add(invitacion);
+	}
+
 	@Override
 	public String toString() {
 		return "{Correo: " + correo + " Nombre: " + nombre + " Passwd: " + passwd + " Invitaciones: " + invitaciones

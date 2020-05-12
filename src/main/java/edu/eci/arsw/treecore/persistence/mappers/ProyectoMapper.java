@@ -47,7 +47,7 @@ public interface ProyectoMapper {
 	 * 
 	 * @param proyecto Nuevo proyecto
 	 */
-	public void insertarProyecto(@Param("proyecto") Proyecto proyecto);
+	public int insertarProyecto(@Param("proyecto") Proyecto proyecto);
 
 	/**
 	 * Metodo que adiciona un nuevo miembro al proyecto
@@ -108,7 +108,7 @@ public interface ProyectoMapper {
 	 * @param mensaje  Nuevo mensaje
 	 * @param proyecto Proyecto al que va a pertenecer el mensaje
 	 */
-	public void insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
+	public int insertarMensaje(@Param("mensaje") Mensaje mensaje, @Param("proyecto") int proyecto);
 
 	/**
 	 * Metodo para obtener el token de la app

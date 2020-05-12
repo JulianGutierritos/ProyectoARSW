@@ -116,7 +116,7 @@ public class TreeCoreAPIMessage {
 	 */
 	@MessageMapping("/delRoot.{project}")
     public void handlerRootDelete(Rama root, @DestinationVariable int project) throws ServiciosTreeCoreException  {
-		treeCoreProjectServices.deleteRama(root);
+		treeCoreProjectServices.deleteRama(root, project);
 		msgt.convertAndSend("/project/del/tree." + project, root);
 	}
 

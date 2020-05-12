@@ -92,4 +92,16 @@ public class Proyecto {
 	public void setMensajes(ArrayList<Mensaje> mensajes) {
 		this.mensajes = mensajes;
 	}
+
+	public void addMensaje(Mensaje mensaje){
+		this.mensajes.add(mensaje);
+	}
+
+	public void addRama(Rama rama){
+		this.ramas.add(rama);
+	}
+
+	public void addParticipante(Usuario participante){
+		this.participantes.add(participante);
+	}
 }

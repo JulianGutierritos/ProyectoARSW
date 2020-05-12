@@ -148,9 +148,9 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	}
 
 	@Override
-	public void deleteRama(Rama rama) throws ServiciosTreeCoreException {
+	public void deleteRama(Rama rama, int proyecto) throws ServiciosTreeCoreException {
 		try {
-			proyectoDAO.deleteRama(rama);
+			proyectoDAO.deleteRama(rama, proyecto);
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("No se pudo eliminar la rama");
 		}
@@ -160,11 +160,11 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	public void deleteProyecto(Proyecto project) throws ServiciosTreeCoreException {
 
 		try {
-
+			int id = project.getId();
 			ArrayList<Rama> ramas = proyectoDAO.getRamas(project.getId());
 
 			for(Rama r:ramas) {
-				if(r.getRamaPadre()!=null) deleteRama(r);
+				if(r.getRamaPadre()!=null) deleteRama(r, id);
 			}
 
 			proyectoDAO.deleteProyecto(project);

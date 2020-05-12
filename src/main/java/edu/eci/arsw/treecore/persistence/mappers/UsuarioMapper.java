@@ -56,7 +56,7 @@ public interface UsuarioMapper {
 	 * @param n Notificaciones del usuario
 	 * @param u Correo del usuario
 	 */
-	public void insertarNotificacion(@Param("notificacion") Notificacion n, @Param("usuario") String u);
+	public int insertarNotificacion(@Param("notificacion") Notificacion n, @Param("usuario") String u);
 
 	/**
 	 * Metodo que adiciona una invitacion al usuario dado
