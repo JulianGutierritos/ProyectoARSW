@@ -87,11 +87,11 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 
 ## Diagrama de componentes
 
-![Diagrama de Componentes](images/compon.png)
+![Diagrama de Componentes](images/compon2.png)
 
 ## Diagrama de despliegue
 
-![Diagrama de Despliegue](images/despl_diagram.png)
+![Diagrama de Despliegue](images/despl_diagram2.png)
 
 # Heroku
 
