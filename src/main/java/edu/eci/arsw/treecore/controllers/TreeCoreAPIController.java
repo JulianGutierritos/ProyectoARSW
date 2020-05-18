@@ -109,9 +109,14 @@ public class TreeCoreAPIController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-
+	/**
+	 * Metodo que publica una notificacion a un usuario.
+	 * @param notificacion notificacion a agregar.
+	 * @param correo Correo del usuario.
+	 * @return Respuesta HTTP sobre el estado de la solicitud.
+	 */
 	@RequestMapping(path = "/users/{correo}/notification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addNewProject(@RequestBody Notificacion notificacion,
+	public ResponseEntity<?> addNewNotification(@RequestBody Notificacion notificacion,
 			@PathVariable("correo") String correo) {
 		try {
 			this.treeCoreUserServices.insertarNotificacion(notificacion, correo);
