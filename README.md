@@ -105,4 +105,7 @@ https://treecore.herokuapp.com/
 https://tree.taiga.io/project/nduran06-treecoreproject/
 ```
 
+# CircleCI
+
+[![CircleCI](https://app.circleci.com/pipelines/github/JulianGutierritos/ProyectoARSW)
 
