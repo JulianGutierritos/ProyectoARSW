@@ -107,5 +107,5 @@ https://tree.taiga.io/project/nduran06-treecoreproject/
 
 # CircleCI
 
-[![CircleCI](https://app.circleci.com/pipelines/github/JulianGutierritos/ProyectoARSW)
+[![CircleCI](https://circleci.com/gh/JulianGutierritos/ProyectoARSW.svg?style=svg)](https://app.circleci.com/pipelines/github/JulianGutierritos/ProyectoARSW)
 
