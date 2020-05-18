@@ -149,7 +149,7 @@ public class TreeCoreAPIMessage {
 	@MessageMapping("/updateRoot.{projectId}")
     public void handlerRootUpdate(Rama root, @DestinationVariable int projectId) throws ServiciosTreeCoreException  {
 		this.treeCoreProjectServices.updateRama(projectId, root);
-		msgt.convertAndSend("/project/update/root", root);
+		msgt.convertAndSend("/project/update/root." + projectId, root);
 	}
 	
 }

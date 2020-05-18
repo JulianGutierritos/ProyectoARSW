@@ -4,7 +4,6 @@ import edu.eci.arsw.treecore.persistence.mappers.ProyectoMapper;
 import edu.eci.arsw.treecore.persistenceDAO.ProyectoDAO;
 import edu.eci.arsw.treecore.persistenceDAO.TeeCoreCacheService;
 import edu.eci.arsw.treecore.exceptions.PersistenceException;
-import edu.eci.arsw.treecore.exceptions.ServiciosTreeCoreException;
 import edu.eci.arsw.treecore.model.impl.Mensaje;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
