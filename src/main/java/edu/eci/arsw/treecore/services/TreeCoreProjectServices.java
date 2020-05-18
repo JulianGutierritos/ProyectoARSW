@@ -146,11 +146,11 @@ public interface TreeCoreProjectServices {
 	/**
 	 * Metodo que actualiza los datos de una rama
 	 * 
-	 * @param proyecto Proyecto al que pertenece una rama
+	 * @param projectId Proyecto al que pertenece una rama
 	 * @param rama     Rama con los nuevos datos
 	 * @throws ServiciosTreeCoreException Si no encuentra a la rama o el proyecto
 	 */
-	public void updateRama(Proyecto proyecto, Rama rama) throws ServiciosTreeCoreException;
+	public void updateRama(int projectId, Rama rama) throws ServiciosTreeCoreException;
 
 	/**
 	 * Metodo que obtiene el ultimo id de las ramas

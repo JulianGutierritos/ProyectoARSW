@@ -139,7 +139,7 @@
       update rama set
         nombre = #{rama.nombre},
         descripcion = #{rama.descripcion}
-      where ramaid = #{rama.id} and proyecto=#{project.id}
+      where ramaid = #{rama.id} and proyecto=#{projectId}
     </update>
 
     <update id="updateRamaNombre">

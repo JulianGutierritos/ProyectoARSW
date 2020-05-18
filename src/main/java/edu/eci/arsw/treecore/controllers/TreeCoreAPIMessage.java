@@ -100,7 +100,7 @@ public class TreeCoreAPIMessage {
 				String ramaDescrip = rama.getDescripcion();
 				oldRama.setNombre(ramaName);
 				oldRama.setDescripcion(ramaDescrip);
-				this.treeCoreProjectServices.updateRama(project, oldRama);
+				this.treeCoreProjectServices.updateRama(project.getId(), oldRama);
 			}
 			msgt.convertAndSend("/project/update/tree", rama);
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -138,6 +138,18 @@ public class TreeCoreAPIMessage {
 	@MessageMapping("/delProject")
     public void handlerProjectDelete(Proyecto project) throws ServiciosTreeCoreException  {
 		msgt.convertAndSend("/project/delete", project);
+	}
+	
+	/**
+	 * 
+	 * @param root
+	 * @param projectId
+	 * @throws ServiciosTreeCoreException
+	 */
+	@MessageMapping("/updateRoot.{projectId}")
+    public void handlerRootUpdate(Rama root, @DestinationVariable int projectId) throws ServiciosTreeCoreException  {
+		this.treeCoreProjectServices.updateRama(projectId, root);
+		msgt.convertAndSend("/project/update/root", root);
 	}
 	
 }

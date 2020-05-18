@@ -193,9 +193,9 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	}
 
 	@Override
-	public void updateRama(Proyecto proyecto, Rama rama) throws ServiciosTreeCoreException {
+	public void updateRama(int proyectoId, Rama rama) throws ServiciosTreeCoreException {
 		try {
-			proyectoDAO.updateRama(proyecto, rama);
+			proyectoDAO.updateRama(proyectoId, rama);
 		} catch (PersistenceException e) {
 			throw new ServiciosTreeCoreException("Error al actualizar la rama");
 		}

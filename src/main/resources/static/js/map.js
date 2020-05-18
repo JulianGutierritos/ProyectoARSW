@@ -6,7 +6,6 @@ var map = (function () {
 	var currentRootParentId;
 	var currentRootParent;
 	var currentProject;
-	var currentUser;
 	var currentRoot;
 	var centralKey;
 	var olddata;
@@ -51,7 +50,7 @@ var map = (function () {
 					{
 						name: "TEXT",
 						minSize: new go.Size(30, 15),
-						editable: true
+						editable: false
 					},
 					// remember not only the text string but the scale and the font in the node data
 					new go.Binding("text", "text").makeTwoWay(),
@@ -252,15 +251,6 @@ var map = (function () {
 		hiddenNuevaRama();
 	}
 
-	var newCurrentRoot = function (newnode) {
-
-		currentRootId = newnode.data.key; //current root id 
-		currentRootParentId = newnode.data.parent; //cuando es 0, el padre es el proyecto
-
-		setValuesToAddRoot();
-	}
-
-
 	var setValuesToAddRoot = function () {
 		if (currentRootParentId == 0) {
 			currentRootParentId = null;
@@ -445,6 +435,11 @@ var map = (function () {
 				alert("Proyecto eliminado")
 				location.replace("/profile.html")
 			});
+			
+			stompClient.subscribe('/project/update/root', function (rama) {
+				alert("se ha actualizado la rama")
+				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);		
+			});
 
 		});
 	}
@@ -463,6 +458,14 @@ var map = (function () {
 			this.proyecto = proyecto;
 			this.nombreProyecto = nombreProyecto;
 			this.receptor = receptor;
+		}
+	}
+	
+	class Notificacion {
+		constructor(informacion) {
+			this.id = 0;
+			this.fecha = null;
+			this.informacion = informacion;
 		}
 	}
 
@@ -539,24 +542,6 @@ var map = (function () {
 		var r = JSON.parse(rama);
 		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, r.nombre);
 	}
-
-	var addRootInfo = function (name, messDecr, padre) {
-
-		var newRoot = {
-			id: currentRootId,
-			nombre: name,
-			ramaPadre: currentRootParent,
-			descripcion: messDecr,
-			archivos: [],
-			fechaDeCreacion: "",
-			creador: currentUser
-
-		};
-		let jroot = JSON.stringify(newRoot);
-		//apiclient.addProjectRoot(currentProject.id, JSON.stringify(newRoot));
-		//stompClient.send("/treecore/projects/"+currentProject.id+"/add/rama",{},jroot);
-	}
-
 
 	var delComponent = function () {
 
@@ -767,12 +752,11 @@ var map = (function () {
 		stompClient.send("/treecore/notificacion." + correo, {}, notificacion);
 	}
 
-	class Notificacion {
-		constructor(informacion) {
-			this.id = 0;
-			this.fecha = null;
-			this.informacion = informacion;
-		}
+	var updateRootInfo=function(nuevaDes){
+		projectId=currentProject.id
+		currentRoot.descripcion=nuevaDes
+		jroot=JSON.stringify(currentRoot)
+		stompClient.send("/treecore/updateRoot."+projectId, {}, JSON.stringify(currentRoot));
 	}
 
 	return {
@@ -790,6 +774,7 @@ var map = (function () {
 		hiddenNuevaRama: hiddenNuevaRama,
 		invitar: invitar,
 		loadFiles: loadFiles,
-		upload: upload
+		upload: upload,
+		updateRootInfo:updateRootInfo
 	}
 })();

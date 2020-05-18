@@ -217,10 +217,10 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	}
 
 	@Override
-	public void updateRama(Proyecto proyecto, Rama rama) throws PersistenceException {
+	public void updateRama(int proyectoId, Rama rama) throws PersistenceException {
 		try {
-			proyectoMapper.updateRama(proyecto, rama);
-			treeCoreCacheService.updateRama(rama, proyecto.getId());
+			proyectoMapper.updateRama(proyectoId, rama);
+			treeCoreCacheService.updateRama(rama, proyectoId);
 		} catch (Exception e) {
 			throw new PersistenceException("Error al actualizar la rama");
 		}

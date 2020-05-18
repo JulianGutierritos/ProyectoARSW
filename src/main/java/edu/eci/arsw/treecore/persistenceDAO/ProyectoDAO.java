@@ -137,11 +137,11 @@ public interface ProyectoDAO {
 	/**
 	 * Metodo que actualiza los datos de una rama
 	 * 
-	 * @param proyecto Proyecto al que pertenece una rama
+	 * @param proyectoId Proyecto al que pertenece una rama
 	 * @param rama     Rama con los nuevos datos
 	 * @throws PersistenceException Si no encuentra a la rama o el proyecto
 	 */
-	public void updateRama(Proyecto proyecto, Rama rama) throws PersistenceException;
+	public void updateRama(int proyectoId, Rama rama) throws PersistenceException;
 
 	/**
 	 * Metodo que obtiene el token de la app

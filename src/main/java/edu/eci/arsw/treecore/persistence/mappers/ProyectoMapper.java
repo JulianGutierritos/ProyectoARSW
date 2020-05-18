@@ -76,10 +76,10 @@ public interface ProyectoMapper {
 	/**
 	 * Metodo para actualizar los datos de una rama
 	 * 
-	 * @param proyecto Proyecto al que pertenece la rama
+	 * @param proyectoId Proyecto al que pertenece la rama
 	 * @param rama     Rama con sus nuevos datos
 	 */
-	public void updateRama(@Param("project") Proyecto proyecto, @Param("rama") Rama rama);
+	public void updateRama(@Param("projectId") int proyectoId, @Param("rama") Rama rama);
 
 	/**
 	 * Metodo para actualizar el nombre de una rama
