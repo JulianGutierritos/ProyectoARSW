@@ -54,7 +54,7 @@ public class TreeCoreShiroConfig {
 		// filterMap.put("/login", "perms[user:add]");
 		// shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
-		filterMap.put("/signup.html","anon");
+		/*filterMap.put("/signup.html","anon");
 		filterMap.put("/index.html","anon");
 		filterMap.put("/","anon");
 		filterMap.put("/login.html","anon");	
@@ -69,7 +69,7 @@ public class TreeCoreShiroConfig {
 		// Modify the page of the blocked request jump
 
 		//shiroFilterFactoryBean.setLoginUrl("/index.html");
-		// // Set unauthorized pages
+		// // Set unauthorized pages*/
 
         filterMap.put("/login","anon");
         

@@ -44,7 +44,6 @@
 </head>
 
 <body onload="app.block(), map.verificar(), map.init()" oncontextmenu="return false;">
-
 	<section id="container">
 		<header class="header black-bg">
 			<a class="logo"><b>TREE<span>CORE</span></b></a>
@@ -71,7 +70,7 @@
 					Agregar Colaborador
 				</button>
 				<br />
-				<button type="button" class="contact100-form-btn" onclick="">
+				<button type="button" class="contact100-form-btn" onclick="map.save()">
 					Abandonar Proyecto
 				</button>
 				<br />
@@ -117,8 +116,7 @@
 
 						</label>
 						<label class="label-input100 rs2" for="message">
-							<button class="updateButton btn-sm" value="Click me" 
-							onclick="map.updateRootInfo(); return false;">
+							<button class="updateButton btn-sm" value="Click me" onclick="map.updateRootInfo(descripcionRama.value)">
 								<i class="fa fa-edit fa-2x"><br />Update</i>
 							</button>
 						</label>
