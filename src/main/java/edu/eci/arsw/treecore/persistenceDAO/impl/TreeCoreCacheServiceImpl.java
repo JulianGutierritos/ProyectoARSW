@@ -103,6 +103,25 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
         }
     }
 
+    public void eliminarParticipante (String correo, int proyecto){
+        synchronized(proyectos){
+            if (proyectos.get(proyecto) != null){ 
+                proyectos.get(proyecto).eliminarParticipante(correo);
+            }
+        }
+        synchronized(proyectosDeUsuario){
+            if (proyectosDeUsuario.get(correo) != null){
+                for (int i = 0; i< proyectosDeUsuario.get(correo).size(); i++){
+                    if (proyectosDeUsuario.get(correo).get(i).getId() == proyecto){
+                        proyectosDeUsuario.get(correo).remove(i);
+                        break;             
+                    }
+                }
+            }
+        }
+
+    }
+
     @Override
     public void eliminarRama (ArrayList<Rama> ramas, int proyecto){
         synchronized(proyectos){
@@ -178,23 +197,26 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
         }
     }
 
-    public void eliminarProyecto (Proyecto proyecto){
-        synchronized (proyectosDeUsuario){
-            String correo;
-            for (int i=0; i<proyecto.getParticipantes().size(); i++){
-                correo = proyecto.getParticipantes().get(i).getCorreo();
-                if (proyectosDeUsuario.get(correo) != null){
-                    for (int j=0; j<proyectosDeUsuario.get(correo).size(); j++){
-                        if (proyectosDeUsuario.get(correo).get(j).getId() == proyecto.getId()){
-                            proyectosDeUsuario.get(correo).remove(j);
-                            break;
+    public void eliminarProyecto (int proyectoId){
+        Proyecto proyecto = proyectos.get(proyectoId);
+        if (proyecto != null){
+            synchronized (proyectosDeUsuario){
+                String correo;
+                for (int i=0; i<proyecto.getParticipantes().size(); i++){
+                    correo = proyecto.getParticipantes().get(i).getCorreo();
+                    if (proyectosDeUsuario.get(correo) != null){
+                        for (int j=0; j<proyectosDeUsuario.get(correo).size(); j++){
+                            if (proyectosDeUsuario.get(correo).get(j).getId() == proyecto.getId()){
+                                proyectosDeUsuario.get(correo).remove(j);
+                                break;
+                            }
                         }
                     }
                 }
             }
-        }
-        synchronized(this.proyectos){
-            this.proyectos.remove(proyecto.getId());
+            synchronized(this.proyectos){
+                this.proyectos.remove(proyecto.getId());
+            }
         }
     }
 }

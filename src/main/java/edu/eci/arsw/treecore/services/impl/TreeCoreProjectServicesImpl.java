@@ -138,6 +138,15 @@ public class TreeCoreProjectServicesImpl implements TreeCoreProjectServices {
 	}
 
 	@Override
+	public void eliminarParticipante(String correo, Proyecto proyecto) throws ServiciosTreeCoreException{
+		try {
+			proyectoDAO.eliminarParticipante(correo, proyecto);;
+		} catch (PersistenceException e) {
+			throw new ServiciosTreeCoreException("No se pudo salir del proyecto");
+		}
+	}
+
+	@Override
 	public int insertarRama(Rama rama, Proyecto proyecto) throws ServiciosTreeCoreException {
 		try {
 			int r = proyectoDAO.insertarRama(rama, proyecto);

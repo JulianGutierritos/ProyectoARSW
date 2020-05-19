@@ -113,6 +113,10 @@
         VALUES(#{usuario.correo}, #{proyecto.id})
     </insert>  
 
+    <delete id = "eliminarParticipante">
+        DELETE FROM public.participante WHERE usuario = #{correo} and proyecto = #{proyecto.id}
+    </delete>
+
     <select id ="insertarMensaje" parameterType="Mensaje" resultType="int">
       INSERT INTO mensaje (id, usuario, proyecto, contenido)
       VALUES((select COALESCE(MAX(id)+1,1) from mensaje where usuario=#{mensaje.usuario.correo} and proyecto=#{proyecto}), #{mensaje.usuario.correo}, #{proyecto}, #{mensaje.contenido})

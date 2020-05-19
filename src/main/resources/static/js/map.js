@@ -381,7 +381,7 @@ var map = (function () {
 	}
 
 	var publicarInvitacion = function (invitacion){
-		stompClient.send("/treecore/invitacion." + $("#colaborador").val(), {}, invitacion);
+		stompClient.send("/treecore/invitacion." + JSON.parse(invitacion).receptor, {}, invitacion);
 		$("#colaborador").val("");
 	}
 
@@ -715,8 +715,23 @@ var map = (function () {
 		}
 	}
 
+	var salirProyecto = function(){
+		apiclient.eliminarParticipante(JSON.stringify(currentProject), localStorage.correo);
+		apiclient.getProjectTeam(sessionStorage.proyecto, notificarSalida);
+	}
+
 	var setCurrentRootParent = function (parent) {
 		currentRootParent = parent;
+	}
+
+	var notificarSalida = function(lista){
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha salido del proyecto " + currentProject.nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
 	}
 
 	var notificarNuevaRama = function (lista, nombre) {
@@ -766,6 +781,7 @@ var map = (function () {
 		invitar: invitar,
 		loadFiles: loadFiles,
 		upload: upload,
-		updateRootInfo:updateRootInfo
+		updateRootInfo:updateRootInfo,
+		salirProyecto : salirProyecto
 	}
 })();

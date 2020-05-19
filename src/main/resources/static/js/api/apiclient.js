@@ -78,6 +78,24 @@ var apiclient = (function () {
 			);
 		},
 
+		eliminarParticipante: function (proyecto, correo) {
+			var postRequest = $.ajax({
+				url: appUrl + "/projects/team/" + correo,
+				type: 'DELETE',
+				data: proyecto,
+				contentType: "application/json"
+			});
+			postRequest.then(
+				function () {
+					alert("Ha salido del proyecto");
+					location.replace("/profile.html");
+				},
+				function () {
+					alert("failure acept");
+				}
+			);
+		},
+
 		eliminarInvitacion: function (invitacion) {
 			var postRequest = $.ajax({
 				url: appUrl + "/users/invitations",
@@ -104,7 +122,7 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					location.replace("/login.html")
+					location.replace("/login.html");
 				},
 				function (ans) {
 					callback(ans);

@@ -58,6 +58,14 @@ public interface ProyectoMapper {
 	public void insertarParticipante(@Param("usuario") Usuario usuario, @Param("proyecto") Proyecto proyecto);
 
 	/**
+	 * Metodo que elimina un participante de un proyecto
+	 * 
+	 * @param correo usuario participante
+	 * @param proyecto Proyecto al que pertenece el usuario
+	 */
+	public void eliminarParticipante(@Param("correo") String correo, @Param("proyecto") Proyecto proyecto);
+
+	/**
 	 * Metodo para adicionar una nueva rama hija a un proyecto
 	 * 
 	 * @param rama     Nueva rama a adicionar

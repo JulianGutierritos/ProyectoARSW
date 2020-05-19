@@ -163,6 +163,19 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 			proyectoMapper.insertarParticipante(usuario, proyecto);
 			treeCoreCacheService.agregarParticipante(usuario, proyecto.getId());
 		} catch (Exception e) {
+			throw new PersistenceException("Error al eliminar participante");
+		}
+	}
+
+	@Override
+	public void eliminarParticipante(String correo, Proyecto proyecto) throws PersistenceException{
+		try {
+			proyectoMapper.eliminarParticipante(correo, proyecto);
+			treeCoreCacheService.eliminarParticipante(correo, proyecto.getId());
+			if (getProyecto(proyecto.getId()).getParticipantes().size() == 0){
+				deleteProyecto(proyecto);
+			}
+		} catch (Exception e) {
 			throw new PersistenceException("Error al insertar participante");
 		}
 	}
@@ -196,7 +209,7 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	public void deleteProyecto(Proyecto project) throws PersistenceException {
 		try {
 			proyectoMapper.delProyecto(project);
-			treeCoreCacheService.eliminarProyecto(project);
+			treeCoreCacheService.eliminarProyecto(project.getId());
 		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido eliminar el proyecto");
 		}

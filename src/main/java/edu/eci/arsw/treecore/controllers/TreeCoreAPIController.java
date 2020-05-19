@@ -402,6 +402,22 @@ public class TreeCoreAPIController {
 	}
 
 	/**
+	 * Metodo para agregar un nuevo integrante al equipo del proyecto
+	 * @param correo usario a eliminar del proyecto
+	 * @param proyecto proyecto
+	 * @return Respuesta http con el estado de la solicitud
+	 */
+	@RequestMapping(path = "/projects/team/{correo}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteTeamMate(@RequestBody Proyecto proyecto, @PathVariable("correo") String correo) {
+		try {
+			this.treeCoreProjectServices.eliminarParticipante(correo, proyecto);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
 	 * Metodo para consultar los archivos y carpetas en una ruta.
 	 * 
 	 * @param ruta ruta de la carpeta que se quiere consultar

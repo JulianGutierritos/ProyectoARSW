@@ -19,6 +19,8 @@ public interface TeeCoreCacheService {
 
     public void insertarProyectoDeUsuario (Proyecto proyecto, String usuario);
 
+    public void eliminarParticipante (String correo, int proyecto);
+
     public Proyecto getProyecto(int identificador);
 
     public ArrayList<Proyecto> getProyectosDeUsuario(String usuario);
@@ -45,5 +47,5 @@ public interface TeeCoreCacheService {
 
     public void eliminarInvitacion (ArrayList<Invitacion> invitaciones, String correo);
 
-    public void eliminarProyecto (Proyecto proyecto);
+    public void eliminarProyecto (int proyectoId);
 }

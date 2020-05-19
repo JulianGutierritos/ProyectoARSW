@@ -104,4 +104,13 @@ public class Proyecto {
 	public void addParticipante(Usuario participante){
 		this.participantes.add(participante);
 	}
+
+	public void eliminarParticipante (String correo){
+		for (int i = 0; i < participantes.size(); i++){
+			if (participantes.get(i).getCorreo().equals(correo)){
+				participantes.remove(i);
+				break;
+			}
+		}
+	}
 }

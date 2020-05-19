@@ -83,6 +83,15 @@ public interface ProyectoDAO {
 	public void insertarParticipante(Proyecto proyecto, Usuario usuario) throws PersistenceException;
 
 	/**
+	 * Metodo que elimina un participante de un proyecto
+	 * 
+	 * @param correo usuario participante
+	 * @param proyecto Proyecto al que pertenece el usuario
+	 */
+	public void eliminarParticipante(String correo, Proyecto proyecto) throws PersistenceException;
+
+
+	/**
 	 * Metodo para adicionar una nueva rama a un proyecto
 	 * 
 	 * @param rama     Nueva rama
