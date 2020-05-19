@@ -68,12 +68,12 @@ public class TreeCoreShiroConfig {
 
 		// Modify the page of the blocked request jump
 
-		shiroFilterFactoryBean.setLoginUrl("/index.html");
+		//shiroFilterFactoryBean.setLoginUrl("/index.html");
 		// // Set unauthorized pages
 
         filterMap.put("/login","anon");
         
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
+        //shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         
 		return shiroFilterFactoryBean;
 	}
