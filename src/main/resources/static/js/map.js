@@ -347,29 +347,6 @@ var map = (function () {
 		mensajes(project);
 	}
 
-	var updateTree = function (ramlist) {
-		myDiagram.model.clear();
-		console.log(ramlist);
-		var list = [];
-		//currentProject.ramas = ramlist;
-		for (var i = 1; i <= ramlist.length; i++) {
-			var rama = ramlist[i - 1];
-			var padre = rama.ramaPadre;
-			var idPadre;
-			if (padre == null) {
-				idPadre = 0;
-			}
-			else {
-				idPadre = padre.id;
-			}
-			var cadena = { "key": rama.id, "parent": idPadre, "text": rama.nombre, "descripcion": rama.descripcion, "archivos": rama.archivos, "fechaDeCreacion": rama.fechaDeCreacion, "creador": rama.creador };
-			list.push(cadena);
-		};
-		var val = { "class": "go.TreeModel", "nodeDataArray": list };
-		myDiagram.model = go.Model.fromJson(val);
-		layoutAll();
-	}
-
 	function loadN() {
 		myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
 	}
@@ -418,12 +395,21 @@ var map = (function () {
 					'<li> <div class="commenterImage"> <img src="img/default.jpg" /> </div> <div class="commentText"></div> <p class="">' + mensaje.contenido + '</p> <span class="date sub-text">' + mensaje.usuario.nombre + ' on ' + mensaje.fecha + '</span> </div> </li>'
 				);
 			});
-			stompClient.subscribe('/project/update/tree', function (root) {
-				updateTree(root);
-			});
 			stompClient.subscribe('/project/del/tree.' + sessionStorage.proyecto, function (root) {
-				apiclient.getProjectRamas(sessionStorage.proyecto, updateTree);
-				//location.reload();
+				rama = JSON.parse(root.body);
+				var list = [];
+				for( var i = 0; i < myDiagram.model.Cc.length ; i++){					
+					if (myDiagram.model.Cc[i].key != rama.id){
+						if (myDiagram.model.Cc[i].parent == rama.id){
+							myDiagram.model.Cc[i].parent = rama.ramaPadre.id;
+						}
+						list.push(myDiagram.model.Cc[i]);
+					}
+				}
+				var val = { "class": "go.TreeModel", "nodeDataArray": list };
+				myDiagram.model.clear();
+				myDiagram.model = go.Model.fromJson(val);
+				layoutAll();	
 			});
 			stompClient.subscribe('/project/add/tree.' + sessionStorage.proyecto, function (root) {
 				rama = JSON.parse(root.body);				
@@ -478,11 +464,14 @@ var map = (function () {
 	}
 
 	var hiddenComponentAddCollaborator = function () {
+		document.getElementById('colaborador').value = "";
 		var el = document.getElementById("componentCollaborator");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 	}
 
 	var hiddenNuevaRama = function () {
+		document.getElementById('rootName').value = "";
+		document.getElementById('message').value = "";
 		var el = document.getElementById("nuevaRama");
 		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
 
