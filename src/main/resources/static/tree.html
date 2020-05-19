@@ -43,7 +43,7 @@
 
 </head>
 
-<body onload="map.verificar(), map.init()">
+<body onload="app.block(), map.verificar(), map.init()" oncontextmenu="return false;">
 
 	<section id="container">
 		<header class="header black-bg">
@@ -71,8 +71,8 @@
 					Agregar Colaborador
 				</button>
 				<br />
-				<button type="button" class="contact100-form-btn" onclick="map.save()">
-					Exportar
+				<button type="button" class="contact100-form-btn" onclick="">
+					Abandonar Proyecto
 				</button>
 				<br />
 				<button type="button" class="contact100-form-btn" onclick="map.save()">
