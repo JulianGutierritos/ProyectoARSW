@@ -28,7 +28,7 @@ public class TreeCoreShiroConfig {
 	}
 
 	/**
-	 * Metodo que crea el filtro de bean
+	 * Metodo que crea el filtro del bean
 	 * 
 	 * @param securityManager Objeto Security Manager
 	 * @return Filtro de shiro
@@ -36,6 +36,7 @@ public class TreeCoreShiroConfig {
 	@Bean
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(
 			@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+		
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		/**
@@ -43,7 +44,7 @@ public class TreeCoreShiroConfig {
 		 * interceptor Common filters: anon:Access without authentication (login)
 		 * authc:Must be authenticated to access user:If you use the function of
 		 * rememberMe, you can access it directly perms:The resource must have resource
-		 * permission to access role:The resource must have role permission to access
+		 * permission to aanonccess role:The resource must have role permission to access
 		 */
 		Map<String, String> filterMap = new LinkedHashMap<>();
 		// filterMap.put("/tree.html", "authc");
@@ -53,10 +54,27 @@ public class TreeCoreShiroConfig {
 		// filterMap.put("/login", "perms[user:add]");
 		// shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
-		// // Modify the page of the blocked request jump
-		shiroFilterFactoryBean.setLoginUrl("/toLogin");
+		filterMap.put("/signup.html","anon");
+		filterMap.put("/index.html","anon");
+		filterMap.put("/","anon");
+		filterMap.put("/login.html","anon");	
+		
+		// Set unauthorized pages
+
+		filterMap.put("/profile.html","authc");
+		filterMap.put("/addProject.html","authc");
+		filterMap.put("/project_description.html","authc");
+		filterMap.put("/tree.html","authc");
+
+		// Modify the page of the blocked request jump
+
+		shiroFilterFactoryBean.setLoginUrl("/index.html");
 		// // Set unauthorized pages
-		shiroFilterFactoryBean.setUnauthorizedUrl("/nuAuth");
+
+        filterMap.put("/login","anon");
+        
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
+        
 		return shiroFilterFactoryBean;
 	}
 

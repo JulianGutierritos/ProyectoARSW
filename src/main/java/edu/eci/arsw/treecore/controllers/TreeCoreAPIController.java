@@ -46,19 +46,6 @@ public class TreeCoreAPIController {
 	@Autowired
 	SimpMessagingTemplate msgt;
 
-	/**
-	 * Metodo que retorna todos los usuarios contenidos en la base de datos
-	 * 
-	 * @return Respuesta http con una lista de todos los usuarios
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	private ResponseEntity<?> getAllUsers() {
-		try {
-			return new ResponseEntity<>(this.treeCoreUserServices.getAllUsers(), HttpStatus.OK);
-		} catch (ServiciosTreeCoreException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
 
 	/**
 	 * Metodo que retorna un usuario dado su correo

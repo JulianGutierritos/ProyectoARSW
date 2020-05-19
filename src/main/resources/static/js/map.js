@@ -744,7 +744,7 @@ var map = (function () {
 	}
 
 	var updateRootInfo=function(){
-		currentRoot.descripcion= document.getElementById('descripcionRama').value;
+		currentRoot.descripcion=document.getElementById('descripcionRama').value;
 		jroot=JSON.stringify(currentRoot);
 		stompClient.send("/treecore/updateRoot."+ sessionStorage.proyecto, {}, JSON.stringify(currentRoot));
 		alert("Descripción actualizada");
