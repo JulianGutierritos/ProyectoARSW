@@ -9,9 +9,8 @@ var apiprofile = (function () {
 			proyecto: p
 		};
 		apiclient.getProjectTeam(p, notificarNuevoColaborador, nombre);
-		apiclient.aceptarInvitacion(JSON.stringify(newInvitacion));
+		apiclient.aceptarInvitacion(JSON.stringify(newInvitacion), nombre, putProyectos);
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
-		putProyectos(nombre, p);
 		deleteInvitacion(p);
 		stompClient.send("/treecore/aceptarInvitacion", {}, JSON.stringify(newInvitacion));
 	}

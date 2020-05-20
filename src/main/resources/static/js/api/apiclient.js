@@ -1,6 +1,6 @@
 var apiclient = (function () {
-	var appUrl = "https://treecore.herokuapp.com/treecore/v1";
-	//var appUrl = "http://localhost:8080/treecore/v1";
+	//var appUrl = "https://treecore.herokuapp.com/treecore/v1";
+	var appUrl = "http://localhost:8080/treecore/v1";
 	return {
 
 		getUser: function (callback) {
@@ -61,7 +61,7 @@ var apiclient = (function () {
 			);
 		},
 
-		aceptarInvitacion: function (invitacion) {
+		aceptarInvitacion: function (invitacion, n, callback) {
 			var postRequest = $.ajax({
 				url: appUrl + "/projects/team",
 				type: 'PUT',
@@ -70,10 +70,14 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					//apiprofile.getProyectos();
+					callback(n, JSON.parse(invitacion).proyecto);
 				},
 				function () {
-					alert("failure acept");
+					swal(
+						'Error al aceptar invitación',
+						'El proyecto al cual corresponde esta invitación ya no existe',
+						'error'
+					);	
 				}
 			);
 		},
@@ -87,8 +91,16 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					alert("Ha salido del proyecto");
-					location.replace("/profile.html");
+					swal({
+						title: 'Ha salido del proyecto',
+						text: "Usted ha dejado de ser colaborador del proyecto",
+						icon: 'success',
+						buttons: {
+							confirm: "Ok"
+						 }
+						}).then((result) => {
+							location.replace("/profile.html")
+						})
 				},
 				function () {
 					alert("failure acept");
@@ -281,7 +293,11 @@ var apiclient = (function () {
 					callback(postRequest.responseText);
 				},
 				function () {
-					alert("failed root creation");
+					swal(
+						'Error',
+						'El proyecto ya tiene una rama con el nombre: ' + JSON.parse(root).nombre,
+						'error'
+					);
 				}
 			);
 		},
@@ -296,10 +312,14 @@ var apiclient = (function () {
 			});
 			delRequest.then(
 				function () {
-					location.reload();
+					//location.reload();
 				},
 				function () {
-					alert("failure delete");
+					swal(
+						'Error',
+						'Ha ocurrido un error en el servidor mientras se intentaba borrar la rama: ' + JSON.parse(rama).nombre,
+						'error'
+					);
 				}
 			);
 		},
@@ -316,7 +336,11 @@ var apiclient = (function () {
 		
 				},
 				function () {
-					alert("failure delete");
+					swal(
+						'Error',
+						'Ha ocurrido un error en el servidor mientras se intentaba borrar el proyecto: ' + JSON.parse(proyecto).nombre,
+						'error'
+					);
 				}
 			);
 		},

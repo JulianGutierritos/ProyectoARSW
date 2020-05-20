@@ -576,7 +576,7 @@ var map = (function () {
 	var delComponent = function () {
 		if (olddata.key == id_root_base_project) {
 			swal({
-				title: '¿Está seguro que desea eliminar esta rama?',
+				title: '¿Está seguro que desea eliminar la rama principal?',
 				text: "Si la borra, todo el proyecto será eliminado",
 				icon: 'warning',
 				buttons: {
@@ -777,9 +777,22 @@ var map = (function () {
 	}
 
 	var salirProyecto = function(){
-		apiclient.eliminarParticipante(JSON.stringify(currentProject), localStorage.correo);
-		apiclient.getProjectTeam(sessionStorage.proyecto, notificarSalida);
-		stompClient.send("/treecore/deleteUser." + localStorage.correo, {}, JSON.stringify(currentProject));
+		swal({
+			title: 'Esta apunto de abandonar el proyecto ' + currentProject.nombre,
+			text: "¿Está seguro que desea dejar de ser colaborador de este proyecto?",
+			icon: 'warning',
+			buttons: {
+				cancel: true,
+				cancel: "No, cancelar",
+				confirm: "Sí, sí quiero"
+			 }
+			}).then((result) => {
+				if (result){
+					apiclient.eliminarParticipante(JSON.stringify(currentProject), localStorage.correo);
+					apiclient.getProjectTeam(sessionStorage.proyecto, notificarSalida);
+					stompClient.send("/treecore/deleteUser." + localStorage.correo, {}, JSON.stringify(currentProject));
+				}
+			})
 	}
 
 	var setCurrentRootParent = function (parent) {
