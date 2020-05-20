@@ -419,6 +419,41 @@ ul.sidebar-menu li a.active i {
     margin-left: 210px;
 }
 
+#main-content2 {
+	margin: 0 auto;
+	position: absolute;
+	left: 5%;
+	right: 0%;
+	top: 0;
+	height: 100%;
+	width: 95%;
+	height: 80%;
+}
+
+.nomInput {
+	width: 95%;
+}
+
+.descTextArea {
+	height: 25%;
+	width: 95%;
+	padding: 1%;
+}
+
+
+.descTextArea:focus {
+	border: 2.5px solid #5c9dd6;
+	box-shadow: none;
+}
+
+.addProjectButDiv{
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: 20%;
+}
+
 #message-content {
     margin-top: 500px;
     margin-left: 10px;
@@ -539,6 +574,16 @@ ul.sidebar-menu li a.active i {
     padding-bottom: 15px;
     padding-top: 0px;
     width: 100%;
+}
+
+.wrapper2 {
+	display: inline-block;
+	margin-top: 5%;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-bottom: 3%;
+	padding-top: 0px;
+	width: 100%;
 }
 
 a.logo {
@@ -1954,10 +1999,11 @@ PANELS CONFIGURATIONS
 /* FORMS CONFIGURATION */
 .form-panel {
     background: #ffffff;
-    margin: 10px;
-    padding: 10px;
-    box-shadow: 0px 3px 2px #aab2bd;
-    text-align: left;
+    margin-top: 1%;
+	padding: 2%;
+	box-shadow: 0px 3px 2px #aab2bd;
+	text-align: left;
+	width: 95%;
 }
 
 label {
@@ -1977,7 +2023,7 @@ label {
 
 @media (min-width: 768px) {
     .form-horizontal .control-label {
-        text-align: left;
+        text-align: center;
     }
 }
 
@@ -3711,6 +3757,15 @@ ul.chat-available-user li a:hover {
     color: #fff;
     padding: 15px 0;
 }
+
+/*footer*/
+.site-footer2 {
+    background: #4ECDC4;
+    color: #fff;
+    padding: 0.1% 0;
+    margin-top:-3.8%;
+}
+
 
 .site-footer p {
     margin-bottom: 5px;
