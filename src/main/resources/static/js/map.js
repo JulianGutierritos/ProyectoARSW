@@ -374,8 +374,25 @@ var map = (function () {
 
 	var invitar = function () {
 		if ($("#colaborador").val() != "") {
-			var invitacion = new Invitacion(localStorage.correo, currentProject.id, currentProject.nombre, $("#colaborador").val());
-			apiclient.addInvitacion(JSON.stringify(invitacion), publicarInvitacion);
+			var flag = false;
+			console.log(currentProject.participantes);
+			for (var i = 0; i < currentProject.participantes.length ; i++){
+				if (currentProject.participantes[i].correo == $("#colaborador").val()){
+					flag = true;
+					break;
+				}
+			}
+			if (flag){
+				swal(
+					'Error',
+					'El usuario ' + $("#colaborador").val() + ' ya está colaborando en el proyecto',
+					'error'
+				);
+			}
+			else{
+				var invitacion = new Invitacion(localStorage.correo, currentProject.id, currentProject.nombre, $("#colaborador").val());
+				apiclient.addInvitacion(JSON.stringify(invitacion), publicarInvitacion);
+			}
 		}
 		hiddenComponentAddCollaborator();
 	}
@@ -417,9 +434,17 @@ var map = (function () {
 				myDiagram.model.addNodeData(cadena);
 				layoutAll();
 			});
-			stompClient.subscribe('/project/delete', function (pro) {
-				alert("Proyecto eliminado")
-				location.replace("/profile.html")
+			stompClient.subscribe('/project/delete.' + sessionStorage.proyecto, function (pro) {
+				swal({
+					title: 'Proyecto eliminado',
+					text: "Este proyecto ha sido eliminado con éxito",
+					icon: 'success',
+					buttons: {
+						confirm: "Ok"
+					 }
+					}).then((result) => {
+						location.replace("/profile.html")
+					})
 			});
 			stompClient.subscribe('/project/update/root.' + sessionStorage.proyecto, function (rama) {
 				var root = JSON.parse(rama.body);
@@ -429,7 +454,21 @@ var map = (function () {
 					}
 				}		
 			});
+			stompClient.subscribe("/project/delete/user." + sessionStorage.proyecto, function (usuario) {
+				console.log(usuario.body);
+				for (var i = 0; i < currentProject.participantes.length; i++){
+					if (currentProject.participantes[i].correo == usuario.body){
+						currentProject.participantes.splice(i, 1);
+						break;
+					}
+				}
+			});
+			stompClient.subscribe("/project/accept/user." + sessionStorage.proyecto, function (usuario) {
+				var usuarioJS = JSON.parse(usuario.body);
+				currentProject.participantes.push(usuarioJS)
+			});
 		});
+		
 	}
 
 	class Mensaje {
@@ -535,33 +574,55 @@ var map = (function () {
 	}
 
 	var delComponent = function () {
-
 		if (olddata.key == id_root_base_project) {
-			delProject();
+			swal({
+				title: '¿Está seguro que desea eliminar esta rama?',
+				text: "Si la borra, todo el proyecto será eliminado",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					cancel: "No, no eliminarla",
+					confirm: "Sí, sí eliminarla"
+			 	}
+				}).then((result) => {
+					if (result){
+						delProject();
+					}
+				})
 		}
 		else {
-			var newRoot = {
-				id: olddata.key,
-				nombre: olddata.text,
-				ramaPadre: olddata.ramaPadre,
-				descripcion: olddata.descripcion,
-				archivos: olddata.archivos,
-				fechaDeCreacion: olddata.fechaDeCreacion,
-				creador: olddata.creador
-			};
-
-			var jroot = JSON.stringify(newRoot);
-
-			stompClient.send("/treecore/delRoot." + sessionStorage.proyecto, {}, jroot);
-			var path = "proyectos/" + currentProject.id + "/" + currentRootId;
-			path = path.replace(/[/]/g, '+++');
-			apifiles.deleteFile(path);
-			apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
-
+			swal({
+				title: '¿Está seguro que desea eliminar esta rama?',
+				text: "No podrá deshacer está acción",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					cancel: "No, no eliminarla",
+					confirm: "Sí, sí eliminarla"
+			 	}
+			    }).then((result) => {
+				if (result) {
+					var newRoot = {
+						id: olddata.key,
+						nombre: olddata.text,
+						ramaPadre: olddata.ramaPadre,
+						descripcion: olddata.descripcion,
+						archivos: olddata.archivos,
+						fechaDeCreacion: olddata.fechaDeCreacion,
+						creador: olddata.creador
+					};
+		
+					var jroot = JSON.stringify(newRoot);
+		
+					stompClient.send("/treecore/delRoot." + sessionStorage.proyecto, {}, jroot);
+					var path = "proyectos/" + currentProject.id + "/" + currentRootId;
+					path = path.replace(/[/]/g, '+++');
+					apifiles.deleteFile(path);
+					apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
+				}
+			})
 		}
-
 		hiddenComponentAdd();
-
 	}
 
 	var delProject = function () {
@@ -718,6 +779,7 @@ var map = (function () {
 	var salirProyecto = function(){
 		apiclient.eliminarParticipante(JSON.stringify(currentProject), localStorage.correo);
 		apiclient.getProjectTeam(sessionStorage.proyecto, notificarSalida);
+		stompClient.send("/treecore/deleteUser." + localStorage.correo, {}, JSON.stringify(currentProject));
 	}
 
 	var setCurrentRootParent = function (parent) {
@@ -762,7 +824,11 @@ var map = (function () {
 		currentRoot.descripcion=document.getElementById('descripcionRama').value;
 		jroot=JSON.stringify(currentRoot);
 		stompClient.send("/treecore/updateRoot."+ sessionStorage.proyecto, {}, JSON.stringify(currentRoot));
-		alert("Descripción actualizada");
+		swal(
+			'¡Descripción actualizada!',
+			'La descripcion ha sido actualizada',
+			'success'
+		);
 	}
 
 	return {

@@ -140,11 +140,19 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
+					swal(
+						'¡Invitación enviada!',
+						'Se ha enviado con éxito la invitación al usuario ' + $("#colaborador").val(),
+						'success'
+					);
 					callback(invitacion);
-					alert("Se ha enviado la invitacion");
 				},
 				function () {
-					alert(postRequest.responseText);
+					swal(
+						'Error',
+						postRequest.responseText,
+						'error'
+					);
 				}
 			);
 		},
@@ -227,8 +235,13 @@ var apiclient = (function () {
 			});
 			postRequest.then(
 				function () {
-					alert("successful project creation");
-					location.reload();
+					swal(
+						'¡Proyecto creado!',
+						'El proyecto "' +  $("#pnombre").val() + '" ha sido creado con éxito',
+						'success'
+					);
+					$("#pnombre").val("");
+					$("#pdescripcion").val("");
 				},
 				function () {
 					alert("failed project creation");
@@ -300,7 +313,7 @@ var apiclient = (function () {
 			});
 			delRequest.then(
 				function () {
-					console.log("success")
+		
 				},
 				function () {
 					alert("failure delete");

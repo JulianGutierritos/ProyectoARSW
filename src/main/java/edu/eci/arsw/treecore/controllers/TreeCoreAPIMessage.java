@@ -24,6 +24,7 @@ import edu.eci.arsw.treecore.model.impl.Mensaje;
 import edu.eci.arsw.treecore.model.impl.Notificacion;
 import edu.eci.arsw.treecore.model.impl.Proyecto;
 import edu.eci.arsw.treecore.model.impl.Rama;
+import edu.eci.arsw.treecore.model.impl.Usuario;
 import edu.eci.arsw.treecore.services.TreeCoreProjectServices;
 import edu.eci.arsw.treecore.services.TreeCoreUserServices;
 
@@ -137,7 +138,7 @@ public class TreeCoreAPIMessage {
 	 */
 	@MessageMapping("/delProject")
     public void handlerProjectDelete(Proyecto project) throws ServiciosTreeCoreException  {
-		msgt.convertAndSend("/project/delete", project);
+		msgt.convertAndSend("/project/delete." + project.getId(), project);
 	}
 	
 	/**
@@ -150,6 +151,17 @@ public class TreeCoreAPIMessage {
     public void handlerRootUpdate(Rama root, @DestinationVariable int projectId) throws ServiciosTreeCoreException  {
 		this.treeCoreProjectServices.updateRama(projectId, root);
 		msgt.convertAndSend("/project/update/root." + projectId, root);
+	}
+
+	@MessageMapping("/deleteUser.{correo}")
+	public void handlerDeleteUser(Proyecto proyecto, @DestinationVariable String correo){
+		msgt.convertAndSend("/project/delete/user." + proyecto.getId(), correo);
+	}
+
+	@MessageMapping("/aceptarInvitacion")
+	public void handlerAceptarInvitacion(Invitacion invitacion) throws ServiciosTreeCoreException {
+		Usuario u = treeCoreUserServices.getUsuario(invitacion.getReceptor());
+		msgt.convertAndSend("/project/accept/user." + invitacion.getProyecto(), u);
 	}
 	
 }

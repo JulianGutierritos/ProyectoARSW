@@ -13,6 +13,7 @@ var apiprofile = (function () {
 		apiclient.eliminarInvitacion(JSON.stringify(newInvitacion));
 		putProyectos(nombre, p);
 		deleteInvitacion(p);
+		stompClient.send("/treecore/aceptarInvitacion", {}, JSON.stringify(newInvitacion));
 	}
 
 	var eliminarInvitacion = function (p, r) {
