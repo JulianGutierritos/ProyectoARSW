@@ -493,7 +493,7 @@ public class TreeCoreAPIController {
 	public ResponseEntity<?> deleteFile(@PathVariable("ruta") String ruta) {
 		try {
 			treeCoreStoreServices.deleteFile(ruta);
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (TreeCoreStoreException e) {
 			Logger.getLogger(TreeCoreAPIController.class.getName()).log(Level.SEVERE, null, e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
