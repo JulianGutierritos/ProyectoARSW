@@ -123,10 +123,25 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
     }
 
     @Override
-    public void eliminarRama (ArrayList<Rama> ramas, int proyecto){
+    public void eliminarRama (Rama rama, int proyecto){
         synchronized(proyectos){
-            if (proyectos.get(proyecto) != null){ 
-                proyectos.get(proyecto).setRamas(ramas);
+            if (proyectos.get(proyecto) != null){
+                int pos = -1; 
+                for (int i= 0; i < proyectos.get(proyecto).getRamas().size(); i++){
+                    if (proyectos.get(proyecto).getRamas().get(i).getId() == rama.getId()){
+                        pos = i;
+                    }
+                    else{
+                        if (proyectos.get(proyecto).getRamas().get(i).getRamaPadre() != null){
+                            if (proyectos.get(proyecto).getRamas().get(i).getRamaPadre().getId() == rama.getId()){
+                                proyectos.get(proyecto).getRamas().get(i).setRamaPadre(rama.getRamaPadre());
+                            }
+                        } 
+                    }
+                };
+                if (pos >= 0){
+                    proyectos.get(proyecto).getRamas().remove(pos);
+                }
             }
         }
     }
@@ -189,10 +204,15 @@ public class TreeCoreCacheServiceImpl implements TeeCoreCacheService {
     }
 
     @Override
-    public void eliminarInvitacion (ArrayList<Invitacion> invitaciones, String correo){
+    public void eliminarInvitacion (Invitacion invitacion, String correo){
         synchronized(usuarios){
             if (usuarios.get(correo) != null){ 
-                usuarios.get(correo).setInvitaciones(invitaciones);
+                for (int i=0; i < usuarios.get(correo).getInvitaciones().size(); i++){
+                    if (usuarios.get(correo).getInvitaciones().get(i).getProyecto() == invitacion.getProyecto()){
+                        usuarios.get(correo).getInvitaciones().remove(i);
+                        break;
+                    }
+                }
             }
         }
     }

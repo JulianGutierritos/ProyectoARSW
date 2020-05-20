@@ -199,7 +199,7 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	public void deleteRama(Rama rama, int proyecto) throws PersistenceException {
 		try {
 			proyectoMapper.delRama(rama);
-			treeCoreCacheService.eliminarRama(proyectoMapper.getProyectosRamas(proyecto), proyecto);
+			treeCoreCacheService.eliminarRama(rama, proyecto);
 		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido eliminar la rama");
 		}
