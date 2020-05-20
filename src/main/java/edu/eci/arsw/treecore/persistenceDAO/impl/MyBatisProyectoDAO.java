@@ -27,14 +27,13 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	@Override
 	public Proyecto getProyecto(int identificador) throws PersistenceException {
 		Proyecto proyecto = treeCoreCacheService.getProyecto(identificador);
-		if (proyecto != null){
+		if (proyecto != null) {
 			return proyecto;
-		}
-		else{
+		} else {
 			proyecto = proyectoMapper.getProyecto(identificador);
 			if (proyecto == null)
 				throw new PersistenceException("Proyecto no encontrado");
-			else{
+			else {
 				treeCoreCacheService.insertarProyecto(proyecto);
 				return proyecto;
 			}
@@ -55,7 +54,7 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 		ArrayList<Proyecto> projects = this.proyectoMapper.getProyectos();
 		if (projects == null)
 			throw new PersistenceException("Proyectos no encontrados");
-		else{
+		else {
 			treeCoreCacheService.insertarProyectos(projects);
 			return projects;
 		}
@@ -63,35 +62,33 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 
 	@Override
 	public ArrayList<Proyecto> getProyectosUsuario(String correo) throws PersistenceException {
-		if (treeCoreCacheService.getProyectosDeUsuario(correo) != null){
+		if (treeCoreCacheService.getProyectosDeUsuario(correo) != null) {
 			return treeCoreCacheService.getProyectosDeUsuario(correo);
-		}
-		else{
+		} else {
 			ArrayList<Proyecto> proyectos = proyectoMapper.getProyectosUsuario(correo);
 			if (proyectos == null)
 				throw new PersistenceException("El usuario no tiene proyectos");
-			else{
+			else {
 				treeCoreCacheService.insertarProyectosDeUsuario(proyectos, correo);
 				return proyectos;
 			}
-		}		
+		}
 	}
 
 	@Override
 	public ArrayList<Usuario> getParticipantes(int identificador) throws PersistenceException {
 		Proyecto proyecto = treeCoreCacheService.getProyecto(identificador);
-		if (proyecto != null){
+		if (proyecto != null) {
 			return proyecto.getParticipantes();
-		}
-		else{
+		} else {
 			proyecto = proyectoMapper.getProyecto(identificador);
 			if (proyecto == null)
 				throw new PersistenceException("Proyecto no encontrado");
-			else{
+			else {
 				treeCoreCacheService.insertarProyecto(proyecto);
 				return proyecto.getParticipantes();
 			}
-		}	
+		}
 	}
 
 	@Override
@@ -114,14 +111,13 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	@Override
 	public ArrayList<Rama> getRamas(int identificador) throws PersistenceException {
 		Proyecto proyecto = treeCoreCacheService.getProyecto(identificador);
-		if (proyecto != null){
+		if (proyecto != null) {
 			return proyecto.getRamas();
-		}
-		else{
+		} else {
 			proyecto = proyectoMapper.getProyecto(identificador);
 			if (proyecto == null)
 				throw new PersistenceException("Proyecto no encontrado");
-			else{
+			else {
 				treeCoreCacheService.insertarProyecto(proyecto);
 				return proyecto.getRamas();
 			}
@@ -131,14 +127,13 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	@Override
 	public ArrayList<Mensaje> getMensajes(int identificador) throws PersistenceException {
 		Proyecto proyecto = treeCoreCacheService.getProyecto(identificador);
-		if (proyecto != null){
+		if (proyecto != null) {
 			return proyecto.getMensajes();
-		}
-		else{
+		} else {
 			proyecto = proyectoMapper.getProyecto(identificador);
 			if (proyecto == null)
 				throw new PersistenceException("Proyecto no encontrado");
-			else{
+			else {
 				treeCoreCacheService.insertarProyecto(proyecto);
 				return proyecto.getMensajes();
 			}
@@ -168,11 +163,11 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	}
 
 	@Override
-	public void eliminarParticipante(String correo, Proyecto proyecto) throws PersistenceException{
+	public void eliminarParticipante(String correo, Proyecto proyecto) throws PersistenceException {
 		try {
 			proyectoMapper.eliminarParticipante(correo, proyecto);
 			treeCoreCacheService.eliminarParticipante(correo, proyecto.getId());
-			if (getProyecto(proyecto.getId()).getParticipantes().size() == 0){
+			if (getProyecto(proyecto.getId()).getParticipantes().size() == 0) {
 				deleteProyecto(proyecto);
 			}
 		} catch (Exception e) {
@@ -218,7 +213,7 @@ public class MyBatisProyectoDAO implements ProyectoDAO {
 	@Override
 	public void insertarMensaje(Mensaje mensaje, int proyecto) throws PersistenceException {
 		try {
-			int i =proyectoMapper.insertarMensaje(mensaje, proyecto);
+			int i = proyectoMapper.insertarMensaje(mensaje, proyecto);
 			mensaje.setId(i);
 			Date currentDate = new Date();
 			mensaje.setFecha(currentDate);

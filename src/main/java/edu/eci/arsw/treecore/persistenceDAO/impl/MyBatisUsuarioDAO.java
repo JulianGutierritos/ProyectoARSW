@@ -1,4 +1,5 @@
 package edu.eci.arsw.treecore.persistenceDAO.impl;
+
 import edu.eci.arsw.treecore.persistence.mappers.UsuarioMapper;
 import edu.eci.arsw.treecore.persistenceDAO.TeeCoreCacheService;
 import edu.eci.arsw.treecore.persistenceDAO.UsuarioDAO;
@@ -20,132 +21,124 @@ public class MyBatisUsuarioDAO implements UsuarioDAO {
 
 	@Autowired
 	private TeeCoreCacheService treeCoreCacheService;
-	
+
 	@Override
 	public ArrayList<Usuario> getAllUsers() throws PersistenceException {
-		ArrayList<Usuario> users=this.usuarioMapper.getUsers();
+		ArrayList<Usuario> users = this.usuarioMapper.getUsers();
 		treeCoreCacheService.insertarUsuarios(users);
-		if(users==null) throw new PersistenceException("Error al encontrar los usuarios");
-		else return users;   
+		if (users == null)
+			throw new PersistenceException("Error al encontrar los usuarios");
+		else
+			return users;
 	}
-	
-	
+
 	@Override
 	public Usuario getUser(String correo, String passwd) throws PersistenceException {
 		Usuario user = treeCoreCacheService.getUsuario(correo);
-		if (user != null){
-			if (user.getPasswd().equals(passwd)){
+		if (user != null) {
+			if (user.getPasswd().equals(passwd)) {
 				return user;
-			}
-			else{
+			} else {
 				throw new PersistenceException("Usuario no encontrado");
 			}
-		}
-		else{
-			user=usuarioMapper.getUserWithPasswd(correo, passwd);
-			if(user==null) throw new PersistenceException("Usuario no encontrado");
-			else{
+		} else {
+			user = usuarioMapper.getUserWithPasswd(correo, passwd);
+			if (user == null)
+				throw new PersistenceException("Usuario no encontrado");
+			else {
 				treeCoreCacheService.insertarUsuario(user);
 				return user;
-			} 
-		}   
+			}
+		}
 	}
-	
-	
+
 	@Override
 	public Usuario getUser(String correo) throws PersistenceException {
 		Usuario user = treeCoreCacheService.getUsuario(correo);
-		if (user != null){
+		if (user != null) {
 			return user;
-		}
-		else{
+		} else {
 			user = usuarioMapper.getUser(correo);
-			if(user==null) throw new PersistenceException("Usuario no encontrado");
-			else{
+			if (user == null)
+				throw new PersistenceException("Usuario no encontrado");
+			else {
 				treeCoreCacheService.insertarUsuario(user);
 				return user;
 			}
-		}   
-	}
-	
-	
-	@Override
-	public ArrayList<Notificacion> getNotificaciones(String correo) throws PersistenceException{
-		Usuario user = treeCoreCacheService.getUsuario(correo);
-		if (user != null){
-			return user.getNotificaciones();
 		}
-		else{
-			user=usuarioMapper.getUser(correo);
-			if(user==null) throw new PersistenceException("Usuario no encontrado");
+	}
+
+	@Override
+	public ArrayList<Notificacion> getNotificaciones(String correo) throws PersistenceException {
+		Usuario user = treeCoreCacheService.getUsuario(correo);
+		if (user != null) {
+			return user.getNotificaciones();
+		} else {
+			user = usuarioMapper.getUser(correo);
+			if (user == null)
+				throw new PersistenceException("Usuario no encontrado");
 			else {
 				treeCoreCacheService.insertarUsuario(user);
 				return user.getNotificaciones();
 			}
 		}
-	} 
+	}
 
 	@Override
-	public void insertarNotifiacion(Notificacion notificacion, String correo) throws PersistenceException{
+	public void insertarNotifiacion(Notificacion notificacion, String correo) throws PersistenceException {
 		try {
 			int i = this.usuarioMapper.insertarNotificacion(notificacion, correo);
 			notificacion.setId(i);
 			Date currentDate = new Date();
 			notificacion.setFecha(currentDate);
 			treeCoreCacheService.insertarNotificacion(notificacion, correo);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new PersistenceException("Usuario no encontrado");
 		}
 	}
 
-
-	
 	@Override
-	public ArrayList<Invitacion> getInvitaciones(String correo) throws PersistenceException{
+	public ArrayList<Invitacion> getInvitaciones(String correo) throws PersistenceException {
 		Usuario user = treeCoreCacheService.getUsuario(correo);
-		if (user != null){
+		if (user != null) {
 			return user.getInvitaciones();
-		}
-		else{
-			user=usuarioMapper.getUser(correo);
-			if(user==null) throw new PersistenceException("Usuario no encontrado");
+		} else {
+			user = usuarioMapper.getUser(correo);
+			if (user == null)
+				throw new PersistenceException("Usuario no encontrado");
 			else {
 				treeCoreCacheService.insertarUsuario(user);
 				return user.getInvitaciones();
 			}
 		}
 	}
-	
+
 	@Override
-	public void setUser(Usuario u) throws PersistenceException{
+	public void setUser(Usuario u) throws PersistenceException {
 		try {
 			this.usuarioMapper.insertarUsuario(u);
 			treeCoreCacheService.insertarUsuario(u);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido adicionar al usuario");
 		}
 	}
 
 	@Override
-	public void deleteInvitacion(Invitacion invitacion) throws PersistenceException{
+	public void deleteInvitacion(Invitacion invitacion) throws PersistenceException {
 		try {
 			this.usuarioMapper.deleteInvitacion(invitacion);
 			treeCoreCacheService.eliminarInvitacion(invitacion, invitacion.getReceptor());
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido eliminar la invitacion");
 		}
 	}
 
 	@Override
-	public void insertarInvitacion(Invitacion invitacion) throws PersistenceException{
+	public void insertarInvitacion(Invitacion invitacion) throws PersistenceException {
 		try {
 			this.usuarioMapper.insertarInvitacion(invitacion);
 			treeCoreCacheService.insertarInvitacion(invitacion, invitacion.getReceptor());
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new PersistenceException("No se ha podido adicionar la invitacion");
 		}
 	}

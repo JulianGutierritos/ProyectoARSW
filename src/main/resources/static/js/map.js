@@ -22,7 +22,8 @@ var map = (function () {
 		myDiagram =
 			$(go.Diagram, "myDiagramCanvas",
 				{
-					// when the user drags a node, also move/copy/delete the whole subtree starting with that node
+					// when the user drags a node, also move/copy/delete the
+					// whole subtree starting with that node
 					"commandHandler.copiesTree": true,
 					"commandHandler.copiesParentKey": true,
 					"commandHandler.deletesTree": true,
@@ -30,7 +31,8 @@ var map = (function () {
 					"undoManager.isEnabled": true
 				});
 
-		// when the document is modified, add a "*" to the title and enable the "Save" button
+		// when the document is modified, add a "*" to the title and enable the
+		// "Save" button
 		myDiagram.addDiagramListener("Modified", function (e) {
 			var button = document.getElementById("SaveButton");
 			if (button) button.disabled = !myDiagram.isModified;
@@ -52,7 +54,8 @@ var map = (function () {
 						minSize: new go.Size(30, 15),
 						editable: false
 					},
-					// remember not only the text string but the scale and the font in the node data
+					// remember not only the text string but the scale and the
+					// font in the node data
 					new go.Binding("text", "text").makeTwoWay(),
 					new go.Binding("scale", "scale").makeTwoWay(),
 					new go.Binding("font", "font").makeTwoWay()),
@@ -60,11 +63,13 @@ var map = (function () {
 					{
 						stretch: go.GraphObject.Horizontal,
 						strokeWidth: 3, height: 3,
-						// this line shape is the port -- what links connect with
+						// this line shape is the port -- what links connect
+						// with
 						portId: "", fromSpot: go.Spot.LeftRightSides, toSpot: go.Spot.LeftRightSides
 					},
 					new go.Binding("stroke", "brush"),
-					// make sure links come in from the proper direction and go out appropriately
+					// make sure links come in from the proper direction and go
+					// out appropriately
 					new go.Binding("fromSpot", "dir", function (d) { return spotConverter(d, true); }),
 					new go.Binding("toSpot", "dir", function (d) { return spotConverter(d, false); })),
 				// remember the locations of each node in the node data
@@ -77,16 +82,19 @@ var map = (function () {
 		myDiagram.nodeTemplate.selectionAdornmentTemplate =
 			$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
-					// this Adornment has a rectangular blue Shape around the selected node
+					// this Adornment has a rectangular blue Shape around the
+					// selected node
 					$(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 3 }),
 					$(go.Placeholder, { margin: new go.Margin(4, 4, 0, 4) })
 				),
-				// and this Adornment has a Button to the right of the selected node
+				// and this Adornment has a Button to the right of the selected
+				// node
 				$("Button",
 					{
 						alignment: go.Spot.Right,
 						alignmentFocus: go.Spot.Left,
-						click: addNodeAndLink  // define click behavior for this Button in the Adornment
+						click: addNodeAndLink  // define click behavior for
+												// this Button in the Adornment
 					},
 					$(go.TextBlock, "+",  // the Button content
 						{ font: "bold 8pt sans-serif" })
@@ -140,7 +148,8 @@ var map = (function () {
 				)
 			);
 
-		// a link is just a Bezier-curved line of the same color as the node to which it is connected
+		// a link is just a Bezier-curved line of the same color as the node to
+		// which it is connected
 		myDiagram.linkTemplate =
 			$(go.Link,
 				{
@@ -157,7 +166,8 @@ var map = (function () {
 					}).ofObject())
 			);
 
-		// the Diagram's context menu just displays commands for general functionality
+		// the Diagram's context menu just displays commands for general
+		// functionality
 		myDiagram.contextMenu =
 			$("ContextMenu",
 				$("ContextMenuButton",
@@ -183,7 +193,8 @@ var map = (function () {
 		myDiagram.addDiagramListener("SelectionMoved", function (e) {
 			var rootX = myDiagram.findNodeForKey(centralKey).location.x;
 			myDiagram.selection.each(function (node) {
-				if (node.data.parent !== 0) return; // Only consider nodes connected to the root
+				if (node.data.parent !== 0) return; // Only consider nodes
+													// connected to the root
 				var nodeX = node.location.x;
 				if (rootX < nodeX && node.data.dir !== "right") {
 					updateNodeDirection(node, "right");
@@ -232,7 +243,9 @@ var map = (function () {
 	function updateNodeDirection(node, dir) {
 		myDiagram.model.setDataProperty(node.data, "dir", dir);
 		// recursively update the direction of the child nodes
-		var chl = node.findTreeChildrenNodes(); // gives us an iterator of the child nodes related to this particular node
+		var chl = node.findTreeChildrenNodes(); // gives us an iterator of the
+												// child nodes related to this
+												// particular node
 		while (chl.next()) {
 			updateNodeDirection(chl.value, dir);
 		}
@@ -257,7 +270,14 @@ var map = (function () {
 		}
 
 		if (currentRootParentId != null) {
-			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);//se necesita el id del padre y el nombre
+			apiclient.getRoot(currentProject.id, currentRootParentId, setCurrentRootParent);// se
+																							// necesita
+																							// el
+																							// id
+																							// del
+																							// padre
+																							// y el
+																							// nombre
 			apiclient.getUser(setCurrentUser);
 		}
 
@@ -271,7 +291,8 @@ var map = (function () {
 	function layoutTree(node) {
 		if (node.data.key === 0) {  // adding to the root?
 			layoutAll();  // lay out everything
-		} else {  // otherwise lay out only the subtree starting at this parent node
+		} else {  // otherwise lay out only the subtree starting at this
+					// parent node
 			var parts = node.findTreeParts();
 			layoutAngle(parts, node.data.dir === "left" ? 180 : 0);
 		}
@@ -284,7 +305,9 @@ var map = (function () {
 				arrangement: go.TreeLayout.ArrangementFixedRoots,
 				nodeSpacing: 5,
 				layerSpacing: 20,
-				setsPortSpot: false, // don't set port spots since we're managing them with our spotConverter function
+				setsPortSpot: false, // don't set port spots since we're
+										// managing them with our spotConverter
+										// function
 				setsChildPortSpot: false
 			});
 		layout.doLayout(parts);
@@ -295,8 +318,8 @@ var map = (function () {
 		if (root === null) return;
 		myDiagram.startTransaction("Layout");
 		// split the nodes and links into two collections
-		var rightward = new go.Set(/*go.Part*/);
-		var leftward = new go.Set(/*go.Part*/);
+		var rightward = new go.Set(/* go.Part */);
+		var leftward = new go.Set(/* go.Part */);
 		root.findLinksConnected().each(function (link) {
 			var child = link.toNode;
 			if (child.data.dir === "left") {
@@ -521,15 +544,16 @@ var map = (function () {
 		var diagram = adorn.diagram;
 		diagram.startTransaction("Add Node");
 		oldnode = adorn.adornedPart;
-		olddata = oldnode.data;//oldata is the current root
-		currentRootId = olddata.key; //current root id 
-		currentRootParentId = olddata.parent; //cuando es 0, el padre es el proyecto
+		olddata = oldnode.data;// oldata is the current root
+		currentRootId = olddata.key; // current root id
+		currentRootParentId = olddata.parent; // cuando es 0, el padre es el
+												// proyecto
 		
 		document.getElementById('compName').innerHTML=olddata.text;
 		document.getElementById('descripcionRama').value=olddata.descripcion;
-		//var conObj = document.getElementById('ramaName');compName
-		//conObj.value = olddata.text;
-		//$("#descripcionRama").val(olddata.descripcion);
+		// var conObj = document.getElementById('ramaName');compName
+		// conObj.value = olddata.text;
+		// $("#descripcionRama").val(olddata.descripcion);
 		setValuesToAddRoot();
 		loadInput();
 	}

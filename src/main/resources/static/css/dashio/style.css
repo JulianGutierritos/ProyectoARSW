@@ -454,6 +454,52 @@ ul.sidebar-menu li a.active i {
 	width: 20%;
 }
 
+.projectTable{
+	width: 47%;
+	height:50%;
+	float: left;
+	margin-left: 2%;	
+}
+
+
+.projectTableDiv{
+	position: float;
+	float:left;	
+	margin-top:2%;
+	width: 100%;
+	overflow-y: auto;
+	height: 100%;	
+}
+
+.buttonDiv{
+	position: float;
+	float:left;	
+	
+}
+
+.notiDiv{
+	width: 47%;
+	float: right;
+	margin-right: 2%;
+	height: 55%;
+    overflow-y: auto;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #f1f1f1; 
+ }
+ 
+ .table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: #f9f5f5;    
+ }
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #eeeeee;
+}
+
+
 #message-content {
     margin-top: 500px;
     margin-left: 10px;
@@ -1871,6 +1917,10 @@ PANELS CONFIGURATIONS
     padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0px 3px 2px #aab2bd;
+    width: 47%;
+	float: right;
+	margin-right: 2%;
+    
 }
 
 /* Font Awesome Showcase */
@@ -3755,7 +3805,8 @@ ul.chat-available-user li a:hover {
 .site-footer {
     background: #4ECDC4;
     color: #fff;
-    padding: 15px 0;
+    margin-top:-3.4%;
+    padding: 0.1% 0;
 }
 
 /*footer*/
