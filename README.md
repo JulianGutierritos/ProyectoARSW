@@ -112,3 +112,9 @@ https://tree.taiga.io/project/nduran06-treecoreproject/
 # Codacy 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6356fef49704b7fb6fb451350c2047e)](https://app.codacy.com/manual/JulianGutierritos/ProyectoARSW/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ricar8o/Lab-6&amp;utm_campaign=Badge_Grade)
 
+# Documentación API
+
+```markdown
+https://app.swaggerhub.com/apis-docs/Ricar8o/tree-core_api/1.0.0
+```
+
