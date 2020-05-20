@@ -570,7 +570,14 @@ var map = (function () {
 	var publicarRama = function (rama) {
 		stompClient.send("/treecore/newRoot." + sessionStorage.proyecto, {}, rama);
 		var r = JSON.parse(rama);
-		apiclient.getProjectTeam(sessionStorage.proyecto, notificarNuevaRama, r.nombre);
+		var lista = currentProject.participantes;
+		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha creado una nueva rama en el proyecto " + currentProject.nombre + " llamada: " + r.nombre);
+		notificacion = JSON.stringify(notificacion);
+		for (var i = 0; i < lista.length; i++) {
+			if (lista[i].correo != localStorage.correo) {
+				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+			}
+		}
 	}
 
 	var delComponent = function () {
@@ -618,7 +625,14 @@ var map = (function () {
 					var path = "proyectos/" + currentProject.id + "/" + currentRootId;
 					path = path.replace(/[/]/g, '+++');
 					apifiles.deleteFile(path);
-					apiclient.getProjectTeam(sessionStorage.proyecto, notificarEliminacion, newRoot.nombre);
+					var lista = currentProject.participantes;
+					var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha eliminado la rama " + newRoot.nombre + " del proyecto " + currentProject.nombre);
+					notificacion = JSON.stringify(notificacion);
+					for (var i = 0; i < lista.length; i++) {
+						if (lista[i].correo != localStorage.correo) {
+							apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+						}
+					}
 				}
 			})
 		}
@@ -789,8 +803,15 @@ var map = (function () {
 			}).then((result) => {
 				if (result){
 					apiclient.eliminarParticipante(JSON.stringify(currentProject), localStorage.correo);
-					apiclient.getProjectTeam(sessionStorage.proyecto, notificarSalida);
 					stompClient.send("/treecore/deleteUser." + localStorage.correo, {}, JSON.stringify(currentProject));
+					var lista = currentProject.participantes;
+					var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha salido del proyecto " + currentProject.nombre);
+					notificacion = JSON.stringify(notificacion);
+					for (var i = 0; i < lista.length; i++) {
+						if (lista[i].correo != localStorage.correo) {
+							apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
+						}
+					}
 				}
 			})
 	}
@@ -801,26 +822,6 @@ var map = (function () {
 
 	var notificarSalida = function(lista){
 		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha salido del proyecto " + currentProject.nombre);
-		notificacion = JSON.stringify(notificacion);
-		for (var i = 0; i < lista.length; i++) {
-			if (lista[i].correo != localStorage.correo) {
-				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
-			}
-		}
-	}
-
-	var notificarNuevaRama = function (lista, nombre) {
-		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha creado una nueva rama en el proyecto " + currentProject.nombre + " llamada: " + nombre);
-		notificacion = JSON.stringify(notificacion);
-		for (var i = 0; i < lista.length; i++) {
-			if (lista[i].correo != localStorage.correo) {
-				apiclient.addNotificacion(notificacion, lista[i].correo, publicarNotificacion);
-			}
-		}
-	}
-
-	var notificarEliminacion = function (lista, nombre) {
-		var notificacion = new Notificacion("El usuario " + localStorage.correo + " ha eliminado la rama " + nombre + " del proyecto " + currentProject.nombre);
 		notificacion = JSON.stringify(notificacion);
 		for (var i = 0; i < lista.length; i++) {
 			if (lista[i].correo != localStorage.correo) {
