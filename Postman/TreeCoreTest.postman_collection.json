@@ -1,0 +1,2070 @@
+{
+	"info": {
+		"_postman_id": "3ced25b7-9dc4-4e28-9799-83a9bc9f22d5",
+		"name": "TreeCoreTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "{correo}",
+					"item": [
+						{
+							"name": "Detalles de un usuario especifico.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:correo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":correo"
+									],
+									"variable": [
+										{
+											"key": "correo",
+											"value": "r@gmail.com",
+											"type": "string",
+											"description": "(Required) correo de algun usuario ya inscrito"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "El usuario no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Informacion de un usuario estructurado en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"correo\": \"someone@mail.com\",\n \"nombre\": \"someone\",\n \"passwd\": \"password123\",\n \"notificaciones\": [\n  {\n   \"id\": 1,\n   \"fecha\": \"2020-05-06\",\n   \"informacion\": \"La rama x fue eliminada\"\n  },\n  {\n   \"id\": 1,\n   \"fecha\": \"2020-05-06\",\n   \"informacion\": \"La rama x fue eliminada\"\n  }\n ],\n \"invitaciones\": [\n  {\n   \"remitente\": \"prueba@mail.com\",\n   \"proyecto\": \"0\",\n   \"nombreProyecto\": \"Proyecto01 \"\n  },\n  {\n   \"remitente\": \"prueba@mail.com\",\n   \"proyecto\": \"0\",\n   \"nombreProyecto\": \"Proyecto01 \"\n  }\n ]\n}"
+								},
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								}
+							]
+						},
+						{
+							"name": "Proyectos de un usuario.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:correo/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":correo",
+										"projects"
+									],
+									"variable": [
+										{
+											"key": "correo",
+											"value": "r@gmail.com",
+											"type": "string",
+											"description": "(Required) correo de algun usuario con proyectos"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "El usuario o el proyecto no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"projects"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Informacion de un los proyectos del usuario estructurados en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"projects"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"id\": 14,\n  \"nombre\": \"ProyectoDePrueba\",\n  \"descripcion\": \"Este es un proyecto de prueba\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"participantes\": [\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  ],\n  \"ramas\": [\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   },\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   }\n  ],\n  \"mensajes\": [\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   },\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   }\n  ]\n },\n {\n  \"id\": 14,\n  \"nombre\": \"ProyectoDePrueba\",\n  \"descripcion\": \"Este es un proyecto de prueba\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"participantes\": [\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  ],\n  \"ramas\": [\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   },\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   }\n  ],\n  \"mensajes\": [\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   },\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   }\n  ]\n }\n]"
+								},
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"projects"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								}
+							]
+						},
+						{
+							"name": "Notificacion de un usuario.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"200\",\n    \"fecha\": \"2020-05-20T00:13:21.820+0000\",\n    \"informacion\": \"Notificacion Generada con Postman\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:correo/notification",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":correo",
+										"notification"
+									],
+									"variable": [
+										{
+											"key": "correo",
+											"value": "maxo@mail.com",
+											"type": "string",
+											"description": "(Required) correo de algun usuario"
+										}
+									]
+								},
+								"description": "Post notification to database"
+							},
+							"response": [
+								{
+									"name": "No pudo ser creada la notificacion",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"notificacion\": {\n        \"id\": 1,\n        \"fecha\": \"2020-05-06\",\n        \"informacion\": \"La rama x fue eliminada\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notification",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notification"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Not Acceptable",
+									"code": 406,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Notificacion publicada",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"notificacion\": {\n        \"id\": 1,\n        \"fecha\": \"2020-05-06\",\n        \"informacion\": \"La rama x fue eliminada\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notification",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notification"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"notificacion\": {\n        \"id\": 1,\n        \"fecha\": \"2020-05-06\",\n        \"informacion\": \"La rama x fue eliminada\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notification",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notification"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								}
+							]
+						},
+						{
+							"name": "Notificaciones de un usuario.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:correo/notifications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":correo",
+										"notifications"
+									],
+									"variable": [
+										{
+											"key": "correo",
+											"value": "maxo@mail.com",
+											"type": "string",
+											"description": "(Required) correo de algun usuario con notificaciones"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notifications",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notifications"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								},
+								{
+									"name": "Informacion de las notificaciones del usuario estructurados en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notifications",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notifications"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"id\": 1,\n  \"fecha\": \"2020-05-06\",\n  \"informacion\": \"La rama x fue eliminada\"\n },\n {\n  \"id\": 1,\n  \"fecha\": \"2020-05-06\",\n  \"informacion\": \"La rama x fue eliminada\"\n }\n]"
+								},
+								{
+									"name": "El usuario no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/notifications",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"notifications"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Invitaciones de un usuario.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:correo/invitations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":correo",
+										"invitations"
+									],
+									"variable": [
+										{
+											"key": "correo",
+											"value": "r@gmail.com",
+											"type": "string",
+											"description": "(Required) correo de algun usuario con invitaciones"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Informacion de las invitaciones del usuario estructurados en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/invitations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"invitations"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"remitente\": \"prueba@mail.com\",\n \"proyecto\": \"0\",\n \"nombreProyecto\": \"Proyecto01 \"\n}"
+								},
+								{
+									"name": "El usuario no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/invitations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"invitations"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:correo/invitations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":correo",
+												"invitations"
+											],
+											"variable": [
+												{
+													"key": "correo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n \"schema type not provided\",\n \"schema type not provided\"\n]"
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "projects",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "ramas",
+							"item": [
+								{
+									"name": "Detalles de las ramas de un proyecto especifico.",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/ramas",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"ramas"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "17",
+													"type": "string",
+													"description": "(Required) id de algún proyecto"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "El proyecto no existe",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Informacion de las ramas de un proyecto estructurado en JSON",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Accepted",
+											"code": 202,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n {\n  \"id\": 79,\n  \"nombre\": \"prueba\",\n  \"ramaPadre\": {\n   \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n  },\n  \"descripcion\": \"descricpcion de prueba\",\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n },\n {\n  \"id\": 79,\n  \"nombre\": \"prueba\",\n  \"ramaPadre\": {\n   \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n  },\n  \"descripcion\": \"descricpcion de prueba\",\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n }\n]"
+										},
+										{
+											"name": "unexpected error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "\"schema type not provided\""
+										}
+									]
+								},
+								{
+									"name": "Subir los detalles de las ramas de un proyecto especifico.",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 0,\r\n        \"nombre\": \"RamaPostmam\",\r\n        \"ramaPadre\": {\r\n            \"id\": 106,\r\n            \"nombre\": \"PruebaPro \",\r\n            \"ramaPadre\": null,\r\n            \"descripcion\": \"Pruebas\",\r\n            \"archivos\": null,\r\n            \"fechaDeCreacion\": \"2020-05-20T00:00:00.000+0000\",\r\n            \"creador\": {\r\n                \"correo\": \"r@gmail.com\",\r\n                \"nombre\": \"Ricardo\",\r\n                \"passwd\": \"260c0baa6f66e7bd2f79bcd9370a1646d9680099d0c14d9dd244f1d8d5ff2cdb\",\r\n                \"notificaciones\": [],\r\n                \"invitaciones\": []\r\n            }\r\n        },\r\n        \"descripcion\": \"Post hecho en postman\",\r\n        \"archivos\": null,\r\n        \"fechaDeCreacion\": \"0\",\r\n        \"creador\": {\r\n            \"correo\": \"r@gmail.com\",\r\n            \"nombre\": \"Ricardo\",\r\n            \"passwd\": \"260c0baa6f66e7bd2f79bcd9370a1646d9680099d0c14d9dd244f1d8d5ff2cdb\",\r\n            \"notificaciones\": [],\r\n            \"invitaciones\": []\r\n        }\r\n    }",
+											"options": {
+												"raw": {}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/ramas",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"ramas"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "17",
+													"type": "string",
+													"description": "(Required) id de algún proyecto"
+												}
+											]
+										},
+										"description": "Post branch to database"
+									},
+									"response": [
+										{
+											"name": "unexpected error",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"rama\": {\n        \"id\": 79,\n        \"nombre\": \"prueba\",\n        \"ramaPadre\": {\n            \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n        },\n        \"descripcion\": \"descricpcion de prueba\",\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "\"schema type not provided\""
+										},
+										{
+											"name": "La rama fue posteada exitosamente",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"rama\": {\n        \"id\": 79,\n        \"nombre\": \"prueba\",\n        \"ramaPadre\": {\n            \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n        },\n        \"descripcion\": \"descricpcion de prueba\",\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"id\": 79,\n \"nombre\": \"prueba\",\n \"ramaPadre\": {\n  \"id\": 79,\n  \"nombre\": \"prueba\",\n  \"ramaPadre\": {\n   \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n  },\n  \"descripcion\": \"descricpcion de prueba\",\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n },\n \"descripcion\": \"descricpcion de prueba\",\n \"fechaDeCreacion\": \"2020-05-06\",\n \"creador\": {\n  \"correo\": \"someone@mail.com\",\n  \"nombre\": \"someone\",\n  \"passwd\": \"password123\",\n  \"notificaciones\": [\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   },\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   }\n  ],\n  \"invitaciones\": [\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   },\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   }\n  ]\n }\n}"
+										},
+										{
+											"name": "El proyecto no pudo ser creado",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"rama\": {\n        \"id\": 79,\n        \"nombre\": \"prueba\",\n        \"ramaPadre\": {\n            \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n        },\n        \"descripcion\": \"descricpcion de prueba\",\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/projects/:id/ramas",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"projects",
+														":id",
+														"ramas"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Acceptable",
+											"code": 406,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Detalles de un proyecto especifico.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "17",
+											"type": "string",
+											"description": "(Required) id de algún proyecto"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								},
+								{
+									"name": "Informacion de un proyecto estructurado en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": 14,\n \"nombre\": \"ProyectoDePrueba\",\n \"descripcion\": \"Este es un proyecto de prueba\",\n \"creador\": {\n  \"correo\": \"someone@mail.com\",\n  \"nombre\": \"someone\",\n  \"passwd\": \"password123\",\n  \"notificaciones\": [\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   },\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   }\n  ],\n  \"invitaciones\": [\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   },\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   }\n  ]\n },\n \"fechaDeCreacion\": \"2020-05-06\",\n \"participantes\": [\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n ],\n \"ramas\": [\n  {\n   \"id\": 79,\n   \"nombre\": \"prueba\",\n   \"ramaPadre\": {\n    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n   },\n   \"descripcion\": \"descricpcion de prueba\",\n   \"fechaDeCreacion\": \"2020-05-06\",\n   \"creador\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  },\n  {\n   \"id\": 79,\n   \"nombre\": \"prueba\",\n   \"ramaPadre\": {\n    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n   },\n   \"descripcion\": \"descricpcion de prueba\",\n   \"fechaDeCreacion\": \"2020-05-06\",\n   \"creador\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  }\n ],\n \"mensajes\": [\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  },\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  }\n ]\n}"
+								},
+								{
+									"name": "El proyecto no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Detalles de los mensajes de un proyecto especifico.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:id/messages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":id",
+										"messages"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "17",
+											"type": "string",
+											"description": "(Required) id de algún proyecto"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "El proyecto no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/messages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"messages"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Informacion de los mensajes de un proyecto estructurado en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/messages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"messages"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n [\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  },\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  }\n ],\n [\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  },\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  }\n ]\n]"
+								},
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/messages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"messages"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								}
+							]
+						},
+						{
+							"name": "Detalles del equipo de un proyecto especifico.",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:id/team",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":id",
+										"team"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "17",
+											"type": "string",
+											"description": "(Required) id de algún proyecto"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/team",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"team"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"schema type not provided\""
+								},
+								{
+									"name": "El proyecto no existe",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/team",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"team"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Informacion de los participantes de un proyecto estructurado en JSON",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:id/team",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":id",
+												"team"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n [\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n ],\n [\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n ]\n]"
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Detalles de todos los proyectos.",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"schema type not provided\""
+						},
+						{
+							"name": "No hay proyectos o no se pudo establecer la conexion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Informacion de todos los proyectos estructurados en JSON",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": 14,\n  \"nombre\": \"ProyectoDePrueba\",\n  \"descripcion\": \"Este es un proyecto de prueba\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"participantes\": [\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  ],\n  \"ramas\": [\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   },\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   }\n  ],\n  \"mensajes\": [\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   },\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   }\n  ]\n },\n {\n  \"id\": 14,\n  \"nombre\": \"ProyectoDePrueba\",\n  \"descripcion\": \"Este es un proyecto de prueba\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"participantes\": [\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  ],\n  \"ramas\": [\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   },\n   {\n    \"id\": 79,\n    \"nombre\": \"prueba\",\n    \"ramaPadre\": {\n     \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n    },\n    \"descripcion\": \"descricpcion de prueba\",\n    \"fechaDeCreacion\": \"2020-05-06\",\n    \"creador\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    }\n   }\n  ],\n  \"mensajes\": [\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   },\n   {\n    \"id\": 1,\n    \"usuario\": {\n     \"correo\": \"someone@mail.com\",\n     \"nombre\": \"someone\",\n     \"passwd\": \"password123\",\n     \"notificaciones\": [\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      },\n      {\n       \"id\": 1,\n       \"fecha\": \"2020-05-06\",\n       \"informacion\": \"La rama x fue eliminada\"\n      }\n     ],\n     \"invitaciones\": [\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      },\n      {\n       \"remitente\": \"prueba@mail.com\",\n       \"proyecto\": \"0\",\n       \"nombreProyecto\": \"Proyecto01 \"\n      }\n     ]\n    },\n    \"fecha\": \"2020-05-06\",\n    \"contenido\": \"Prueba \"\n   }\n  ]\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Subir los detalles de un proyecto.",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"0\",\n    \"nombre\": \"PostmanProject\",\n    \"descripcion\": \"Proyecto Postman\",\n    \"creador\": {\n        \"correo\": \"r@gmail.com\",\n        \"nombre\": \"Ricardo\",\n        \"passwd\": \"260c0baa6f66e7bd2f79bcd9370a1646d9680099d0c14d9dd244f1d8d5ff2cdb\",\n        \"notificaciones\": [\n            {\n                \"id\": 2,\n                \"fecha\": \"2020-05-18T19:31:24.260+0000\",\n                \"informacion\": \"El usuario maxo@mail.com se ha unido al proyecto treecore\"\n            },\n            {\n                \"id\": 1,\n                \"fecha\": \"2020-05-18T17:48:20.763+0000\",\n                \"informacion\": \"El usuario n@mail.com ha creado una nueva rama en el proyecto treecore llamada: NuevaRamaPrueba\"\n            }\n        ],\n        \"invitaciones\": []\n    },\n    \"fechaDeCreacion\": null,\n    \"participantes\": [\n    \t{\n            \"correo\": \"r@gmail.com\",\n            \"nombre\": \"Ricardo\",\n            \"passwd\": \"260c0baa6f66e7bd2f79bcd9370a1646d9680099d0c14d9dd244f1d8d5ff2cdb\",\n            \"notificaciones\": [],\n            \"invitaciones\": []\n    \t}\n    ],\n    \"ramas\": [],\n    \"mensajes\": []\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						},
+						"description": "Post project to database"
+					},
+					"response": [
+						{
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"proyecto\": {\n        \"id\": 14,\n        \"nombre\": \"ProyectoDePrueba\",\n        \"descripcion\": \"Este es un proyecto de prueba\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        },\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"participantes\": [\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            },\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            }\n        ],\n        \"ramas\": [\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            }\n        ],\n        \"mensajes\": [\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            },\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            }\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"schema type not provided\""
+						},
+						{
+							"name": "El proyecto fue posteado exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"proyecto\": {\n        \"id\": 14,\n        \"nombre\": \"ProyectoDePrueba\",\n        \"descripcion\": \"Este es un proyecto de prueba\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        },\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"participantes\": [\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            },\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            }\n        ],\n        \"ramas\": [\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            }\n        ],\n        \"mensajes\": [\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            },\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            }\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": 14,\n \"nombre\": \"ProyectoDePrueba\",\n \"descripcion\": \"Este es un proyecto de prueba\",\n \"creador\": {\n  \"correo\": \"someone@mail.com\",\n  \"nombre\": \"someone\",\n  \"passwd\": \"password123\",\n  \"notificaciones\": [\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   },\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   }\n  ],\n  \"invitaciones\": [\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   },\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   }\n  ]\n },\n \"fechaDeCreacion\": \"2020-05-06\",\n \"participantes\": [\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  },\n  {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n ],\n \"ramas\": [\n  {\n   \"id\": 79,\n   \"nombre\": \"prueba\",\n   \"ramaPadre\": {\n    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n   },\n   \"descripcion\": \"descricpcion de prueba\",\n   \"fechaDeCreacion\": \"2020-05-06\",\n   \"creador\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  },\n  {\n   \"id\": 79,\n   \"nombre\": \"prueba\",\n   \"ramaPadre\": {\n    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n   },\n   \"descripcion\": \"descricpcion de prueba\",\n   \"fechaDeCreacion\": \"2020-05-06\",\n   \"creador\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   }\n  }\n ],\n \"mensajes\": [\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  },\n  {\n   \"id\": 1,\n   \"usuario\": {\n    \"correo\": \"someone@mail.com\",\n    \"nombre\": \"someone\",\n    \"passwd\": \"password123\",\n    \"notificaciones\": [\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     },\n     {\n      \"id\": 1,\n      \"fecha\": \"2020-05-06\",\n      \"informacion\": \"La rama x fue eliminada\"\n     }\n    ],\n    \"invitaciones\": [\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     },\n     {\n      \"remitente\": \"prueba@mail.com\",\n      \"proyecto\": \"0\",\n      \"nombreProyecto\": \"Proyecto01 \"\n     }\n    ]\n   },\n   \"fecha\": \"2020-05-06\",\n   \"contenido\": \"Prueba \"\n  }\n ]\n}"
+						},
+						{
+							"name": "El proyecto no puede ser creado o hay un problema de conexion",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"proyecto\": {\n        \"id\": 14,\n        \"nombre\": \"ProyectoDePrueba\",\n        \"descripcion\": \"Este es un proyecto de prueba\",\n        \"creador\": {\n            \"correo\": \"someone@mail.com\",\n            \"nombre\": \"someone\",\n            \"passwd\": \"password123\",\n            \"notificaciones\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                },\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2020-05-06\",\n                    \"informacion\": \"La rama x fue eliminada\"\n                }\n            ],\n            \"invitaciones\": [\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                },\n                {\n                    \"remitente\": \"prueba@mail.com\",\n                    \"proyecto\": \"0\",\n                    \"nombreProyecto\": \"Proyecto01 \"\n                }\n            ]\n        },\n        \"fechaDeCreacion\": \"2020-05-06\",\n        \"participantes\": [\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            },\n            {\n                \"correo\": \"someone@mail.com\",\n                \"nombre\": \"someone\",\n                \"passwd\": \"password123\",\n                \"notificaciones\": [\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    },\n                    {\n                        \"id\": 1,\n                        \"fecha\": \"2020-05-06\",\n                        \"informacion\": \"La rama x fue eliminada\"\n                    }\n                ],\n                \"invitaciones\": [\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    },\n                    {\n                        \"remitente\": \"prueba@mail.com\",\n                        \"proyecto\": \"0\",\n                        \"nombreProyecto\": \"Proyecto01 \"\n                    }\n                ]\n            }\n        ],\n        \"ramas\": [\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": 79,\n                \"nombre\": \"prueba\",\n                \"ramaPadre\": {\n                    \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n                },\n                \"descripcion\": \"descricpcion de prueba\",\n                \"fechaDeCreacion\": \"2020-05-06\",\n                \"creador\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                }\n            }\n        ],\n        \"mensajes\": [\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            },\n            {\n                \"id\": 1,\n                \"usuario\": {\n                    \"correo\": \"someone@mail.com\",\n                    \"nombre\": \"someone\",\n                    \"passwd\": \"password123\",\n                    \"notificaciones\": [\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        },\n                        {\n                            \"id\": 1,\n                            \"fecha\": \"2020-05-06\",\n                            \"informacion\": \"La rama x fue eliminada\"\n                        }\n                    ],\n                    \"invitaciones\": [\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        },\n                        {\n                            \"remitente\": \"prueba@mail.com\",\n                            \"proyecto\": \"0\",\n                            \"nombreProyecto\": \"Proyecto01 \"\n                        }\n                    ]\n                },\n                \"fecha\": \"2020-05-06\",\n                \"contenido\": \"Prueba \"\n            }\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Detalles de una rama especifica.",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/projects/:projectId/rama/:ramaId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								":projectId",
+								"rama",
+								":ramaId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "17",
+									"type": "string",
+									"description": "(Required) id de algún proyecto"
+								},
+								{
+									"key": "ramaId",
+									"value": "107",
+									"type": "string",
+									"description": "(Required) id de alguna rama"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Informacion de una rama estructurada en JSON",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:projectId/rama/:ramaId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"rama",
+										":ramaId"
+									],
+									"variable": [
+										{
+											"key": "projectId"
+										},
+										{
+											"key": "ramaId"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": 79,\n \"nombre\": \"prueba\",\n \"ramaPadre\": {\n  \"id\": 79,\n  \"nombre\": \"prueba\",\n  \"ramaPadre\": {\n   \"value\": \"<Circular reference to #/components/schemas/rama detected>\"\n  },\n  \"descripcion\": \"descricpcion de prueba\",\n  \"fechaDeCreacion\": \"2020-05-06\",\n  \"creador\": {\n   \"correo\": \"someone@mail.com\",\n   \"nombre\": \"someone\",\n   \"passwd\": \"password123\",\n   \"notificaciones\": [\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    },\n    {\n     \"id\": 1,\n     \"fecha\": \"2020-05-06\",\n     \"informacion\": \"La rama x fue eliminada\"\n    }\n   ],\n   \"invitaciones\": [\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    },\n    {\n     \"remitente\": \"prueba@mail.com\",\n     \"proyecto\": \"0\",\n     \"nombreProyecto\": \"Proyecto01 \"\n    }\n   ]\n  }\n },\n \"descripcion\": \"descricpcion de prueba\",\n \"fechaDeCreacion\": \"2020-05-06\",\n \"creador\": {\n  \"correo\": \"someone@mail.com\",\n  \"nombre\": \"someone\",\n  \"passwd\": \"password123\",\n  \"notificaciones\": [\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   },\n   {\n    \"id\": 1,\n    \"fecha\": \"2020-05-06\",\n    \"informacion\": \"La rama x fue eliminada\"\n   }\n  ],\n  \"invitaciones\": [\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   },\n   {\n    \"remitente\": \"prueba@mail.com\",\n    \"proyecto\": \"0\",\n    \"nombreProyecto\": \"Proyecto01 \"\n   }\n  ]\n }\n}"
+						},
+						{
+							"name": "La rama no existe",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:projectId/rama/:ramaId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"rama",
+										":ramaId"
+									],
+									"variable": [
+										{
+											"key": "projectId"
+										},
+										{
+											"key": "ramaId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/projects/:projectId/rama/:ramaId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"rama",
+										":ramaId"
+									],
+									"variable": [
+										{
+											"key": "projectId"
+										},
+										{
+											"key": "ramaId"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"schema type not provided\""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "file/{ruta}",
+			"item": [
+				{
+					"name": "Details about a file download",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/file/:ruta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"file",
+								":ruta"
+							],
+							"variable": [
+								{
+									"id": "d55f38c8-610c-4aa7-a379-9c36c57030dc",
+									"key": "ruta",
+									"value": "+++test.txt",
+									"type": "string",
+									"description": "(Required) ruta del archivo"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "El archivo existe y puede ser descargado.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/file/:ruta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"file",
+										":ruta"
+									],
+									"variable": [
+										{
+											"key": "ruta"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La ruta del archivo no existe",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/file/:ruta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"file",
+										":ruta"
+									],
+									"variable": [
+										{
+											"key": "ruta"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/file/:ruta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"file",
+										":ruta"
+									],
+									"variable": [
+										{
+											"key": "ruta"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"schema type not provided\""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Lista de archivos en la carpeta",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/files/:ruta",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"files",
+						":ruta"
+					],
+					"variable": [
+						{
+							"id": "6cc0fdd9-f214-4e7c-a164-65687531fc55",
+							"key": "ruta",
+							"value": "proyectos",
+							"type": "string",
+							"description": "(Required) ruta de la carpeta"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "La ruta de la carpeta no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/files/:ruta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"files",
+								":ruta"
+							],
+							"variable": [
+								{
+									"key": "ruta"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "El proyecto tiene carpeta de archivos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/files/:ruta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"files",
+								":ruta"
+							],
+							"variable": [
+								{
+									"key": "ruta"
+								}
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n {\n  \"value\": \"reference #/components/schemas/filePath not found in the OpenAPI spec\"\n },\n {\n  \"value\": \"reference #/components/schemas/filePath not found in the OpenAPI spec\"\n }\n]"
+				},
+				{
+					"name": "unexpected error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/files/:ruta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"files",
+								":ruta"
+							],
+							"variable": [
+								{
+									"key": "ruta"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"schema type not provided\""
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "https://treecore.herokuapp.com/treecore/v1",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,1302 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "TreeCoreAPI",
+        "license": {
+            "name": "TreeCore"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://treecore.herokuapp.com/treecore/v1"
+        }
+    ],
+    "paths": {
+        "/users/{correo}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "name": "correo",
+                    "in": "path",
+                    "description": "correo de algun usuario ya inscrito",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles de un usuario especifico.",
+                "operationId": "getUser",
+                "tags": [
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de un usuario estructurado en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/usuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El usuario no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{correo}/projects": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "name": "correo",
+                    "in": "path",
+                    "description": "correo de algun usuario con proyectos",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Proyectos de un usuario.",
+                "operationId": "getUserProjects",
+                "tags": [
+                    "project",
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de un los proyectos del usuario estructurados en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El usuario o el proyecto no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{correo}/notification": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "name": "correo",
+                    "in": "path",
+                    "description": "correo de algun usuario",
+                    "required": "true"
+                }
+            ],
+            "post": {
+                "summary": "Notificacion de un usuario.",
+                "operationId": "addNewNotification",
+                "tags": [
+                    "notification",
+                    "user"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Notificacion publicada"
+                    },
+                    "406": {
+                        "description": "No pudo ser creada la notificacion"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "notificacion":{
+                                      "$ref": "#/components/schemas/notificacion"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Post notification to database"
+            }
+        },
+        "/users/{correo}/notifications": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "name": "correo",
+                    "in": "path",
+                    "description": "correo de algun usuario con notificaciones",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Notificaciones de un usuario.",
+                "operationId": "getUserNotificatios",
+                "tags": [
+                    "notification",
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de las notificaciones del usuario estructurados en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type" : "array",
+                                    "items" : {
+                                        "$ref": "#/components/schemas/notificacion"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El usuario no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{correo}/invitations": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "name": "correo",
+                    "in": "path",
+                    "description": "correo de algun usuario con invitaciones",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Invitaciones de un usuario.",
+                "operationId": "getUserInvitations",
+                "tags": [
+                    "invitation",
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de las invitaciones del usuario estructurados en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/invitacion"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El usuario no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/invitation": {
+            "post": {
+                "summary": "Subir los detalles de una invitacion.",
+                "operationId": "addNewMessage",
+                "tags": [
+                    "invitation"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "La invitacion fue posteada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                        "$ref": "#/components/schemas/invitacion"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "La invitacion no pudo ser creada"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "invitacion":{
+                                      "$ref": "#/components/schemas/invitacion"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Post invitation to database"
+            }
+        },
+        "/projects": {
+            "get": {
+                "summary": "Detalles de todos los proyectos.",
+                "operationId": "getAllProyects",
+                "tags": [
+                    "project"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de todos los proyectos estructurados en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No hay proyectos o no se pudo establecer la conexion"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Subir los detalles de un proyecto.",
+                "operationId": "addNewProject",
+                "tags": [
+                    "project"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "El proyecto fue posteado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                        "$ref": "#/components/schemas/proyecto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El proyecto no puede ser creado o hay un problema de conexion"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "proyecto":{
+                                      "$ref": "#/components/schemas/proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Post project to database"
+            }
+        },
+        "/projects/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles de un proyecto especifico.",
+                "operationId": "getProject",
+                "tags": [
+                    "project"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de un proyecto estructurado en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/proyecto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El proyecto no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{id}/ramas": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles de las ramas de un proyecto especifico.",
+                "operationId": "getProjectRamas",
+                "tags": [
+                    "branch"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de las ramas de un proyecto estructurado en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/rama"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El proyecto no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Subir los detalles de las ramas de un proyecto especifico.",
+                "operationId": "addNewRoot",
+                "tags": [
+                    "branch"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "La rama fue posteada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                        "$ref": "#/components/schemas/rama"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "El proyecto no pudo ser creado"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "rama":{
+                                      "$ref": "#/components/schemas/rama"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Post branch to database"
+            }
+        },
+        "/projects/{projectId}/rama/{ramaId}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "projectId",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                },
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "ramaId",
+                    "in": "path",
+                    "description": "id de alguna rama",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles de una rama especifica.",
+                "operationId": "getSpecificProjectRama",
+                "tags": [
+                    "branch"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de una rama estructurada en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rama"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La rama no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{id}/messages": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles de los mensajes de un proyecto especifico.",
+                "operationId": "getMessages",
+                "tags": [
+                    "project",
+                    "message"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de los mensajes de un proyecto estructurado en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/mensajes"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El proyecto no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+        },
+        "/projects/{id}/team": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Detalles del equipo de un proyecto especifico.",
+                "operationId": "getTeam",
+                "tags": [
+                    "project",
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Informacion de los participantes de un proyecto estructurado en JSON",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/participantes"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El proyecto no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+        },
+        "/projects/team": {
+            "put": {
+                "summary": "Actualizar el equipo de un proyecto.",
+                "operationId": "addTeamMate",
+                "tags": [
+                    "invitation"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "El integrante fue agregado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                        "$ref": "#/components/schemas/invitacion"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "La invitacion no pudo ser creada"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "invitacion":{
+                                      "$ref": "#/components/schemas/invitacion"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                }
+            }
+        },
+        "/file/{ruta}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "+++help.mp3",
+                        "default": "+++test.txt"
+                    },
+                    "name": "ruta",
+                    "in": "path",
+                    "description": "ruta del archivo",
+                    "note": "cambiar los / por +++",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Details about a file download",
+                "operationId": "getFileLink",
+                "tags": [
+                    "files"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "El archivo existe y puede ser descargado."
+                    },
+                    "404": {
+                        "description": "La ruta del archivo no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Subir un archivo.",
+                "operationId": "postFile",
+                "tags": [
+                    "files"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "El archivo cargo exitosamente"
+                    },
+                    "406": {
+                        "description": "El archivo no pudo ser subido"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "file":{
+                            "description": "Archivo a subir"
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Post File to database"
+            },
+            "put": {
+                "summary": "Subir un archivo.",
+                "operationId": "putFile",
+                "tags": [
+                    "files"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "El archivo cargo exitosamente"
+                    },
+                    "406": {
+                        "description": "El archivo no pudo ser subido"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "file":{
+                            "description": "Archivo a subir"
+                        }
+                    },
+                    "description": "Body example"
+                },
+                "description": "Put File to database"
+            },
+            "delete": {
+                "summary": "Borrar uno o varios archivos.",
+                "operationId": "deleteFile",
+                "tags": [
+                    "files"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "El archivo fue borrado"
+                    },
+                    "406": {
+                        "description": "El archivo no pudo ser borrado"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Delete File"
+            }
+        },
+        "/files/{ruta}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string",
+                        "example": "proyecto+++9",
+                        "default": "proyectos"
+                    },
+                    "name": "ruta",
+                    "in": "path",
+                    "note": "cambiar los / por +++",
+                    "description": "ruta de la carpeta",
+                    "required": "true"
+                }
+            ],
+            "get": {
+                "summary": "Lista de archivos en la carpeta",
+                "operationId": "getFiles",
+                "tags": [
+                    "files"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "El proyecto tiene carpeta de archivos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/filePath"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La ruta de la carpeta no existe"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/delete/project": {
+            "delete": {
+                "summary": "Borrar proyecto.",
+                "operationId": "deleteProject",
+                "tags": [
+                    "project"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "El proyecto fue borrado"
+                    },
+                    "406": {
+                        "description": "El proyecto no pudo ser borrado"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "proyecto": {
+                                      "$ref": "#/components/schemas/proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                }
+            }
+        },
+        "/delete/project/{id}/rama": {
+             "parameters": [
+                {
+                    "schema": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "description": "id de algún proyecto",
+                    "required": "true"
+                }
+            ],
+            "delete": {
+                "summary": "Borrar rama.",
+                "operationId": "deleteRama",
+                "tags": [
+                    "branch"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "La rama fue borrada"
+                    },
+                    "406": {
+                        "description": "La rama no pudo ser borrada"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "rama":{
+                                        "$ref": "#/components/schemas/rama"
+                                    }                                    
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                }
+            }
+        },
+        "/users/invitations": {
+            "delete": {
+                "summary": "Borrar invitacion.",
+                "operationId": "deleteInvitation",
+                "tags": [
+                    "invitation"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "La invitacion fue borrada"
+                    },
+                    "406": {
+                        "description": "La invitacion no pudo ser borrada"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "invitacion":{
+                                        "$ref": "#/components/schemas/invitacion"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "description": "Body example"
+                }
+            }
+        },
+    
+        "/login": {
+            "post": {
+                "summary": "Peticion de logeo de un usuario",
+                "operationId": "loginUser",
+                "tags": [
+                    "user"
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Usuario logeado"
+                        }
+                    },
+                    "404": {
+                        "description": "Fallo en el intento de logeo"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+            
+        
+    },
+    "components": {
+        "schemas": {
+            "proyecto":{
+                "title": "proyecto",
+                "type": "object",
+                "description": "Modelo de un proyecto en formato json",
+                "properties": {
+                    "id": {
+                        "type" : "integer",
+                        "example": 14
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "ProyectoDePrueba"
+                    },
+                    "descripcion":{
+                        "type": "string",
+                        "example" : "Este es un proyecto de prueba"
+                    },
+                    "creador": {
+                        "$ref": "#/components/schemas/usuario"
+                    },
+                    "fechaDeCreacion" :{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-05-06"
+                    },
+                    "participantes":{
+                        "$ref": "#/components/schemas/participantes"
+                    },
+                    "ramas":{
+                        "$ref": "#/components/schemas/ramas"
+                    },
+                    "mensajes":{
+                        "$ref": "#/components/schemas/mensajes"
+                    }
+                }
+            },
+            "usuario": {
+                "title": "usuario",
+                "type": "object",
+                "description": "Modelo de un usuario en formato json",
+                "properties": {
+                    "correo": {
+                        "type": "string",
+                        "example": "someone@mail.com"
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "someone"
+                    },
+                    "passwd": {
+                        "type": "string",
+                        "example": "password123"
+                    },
+                    "notificaciones": {
+                        "$ref": "#/components/schemas/notificaciones"
+                    },
+                    "invitaciones": {
+                        "$ref": "#/components/schemas/invitaciones"
+                    }
+                }
+            },
+            "notificacion":{
+                "title": "notificacion",
+                "type": "object",
+                "description":"Modelo de una notificacion en formato json",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "fecha":{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-05-06"
+                    },
+                    "informacion":{
+                        "type": "string",
+                        "example": "La rama x fue eliminada"
+                    }
+                }
+            },
+            "invitacion":{
+                "title": "invitacion",
+                "type": "object",
+                "description":"Modelo de una invitacion en formato json",
+                "properties": {
+                    "remitente": {
+                        "type" : "string",
+                        "example": "prueba@mail.com"
+                    },
+                    "proyecto":{
+                        "type": "integer",
+                        "example": "0"
+                    },
+                    "nombreProyecto":{
+                        "type": "string",
+                        "example": "Proyecto01 "
+                    }
+                }
+            },
+            "rama":{
+                "title": "rama",
+                "type": "object",
+                "description":"Modelo de una rama en formato json",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 79
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example":"prueba"
+                    },
+                    "ramaPadre": {
+                        "$ref": "#/components/schemas/rama"
+                    },
+                    "descripcion":{ 
+                        "type": "string",
+                        "example":"descricpcion de prueba"
+                    },
+                    "fechaDeCreacion":{ 
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-05-06"
+                    },
+                    "creador": {
+                        "$ref": "#/components/schemas/usuario"
+                    }
+            
+                   
+                }
+            },
+            "mensaje":{
+                "title": "mensaje",
+                "type": "object",
+                "description":"Modelo de un mensaje en formato json",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/usuario"
+                    },
+                    "fecha":{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2020-05-06"
+                    },
+                    "contenido": {
+                        "type": "string",
+                        "example": "Prueba "
+                    }
+                    
+                }
+            },
+            "notificaciones":{
+              "type": "array",
+              "title": "notificaciones",
+              "items":{
+                "$ref": "#/components/schemas/notificacion"}
+            },
+            "invitaciones":{
+              "type": "array",
+              "title": "invitaciones",
+              "items":{
+                "$ref": "#/components/schemas/invitacion"}
+            },
+            "participantes":{
+              "type": "array",
+              "title": "participantes",
+              "items":{
+                "$ref": "#/components/schemas/usuario"}
+            },
+            "ramas":{
+              "type": "array",
+              "title": "ramas",
+              "items":{
+                "$ref": "#/components/schemas/rama"}
+            },
+            "mensajes":{
+              "type": "array",
+              "title": "mensajes",
+              "items":{
+                "$ref": "#/components/schemas/mensaje"}
+            },
+            "Error":{
+                
+            }
+        }
+    }
+}
