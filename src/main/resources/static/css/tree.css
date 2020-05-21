@@ -200,8 +200,19 @@
 
 .inputfile {
 	cursor: pointer;
-
+	border: 2px solid #fcdea4; 
+	width: 20%;
+	margin: 0 auto;
+	left: 0.5%;
+	right: 0;
+	background-color:#fdd496;
+	color: #fff;
 }
+
+.inputfile:focus {
+
+	background-color:gray;
+	}
 
 .delBot {
 	border: none;
