@@ -58,14 +58,18 @@
 		</header>
 
 		<div class="openMenu">
-			<span onclick="app.openNav()">&#9776; Opciones</span>
+			<span onclick="app.openNav()">&#9776; More</span>
 		</div>
 
 
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="app.closeNav()">&times;</a>
-
+			
 			<div class="colabDiv">
+				<h2>Opciones</h2>
+				
+				<br/>
+				
 				<button type="button" class="contact100-form-btn" onclick="map.hiddenComponentAddCollaborator()">
 					Agregar Colaborador
 				</button>
@@ -88,9 +92,9 @@
 
 			<div class="wrap-contact100">
 
-				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-07.jpg);">
 					<div>
-						<span class="buttonClose" onclick="map.hiddenComponentAdd(); map.esconderContenedor()">&times;</span>
+						<span class="buttonClose" onclick="map.hiddenComponentAdd()">&times;</span>
 					</div>
 
 					<div class="oldRamaN">
@@ -122,7 +126,7 @@
 
 					<div class="container" id="contenedor" style="display:none">
 						<h2>Archivos</h2>
-						<div id="Files" class="list-group" style="max-height:150px; overflow-y: scroll">
+						<div id="Files" class="list-group" style="height:60%; overflow-y: auto">
 						</div>
 					</div>
 
@@ -130,7 +134,8 @@
 					
 					<div class="col2">
 						<br/>
-						<input type="file" id="archivo" multiple size="50" class="inputfile" style="margin-left: 14px;"/>
+						<input type="file" id="archivo" multiple size="50" class="hidden" />
+						<label for="archivo" class="inputfile">Adicionar archivo</label>
 						<output type="text" id="file-path" />
 
 						<input type="file" id="archivoPut" class="inputfile" style="display: none;" />
@@ -171,7 +176,7 @@
 			<div class="wrap-contact100">
 
 
-				<div class="contact100-form-title" style="background-image: url(layer/images/bg-04.jpg);">
+				<div class="contact100-form-title" style="background-image: url(layer/images/bg-08.jpg);">
 					<div>
 						<span class="buttonClose" onclick="map.hiddenNuevaRama()">&times;</span>
 					</div>

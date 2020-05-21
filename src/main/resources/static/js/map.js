@@ -702,7 +702,7 @@ var map = (function () {
 			var newEnd = file.name.split(".").pop();
 			if (oldEnd == newEnd) {
 				apifiles.putFile(path, file);
-				esconderContenedor();
+				document.getElementById("Files").innerHTML = "";
 			} else {
 				swal(
 					'Error al reemplazar el archivo',
@@ -756,7 +756,7 @@ var map = (function () {
 			path = path.replace(/[/]/g, '+++');;
 			path = path.replace(/" "/g, "%20");
 			apifiles.deleteFile(path);
-			esconderContenedor();
+			document.getElementById("Files").innerHTML = "";
 			return false;
 		};
 		return boton;
@@ -769,7 +769,7 @@ var map = (function () {
 		boton.setAttribute('title',"Replace");
 
 		var icon = document.createElement("i");
-		icon.setAttribute('class', 'fa fa-arrow-circle-up fa-2x');
+		icon.setAttribute('class', 'fa fa-arrow-circle-down fa-2x');
 		boton.appendChild(icon);
 
 		boton.onclick = function () {
@@ -820,11 +820,6 @@ var map = (function () {
 				filePath.value+= '"' + files[i].name +'" ';
 			}
 		}
-	}
-
-	var esconderContenedor= function(){
-		document.getElementById("Files").innerHTML = "";
-		document.getElementById('contenedor').style.display = "none";
 	}
 
 	var salirProyecto = function(){
@@ -899,7 +894,6 @@ var map = (function () {
 		loadFiles: loadFiles,
 		upload: upload,
 		updateRootInfo:updateRootInfo,
-		salirProyecto : salirProyecto,
-		esconderContenedor : esconderContenedor
+		salirProyecto : salirProyecto
 	}
 })();
