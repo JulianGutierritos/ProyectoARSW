@@ -732,6 +732,7 @@ var map = (function () {
 			var newlink = document.createElement('a');
 			newlink.setAttribute('class', 'list-group-item');
 			newlink.setAttribute('href', resp[1]);
+			newlink.setAttribute('title',"Download");
 			var newContent = document.createTextNode(resp[0]);
 			newlink.appendChild(newContent);
 			var boton1 = crearDelBot(resp[0]);
