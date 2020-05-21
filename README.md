@@ -118,3 +118,26 @@ https://tree.taiga.io/project/nduran06-treecoreproject/
 https://app.swaggerhub.com/apis-docs/Ricar8o/tree-core_api/1.0.0
 ```
 
+# Rendimiento 
+
+Le dimos una gran importancia a la velocidad de carga de nuestra aplicación. Es por eso que nos pusimos como meta que, en la medida de lo posible, la aplicación tuviera la menor interacción con la base de datos, ya que esto toma demasiado tiempo. Es por esto que implementamos un caché dinámico que se actualiza a la par de la base de datos y que contiene tanto la información completa de los usuarios, como la de los proyectos de los mismos. 
+
+Para demostrar el funcionamiento de nuestro caché, presentamos el siguiente vídeo. En este mostraremos que cuando un usuario ingresa a nuestra aplicación, la base de datos es consultada una única vez en todo lo que dure la sesión del usuario (también puede ser que no sea consultada ninguna vez si el usuario ha ingresado a la aplicación recientemente). En el vídeo se harán una serie de "deletes" directamente en la base de datos, haciendo con esto que al ser ejecutados directamente en la base de datos, el caché no cambie por ellos, y que por lo tanto, los deletes no se vean reflejados en la aplicación. 
+(Cabe recalcar que esto sucede porque las eliminiciones o modificaciones de datos sobre la base de datos nunca pueden hacerse directamente. Es decir, en el transcurso normal de la aplicación, la información contenida en el caché siempre estará sincronizada con la información que se encuentra en la base de datos)
+
+```markdown
+https://drive.google.com/file/d/1yV2IitSxzlneK5O3jAcLbT2puQcny3En/view
+```
+Y ya que vimos como nuestro caché hace que las consultas sobre la base de datos no se hagan constantemente en el transcurso de nuestra aplicación, ahora mostraremos el porqué de nuestra decisión. 
+A continuación presentamos los resultados de una serie de gets realizados sobre nuestra aplicación:
+
+![Newman1](images/Newman/Gets-Project2.png)
+
+![Newman2](images/Newman/Gets-Project3.png)
+
+
+Como se puede observar claramente el primer get realizado se demoró muchisimo más en comparación a los gets siguientes. Esto se debe a que la información de la primera consulta fue traida desde la base de datos y almacenada en el caché, mientras que la información de los gets siguientes es traída del caché. Esto nos demuestra como nuestro caché vuelve a la aplicación más rápida, garantizando así un mejor desempeño.
+
+También cabe recalcar que este caché no solo hace nuestra aplicación más rápida, sino que la hará disponible en caso de que la base de datos se caiga. Y aunque por razones de integridad de la información, sin base de datos el usuario no podrá ingresar nueva información, sí podrá consultar la información que haya sido ingresada antes de que la base de datos estuviera caida. Así que el usuario podrá: leer los mensajes de todos sus proyectos y ver la información de todas las ramas de sus proyectos, incluyendo descargar archivos que se encuentren ya dentro de ellas. 
+
+
