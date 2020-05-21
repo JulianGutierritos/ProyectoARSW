@@ -107,6 +107,7 @@ https://tree.taiga.io/project/nduran06-treecoreproject/
 
 # CircleCI
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/50bc0076aa8241ffa43bf8a065d3e40c)](https://app.codacy.com/manual/JulianGutierritos/ProyectoARSW?utm_source=github.com&utm_medium=referral&utm_content=JulianGutierritos/ProyectoARSW&utm_campaign=Badge_Grade_Dashboard)
 [![CircleCI](https://circleci.com/gh/JulianGutierritos/ProyectoARSW.svg?style=svg)](https://app.circleci.com/pipelines/github/JulianGutierritos/ProyectoARSW)
 
 # Codacy 
