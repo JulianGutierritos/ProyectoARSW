@@ -57,9 +57,21 @@ Al dar clic en la rama se redirigiría a un enlace con la información colocada 
 
 # Historias de usuario
 1.
-COMO miembro de equipo de un proyecto
+COMO participante de un proyecto
 QUIERO poder acceder al contenido de un proyecto
 PARA poder ver, agregar, modificar o eliminar los archivos, ramas y contenido.
+
+COMO participante de un proyecto
+QUIERO poder modificar la estructura
+PARA poder llevar el proyecto de una manera organizada
+
+COMO participante de un proyecto
+QUIERO poder comunicarme con otros integrantes
+PARA poder realizar el proyecto en equipo
+
+COMO usuario 
+QUIERO poder ver mis notificaciones
+PARA poder saber como van los proyectos en los que participo 
 
 Criterios de aceptación:
 
@@ -69,7 +81,7 @@ Criterios de aceptación:
 - Poder eliminar ramas y contenido.
 - Poder modificar ramas y contenido.
 - Ser capaz de subir archivos a las ramas.
-
+- Poder comunicarse con otros colaboradores 
 ![Casos de uso](images/casos.png)
 
 
