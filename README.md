@@ -110,6 +110,11 @@ A continuación presentamos el diagrama de clases de la estructura que tenemos p
 ```markdown
 https://treecore.herokuapp.com/
 ```
+## Credenciales:
+- r@gmail.com - prueba
+- n@mail.com - prueba
+- j@mail.com - prueba
+- maxo@mail.com - 12345
 
 # Planeación en Taiga
 
@@ -122,7 +127,7 @@ https://tree.taiga.io/project/nduran06-treecoreproject/
 [![CircleCI](https://circleci.com/gh/JulianGutierritos/ProyectoARSW.svg?style=svg)](https://app.circleci.com/pipelines/github/JulianGutierritos/ProyectoARSW)
 
 # Codacy 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6356fef49704b7fb6fb451350c2047e)](https://app.codacy.com/manual/JulianGutierritos/ProyectoARSW/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ricar8o/Lab-6&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a5b1fae62dff4b398b4588156c2e22f1)](https://www.codacy.com/manual/JulianGutierritos/ProyectoARSW?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JulianGutierritos/ProyectoARSW&amp;utm_campaign=Badge_Grade)
 
 # Documentación API
 
