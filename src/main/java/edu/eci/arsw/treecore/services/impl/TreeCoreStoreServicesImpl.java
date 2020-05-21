@@ -41,10 +41,15 @@ public class TreeCoreStoreServicesImpl implements TreeCoreStoreServices {
     }
 
     @Override
-    public void deleteFile(String ruta) throws TreeCoreStoreException {
-        String token = this.getAccessToken(0);
-        TreeCoreStore store = new TreeCoreStoreImpl(token);
-        store.deleteFile(ruta);
+    public void deleteFile(String ruta) {
+        String token;
+        try {
+            token = this.getAccessToken(0);
+            TreeCoreStore store = new TreeCoreStoreImpl(token);
+            store.deleteFile(ruta);
+        } catch (TreeCoreStoreException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
