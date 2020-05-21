@@ -99,9 +99,11 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
 
             System.out.println(metadata.toStringMultiline());
         } catch (final DbxException  ex) {
+            localFile.delete();
             throw new TreeCoreStoreException("Error uploading to Dropbox: " + ex.getMessage());
 
         } catch (final IOException ex) {
+            localFile.delete();
             throw new TreeCoreStoreException("Error reading from file \"" + localFile + "\": " + ex.getMessage());
         }
     }
@@ -117,7 +119,7 @@ public class TreeCoreStoreImpl implements TreeCoreStore {
             uploadFile(localFile, path,option);
             localFile.delete();
         } catch (IOException e) {
-            System.out.println("F");
+            throw new TreeCoreStoreException("Error reading from file \"" + file.getOriginalFilename() + "\": " + e.getMessage());
         }
     }
     
