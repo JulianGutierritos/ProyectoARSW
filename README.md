@@ -207,7 +207,7 @@ Ya sea llegando a través del formulario de registro o la pantalla principal, el
 
 Cuando el usuario ingrese a la aplicación, se encontrará con la siguiente pantalla: 
 
-![ingreso](images/Menu/perfil.PNG)
+![ingreso](images/Menu/perfil.png)
 
 En la parte izquierda del encabezado, al lado del logo de la app, se encuentra un buzón con un número que indica el número de invitaciones a proyectos que el usuario tiene. Cuando el usuario oprima este buzón se le desplegarán todas las invitaciones que se le han hecho junto con las opciones de aceptarlas o rechazarlas. Si el usuario oprime "aceptar", inmediatamente después la invitación desparecerá y en su lista de proyectos (abajo del buzón) aparecerá este nuevo proyecto, porque el usuario ya formará parte este. Por el contrario, si oprime "rechazar" la invitación desaparecerá y ningún otra acción se realizará. 
 
@@ -229,9 +229,9 @@ Si el usuario oprime el botón "Crear Nuevo Proyecto" será redirigido al siguie
 
 Si el usuario oprime sobre alguno de sus proyectos, será redirigido a la siguiente pantalla:
 
-![nuevoP](images/Menu/tree.PNG)
+![nuevoP](images/Menu/tree.png)
 
-En el encabezado, además de las opciones ya descritas, se encuantra una de "Volver", la cual al ser oprimida lleva al usuario de nuevo a su perfil. 
+En el encabezado, además de las opciones ya descritas, se encuentra una de "Volver", la cual al ser oprimida lleva al usuario de nuevo a su perfil. 
 
 En la parte superior izquierda, se encuentra un menú oculto que al ser oprimido se desplegará y aparecerán las siguientes opciones: "Agregar Colaborador" y "Abandonar Proyecto"
 
