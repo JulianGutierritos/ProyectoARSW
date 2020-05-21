@@ -191,5 +191,100 @@ El diseño de nuestra aplicación está muy bien trabajado. Ninguna de nuestras 
 
 Contamos con un manual de usuario, que se presentará a continuación, además, nuestro código se encuentra bien documentado, en especial nuestros métodos: get, post, delete y put.
 
+# Manual de usuario 
+
+A continuación se presenta nuestra pantalla principal, en ella el usuario podrá: ver la información de nuestra aplicación, ir al formulario de registro o directamente al formulario de ingresar si ya posee una cuenta:
+
+![index](images/Menu/index.PNG)
+
+Si el usuario presiona el botón de registrarse, será redirigido al siguiente formulario donde tendrá que diligenciar algunos datos para poderse registrar en la aplicación. También, en la parte inferior del formulario, se le da la opción al usuario de ir al formulario de ingresar en caso de que ya posea una cuenta.
+
+![registro](images/Menu/registro.PNG)
+
+Ya sea llegando a través del formulario de registro o la pantalla principal, el usuario que ha dado en la opción de ingresar se encontrará con el siguiente formulario para ingresar a su sesión. En el tendrá que diligenciar su correo y contraseña para ingresar a la aplicación. También se presenta en la parte inferior del formulario de ingreso, una opción para que dirigirse al formulario de registro en caso de que el usuario no posea una cuenta.
+
+![ingreso](images/Menu/ingreso.PNG)
+
+Cuando el usuario ingrese a la aplicación, se encontrará con la siguiente pantalla: 
+
+![ingreso](images/Menu/perfil.PNG)
+
+En la parte izquierda del encabezado, al lado del logo de la app, se encuentra un buzón con un número que indica el número de invitaciones a proyectos que el usuario tiene. Cuando el usuario oprima este buzón se le desplegarán todas las invitaciones que se le han hecho junto con las opciones de aceptarlas o rechazarlas. Si el usuario oprime "aceptar", inmediatamente después la invitación desparecerá y en su lista de proyectos (abajo del buzón) aparecerá este nuevo proyecto, porque el usuario ya formará parte este. Por el contrario, si oprime "rechazar" la invitación desaparecerá y ningún otra acción se realizará. 
+
+![invitacion](images/Usabilidad/invitacion.PNG)
+
+En la parte derecha del encabezado se encuentra el botón de cerrar sesión. Si el usuario lo oprimer, su sesión se cerrará y será redirigido otra vez al formulario de ingreso. 
+
+En la parte izquierda de la pantallaz aparece un botón de "Crear Nuevo Proyecto". Si el usuario lo oprime se redigirá a un formulario que veremos más adelante. Abajo de este, estan listados todos los proyectos a los cuales el usuario pertenece. En caso de que oprima click en alguno de ellos, será redirigido a la página del proyecto, la cual veremos más adelante.
+
+![ingreso](images/Menu/proyectos.PNG)
+
+En la parte derecha de la pantalla se listan las notificaciones del usuario. Aquí es donde el usuario puede ver los últimas modificaciones que se han hecho sobre los proyectos a los cuales pertence, así como también quién fue el que realizó estas modificaciones. 
+
+![notificacion](images/Usabilidad/notificaciones.PNG)
+
+Si el usuario oprime el botón "Crear Nuevo Proyecto" será redirigido al siguiente formulario. Allí el usuario podrá crear un nuevo proyecto dado un nombre y una descripción. Para esto, tendrá que llenar los dos espacios del formulario (obligatoriamente) y luego presionar "Guardar". En caso de que el usuario no desee crear un nuevo proyecto, podrá darle al botón cancelar y será redirigido otra vez a su perfil. (La pantalla también tiene el buzón de invitaciones anterior y la opción de cerrar sesión)
+
+![nuevoP](images/Menu/nuevoProyecto.PNG)
+
+Si el usuario oprime sobre alguno de sus proyectos, será redirigido a la siguiente pantalla:
+
+![nuevoP](images/Menu/tree.PNG)
+
+En el encabezado, además de las opciones ya descritas, se encuantra una de "Volver", la cual al ser oprimida lleva al usuario de nuevo a su perfil. 
+
+En la parte superior izquierda, se encuentra un menú oculto que al ser oprimido se desplegará y aparecerán las siguientes opciones: "Agregar Colaborador" y "Abandonar Proyecto"
+
+![menuT](images/Menu/menu.PNG)
+
+Si el usuario oprime la primera opción, se desplegará el siguiente formulario que le solicitará el correo de la persona que desea agregar como colaboradora al proyecto. Si el usuario digita el correo de manera correcta y oprime "AGREGAR", se mandará una invitación a esta persona para que sea participe del proyecto. La otra opción es "CERRAR", que lo único que hará es cerrar el formulario.
+
+![agregarColaborador](images/Menu/agregarColaborador.PNG)
+
+En la segunda opción del menú encontramos "ABANDONAR PROYECTO". Si el usuario da click sobre esta opción saldrá del proyecto, de vuelta a su perfil, y el proyecto ya no estará en su lista, ni recibirá notificaciones del mismo.
+
+En la parte central de la pantalla nos encontramos con el árbol del proyecto. Este árbol está conformado por distintas ramas cada una con: nombre, archivos y descripción. 
+
+![arbol](images/Menu/arbol.PNG)
+
+Si el usuario oprime sobre cualquiera de las ramas apareceran dos botones: uno que dice "me" y otro "+"
+
+![rama](images/Menu/rama.PNG)
+
+Si el usuario da en el "me", se desplegará la información de la rama, además de varias opciones para modificarla. La más notoria, es el campo grande de texto donde el usuario podrá digitar lo que desee y sí le da en el pequeño botón de "cambiar" ubicado en la esquina derecha de este campo, lo escrito se guardará y podrá ser visto por cualquier otro que acceda a la rama. 
+
+![me](images/Menu/me.PNG)
+
+Abajo de este campo están listados los archivos de la rama. Cada uno de ellos cuenta con dos botones: uno de una flecha, que al ser oprimido desplegará un seleccionador de archivos que le permitirá al usuario cambiar ese archivo por uno suyo
+
+![me](images/Menu/cambiar.PNG)
+
+El botón del lado, el que tiene forma de caneca de basura, sirve para eliminar ese archivo. 
+La otra opción es si el usuario da click sobre el archivo. En ese caso, el archivo será descargado al pc del usuario. 
+
+Abajo de la lista de archivos están tres botones: el de "ver", sirve para que el usuario recargue los archivos de la rama, el de "Adicionar archivos" desplegará un seleccionador de archivos para que el usuario elija el archivo que desea subir a la rama y, finalmente, esta el botón de "cargar" que sirve para subir los archivos seleccionados a la rama (pueden ser varios simultaneamente).
+
+En la parte inferior derecha del pop up está el simbolo de una caneca de basura, está sirve para eliminar la rama junto con toda la información que hay en ella. 
+Una peculiaridad de la app, es que si se trata de elminar la rama del medio (la que cuenta con el mismo nombre del proyecto), todo el proyecto será eliminado (esta información por supuesto es suministrada al usuario cada vez que intente borrar la rama principal).
+
+Por otro lado, si el usuario oprime el botón más, se desplegará el siguiente formulario
+
+![+](images/Menu/+.PNG)
+
+Este formulario sirve para crear una nueva rama que saldrá desde la rama sobre la cual el más fue seleccionado. 
+
+Finalmente, en la parte de abajo de la pantalla, está un chat del proyecto.
+
+![chat](images/Menu/chat.PNG)
+
+Allí el usuario podrá interectuar en tiempo real con los demás colaboradores sobre temas del proyecto.
+
+
+
+
+
+
+
+
 
 
