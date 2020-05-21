@@ -704,7 +704,11 @@ var map = (function () {
 				apifiles.putFile(path, file);
 				document.getElementById("Files").innerHTML = "";
 			} else {
-				alert("Los archivos no son del mismo tipo");
+				swal(
+					'Error al reemplazar el archivo',
+					'No se pudo reemplzar el archivo porque no es del mismo tipo del original',
+					'error'
+				);
 			}
 		}
 	}
@@ -787,8 +791,11 @@ var map = (function () {
 		}
 		if (('files' in x) && pasa) {
 			if (x.files.length == 0) {
-				txt = "Select one or more files.";
-				alert(txt);
+				swal(
+					'Por favor seleccione un archivo',
+					'Ningún archivo ha sido seleccionad. Por favor seleccione uno e intentelo de nuevo',
+					'error'
+				);
 			} else {
 				for (var i = 0; i < x.files.length; i++) {
 					var file = x.files[i];

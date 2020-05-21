@@ -35,11 +35,19 @@ var apifiles = (function () {
                 }(),
                 contentType: false,
                 processData: false,
-                success: function (response) {   
-					alert("Archivo " + file.name+ " cargado")                     
+                success: function (response) {  
+                    swal(
+						'¡Éxito al cargar el archivo!',
+						'Su archivo ' + file.name + ' fue cargado con éxito.',
+						'success'
+					);                   
                 },
                 error: function (jqXHR, textStatus, errorMessage) {
-                    alert(file.name + " no cargado");
+                    swal(
+						'Error al cargar el archivo',
+						'Su archivo ' + file.name + ' no pudo ser cargado. Por favor intentelo de nuevo.',
+						'error'
+					);     
                 }
             });
 			
@@ -58,10 +66,18 @@ var apifiles = (function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {   
-					alert("Archivo " + file.name+ " cargado")                     
+                    swal(
+						'¡Éxito al cargar el archivo!',
+						'Su archivo ' + file.name + ' fue cargado con éxito.',
+						'success'
+					);                   
                 },
                 error: function (jqXHR, textStatus, errorMessage) {
-                    alert(file.name + " no cargado");
+                    swal(
+						'Error al cargar el archivo',
+						'Su archivo ' + file.name + ' no pudo ser cargado. Por favor intentelo de nuevo.',
+						'error'
+					); 
                 }
             });
 			
@@ -74,7 +90,6 @@ var apifiles = (function () {
 			});
 			delRequest.then(
 				function () {
-					alert("Archivo borrado") 
 				}
 			);
         },
