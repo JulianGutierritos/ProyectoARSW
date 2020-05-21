@@ -793,7 +793,7 @@ var map = (function () {
 			if (x.files.length == 0) {
 				swal(
 					'Por favor seleccione un archivo',
-					'Ningún archivo ha sido seleccionad. Por favor seleccione uno e intentelo de nuevo',
+					'Ningún archivo ha sido seleccionado. Por favor seleccione uno e intentelo de nuevo',
 					'error'
 				);
 			} else {
