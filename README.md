@@ -140,5 +140,55 @@ Como se puede observar claramente el primer get realizado se demoró muchisimo m
 
 También cabe recalcar que este caché no solo hace nuestra aplicación más rápida, sino que la hará disponible en caso de que la base de datos se caiga. Y aunque por razones de integridad de la información, sin base de datos el usuario no podrá ingresar nueva información, sí podrá consultar la información que haya sido ingresada antes de que la base de datos estuviera caida. Así que el usuario podrá: leer los mensajes de todos sus proyectos y ver la información de todas las ramas de sus proyectos, incluyendo descargar archivos que se encuentren ya dentro de ellas. 
 
+# Usabilidad 
+
+Nuestro proyecto fue diseñado teniendo como premisa ser fácil e intuitivo de usar, enfocandonos bastante en la experiencia de usuario. 
+A continuación algunas de las heuristicas del diseño que nuestro proyecto cumple:
+
+## Visibilidad del estado del sistema 
+
+Esta es la heuristica que tal vez se nota con mayor facilidad y esto se debe principalmente a que: 
+
+- Nuestro proyecto cuenta con notificaciones que le informan inmediatamente al usuario sobre cualquier cambio en cualquiera de sus proyectos de manera clara y al instante
+
+![noti](images/Usabilidad/notificaciones.PNG)
+
+- Nuestro proyecto muestra de manera clara al usuario cuando existe una nueva invitación para él.
+
+![inv](images/Usabilidad/invitacion.PNG)
+
+- Nuestro proyecto informa al usuario de manera clara no solo los errores que pueden surigir, sino que también muestra los aciertos en ocasiones donde estos no se muestran inmediatamente en pantalla (como cuando se crea un proyecto o se invita a un usuario a participar de uno)
+
+![bien](images/Usabilidad/hecho.PNG)
+
+![error](images/Usabilidad/error.PNG)
+
+## Coincidencia entre el sistema y el mundo real
+
+Todos los mensajes que se despliegan a lo largo de la aplicación están hechos para que puedan ser entendidos facilmente. Muestra de esto aquí tenemos un mensaje de error que informa al usuario de manera clara porque no puede agregar a este nuevo participante y a continuación veremos un mensaje de advertencia que de manera igualmente clara informa al usuario sobre lo que está apunto de hacer y las consecuencias de ello
+
+![error2](images/Usabilidad/error2.PNG)
+
+![adv](images/Usabilidad/advertencia.PNG)
+
+## Consistencia y estandar
+
+Como se podrá notar a lo largo del manual de usuario, las pantallas dentro de la aplicación tienen el mismo encabezado y los botones dentro de la aplicación formas similares. Además, como hemos visto acá arriba, los mensajes de: advertencia, error y acierto, son fácilmente distinguibles el uno de otro gracias a sus grandes iconos, haciendo que para el usuario sea muy díficil confundir un mensaje de acierto con uno de fallo.
+
+## Prevención de errores
+
+La aplicación cuenta con mensajes de advertencia claros en las acciones más importnates, y que a la vez, pueden llegar a ser irreversibles, como: salir de un proyecto, eliminar un proyecto y eliminar una rama de un proyecto.
+
+![adv2](images/Usabilidad/advertencia2.PNG)
+
+## Diseño estético y minimalista
+
+El diseño de nuestra aplicación está muy bien trabajado. Ninguna de nuestras pantallas está llena de cosas, sino que usamos estéticos "pop ups" que hagan que la pantalla no esté tan sobrecargada. También utilizamos una buena paleta de colores y adornamos algunos formularios con imagenes que estén relacionadas con estos. 
+
+![adv2](images/Usabilidad/popup.PNG)
+
+## Ayuda y documentacion
+
+Contamos con un manual de usuario, que se presentará a continuación, además, nuestro código se encuentra bien documentado, en especial nuestros métodos: get, post, delete y put.
 
 
