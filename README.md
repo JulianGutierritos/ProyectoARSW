@@ -192,3 +192,4 @@ El diseño de nuestra aplicación está muy bien trabajado. Ninguna de nuestras 
 Contamos con un manual de usuario, que se presentará a continuación, además, nuestro código se encuentra bien documentado, en especial nuestros métodos: get, post, delete y put.
 
 
+

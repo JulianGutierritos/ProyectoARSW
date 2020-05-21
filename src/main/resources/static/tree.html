@@ -58,7 +58,7 @@
 		</header>
 
 		<div class="openMenu">
-			<span onclick="app.openNav()">&#9776; More</span>
+			<span onclick="app.openNav()">&#9776; Menú</span>
 		</div>
 
 
@@ -94,9 +94,8 @@
 
 				<div class="contact100-form-title" style="background-image: url(layer/images/bg-07.jpg);">
 					<div>
-						<span class="buttonClose" onclick="map.hiddenComponentAdd();map.esconderContenedor()">&times;</span>
-					</div>
-
+ 						<span class="buttonClose" onclick="map.hiddenComponentAdd();map.esconderContenedor()">&times;</span>					</div>
+ 						
 					<div class="oldRamaN">
 						<span id="compName">Componente</span>
 					</div>
@@ -117,16 +116,16 @@
 						</label>
 						<label class="label-input100 rs2" for="message">
 							<button class="updateButton btn-sm" value="Click me" onclick="map.updateRootInfo(); return false;">
-								<i class="fa fa-edit fa-2x"><br />Actualizar</i>
+								<i class="fa fa-edit fa-2x"><br />Cambiar</i>
 							</button>
 						</label>
 
 
 					</div>
-
+					<br/>
 					<div class="container" id="contenedor" style="display:none">
 						<h2>Archivos</h2>
-						<div id="Files" class="list-group" style="max-height:186px; overflow-y: auto">
+						<div id="Files" class="list-group" style="height:70%; overflow-y: auto">
 						</div>
 					</div>
 
@@ -134,7 +133,8 @@
 					
 					<div class="col2">
 						<br/>
-						<input type="file" id="archivo" multiple size="50" class="inputfile" style="margin-left: 14px;"/>
+						<input type="file" id="archivo" multiple size="50" class="hidden" />
+						<label for="archivo" class="inputfile">Adicionar archivo</label>
 						<output type="text" id="file-path" />
 
 						<input type="file" id="archivoPut" class="inputfile" style="display: none;" />
@@ -144,11 +144,11 @@
 					<br />
 					
 					<div class="col1">
-
+						<br/>
 						<button class="btn2" onclick="map.loadFiles() ; return false;"><i
 								class="fa fa-folder fa-2x"></i>
 							<br />
-							Ver  archivos
+							Ver 
 						</button>
 						&nbsp; &nbsp; &nbsp; &nbsp;
 
@@ -224,6 +224,7 @@
 				<ul class="commentList" id="chat">
 				</ul>
 				<form class="form-inline" role="form">
+					
 					<div class="form-group">
 						<input id="mensaje" class="form-control" type="text" placeholder="Message" />
 					</div>
@@ -233,6 +234,7 @@
 				</form>
 			</div>
 		</section>
+	
 		<br />
 
 		<section class="container-contact100" id="componentCollaborator">
@@ -267,11 +269,9 @@
 		</section>
 
 	</section>
-
-
-
-
-
+	<div class="footer">
+		<br/>
+	</div>
 
 </body>
 

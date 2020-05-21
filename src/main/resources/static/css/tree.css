@@ -233,6 +233,7 @@
 	height: 5%;
 	top: 0;
 	font-size: 23%;
+	margin-right:15%;
 
 }
 
@@ -254,4 +255,8 @@
 .deleteButton:hover {
 	background-color: rgb(225, 225, 225);
 	color: white;
+}
+
+.footer{
+	margin-top: 12%;
 }
